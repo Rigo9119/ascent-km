@@ -1,6 +1,5 @@
 <script lang="ts">
-
-import { GoogleMap,  } from '@beyonk/svelte-googlemaps'
+	import { GoogleMap } from '@beyonk/svelte-googlemaps';
 
 	import {
 		Card,
@@ -23,10 +22,10 @@ import { GoogleMap,  } from '@beyonk/svelte-googlemaps'
 	/>
 </svelte:head>
 
-<div class="p-2 h-full">
+<div class="h-full p-2">
 	<section class="mb-4 h-1/2">
 		{#if !apiKey}
-			<div class="flex items-center justify-center h-full">
+			<div class="flex h-full items-center justify-center">
 				<p class="text-2xl">Please add your Google Maps API key to see the map.</p>
 			</div>
 		{:else}
@@ -34,21 +33,23 @@ import { GoogleMap,  } from '@beyonk/svelte-googlemaps'
 		{/if}
 	</section>
 	<section>
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-			{#each locations as location}
-				<Card>
-					<CardHeader>
-						<CardTitle>{location.name}</CardTitle>
-						<CardDescription>{location.address}</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<p>{location.description}</p>
-					</CardContent>
-					<CardFooter>
-						<p>Latitude: {location.lat}, Longitude: {location.lng}</p>
-					</CardFooter>
-				</Card>
+		<ul class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+			{#each locations as location (location)}
+				<li>
+					<Card>
+						<CardHeader>
+							<CardTitle>{location.name}</CardTitle>
+							<CardDescription>{location.address}</CardDescription>
+						</CardHeader>
+						<CardContent>
+							<p>{location.description}</p>
+						</CardContent>
+						<CardFooter>
+							<p>Latitude: {location.lat}, Longitude: {location.lng}</p>
+						</CardFooter>
+					</Card>
+				</li>
 			{/each}
-		</div>
+		</ul>
 	</section>
 </div>

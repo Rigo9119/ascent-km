@@ -1,21 +1,25 @@
 <script lang="ts">
-	import { events, type Event } from '$lib/data/events';
-	import { isSameDay } from 'date-fns';
-	import { type DateValue } from '@internationalized/date';
+	import { events } from '$lib/data/events';
+	import { isSameDay } from '@internationalized/date';
+	import { today, getLocalTimeZone, type DateValue, CalendarDate } from '@internationalized/date';
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
 	import CalendarView from './components/calendar-view.svelte';
+	import { categories } from '@/lib/data/categories';
 
-	let value: DateValue | undefined = $state();
-	let selectedCategory: string | undefined = $state('all');
-	let selectedType: string | undefined = $state('all');
-	let selectedLocation: string | undefined = $state('all');
+	let localDate = today(getLocalTimeZone());
+
+	let dateValue = $state<DateValue >(null as unknown as DateValue);
+	let selectedCategory: string = $state<string>('all');
+	let selectedType: string = $state<string>('all');
+	let selectedLocation: string = $state<string>('all');
+	let categoryOptions: { value: string; label: string }[] = $state<{ value: string; label: string }[]>(categories);
 
 	let filteredEvents = $derived(
 		events.filter((event) => {
-			const matchesCategory =
-				selectedCategory === 'all' || event.category === selectedCategory;
-			const matchesDate = !value || isSameDay(event.date, value.toDate(new Date().getTimezoneOffset().toString()));
+			const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
+			const matchesDate =
+				!dateValue || isSameDay(event.date, dateValue);
 			const matchesType = selectedType === 'all' || event.type === selectedType;
 			const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
 			return matchesCategory && matchesDate && matchesType && matchesLocation;
@@ -33,22 +37,23 @@
 	/>
 </svelte:head>
 
-<div class="p-6 max-w-7xl mx-auto">
+<div class="mx-auto max-w-7xl p-6">
 	<Filters
-		bind:value
-		bind:selectedCategory
-		bind:selectedType
-		bind:selectedLocation
-		{uniqueLocations}
+		dateValue={dateValue}
+		selectedCategory={selectedCategory}
+		selectedType={selectedType}
+		selectedLocation={selectedLocation}
+		uniqueLocations={uniqueLocations}
+		categoryOptions={categoryOptions}
 	/>
 
-	<div class="flex flex-col lg:flex-row gap-8">
+	<div class="flex flex-col gap-8 lg:flex-row">
 		<div class="lg:w-1/3">
-			<CalendarView bind:value />
+			<CalendarView {dateValue} />
 		</div>
 
 		<div class="lg:w-2/3">
 			<EventList {filteredEvents} />
 		</div>
 	</div>
-</div> 
+</div>

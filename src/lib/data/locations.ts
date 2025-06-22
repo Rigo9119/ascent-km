@@ -1,6 +1,13 @@
-export type Location = (typeof locations)[number];
+export type Location = 	{
+	id: number,
+	name: string,
+	description: string,
+	address: string,
+	lat: number,
+	lng:number
+}
 
-export const locations = [
+export const locations: Location[] = [
 	{
 		id: 1,
 		name: 'Gyeongbokgung Palace',
