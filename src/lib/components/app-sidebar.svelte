@@ -16,13 +16,8 @@
 			icon: HouseIcon
 		},
 		{
-			title: 'Calendar',
-			url: '#',
-			icon: CalendarIcon
-		},
-		{
 			title: 'Events',
-			url: '#',
+			url: '/events',
 			icon: Ticket
 		},
 		{
@@ -32,12 +27,12 @@
 		},
 		{
 			title: 'Search',
-			url: '#',
+			url: '/search',
 			icon: SearchIcon
 		},
 		{
 			title: 'Settings',
-			url: '#',
+			url: '/settings',
 			icon: SettingsIcon
 		}
 	];

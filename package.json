@@ -16,7 +16,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/js": "^9.18.0",
-    "@internationalized/date": "^3.8.1",
+    "@internationalized/date": "^3.8.2",
     "@lucide/svelte": "^0.515.0",
     "@sveltejs/adapter-netlify": "^5.0.0",
     "@sveltejs/kit": "^2.16.0",
@@ -24,7 +24,7 @@
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "@tailwindcss/vite": "^4.0.0",
-    "bits-ui": "^2.8.4",
+    "bits-ui": "^2.8.6",
     "clsx": "^2.1.1",
     "embla-carousel-svelte": "^8.6.0",
     "eslint": "^9.18.0",
@@ -46,6 +46,9 @@
     "vite-plugin-devtools-json": "^0.2.0"
   },
   "dependencies": {
+    "@beyonk/async-script-loader": "^2.3.0",
+    "@beyonk/svelte-googlemaps": "^3.2.0",
+    "date-fns": "^4.1.0",
     "embla-carousel-autoplay": "^8.6.0"
   }
 }
