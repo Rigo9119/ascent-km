@@ -6,7 +6,7 @@
 	import Map from '@lucide/svelte/icons/map';
 	import Ticket from '@lucide/svelte/icons/ticket';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-	import Button from './ui/button/button.svelte';
+	import Button from '../../lib/components/ui/button/button.svelte';
 
 	// Menu items.
 	const items = [
@@ -24,11 +24,6 @@
 			title: 'Locations',
 			url: '/locations',
 			icon: Map
-		},
-		{
-			title: 'Search',
-			url: '/search',
-			icon: SearchIcon
 		},
 		{
 			title: 'Settings',

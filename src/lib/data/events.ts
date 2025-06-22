@@ -1,23 +1,14 @@
-export interface Event {
-	id: number;
-	title: string;
-	description: string;
-	date: Date;
-	location: string;
-	type: 'public' | 'private';
-	category: 'cultural' | 'food' | 'music' | 'sports' | 'technology' | 'social';
-	image?: string;
-}
+export type Event = (typeof events)[number];
 
-export const events: Event[] = [
+export const events = [
 	{
 		id: 1,
-		title: 'Cherry Blossom Festival',
-		description: 'Experience the beautiful cherry blossoms at Yeouido Spring Flower Festival',
-		date: new Date(2024, 3, 15), // April 15, 2024
-		location: 'Yeouido Park, Seoul',
-		type: 'public',
-		category: 'cultural'
+		title: 'Seoul Lantern Festival',
+		description: 'A festival of lights on the Cheonggyecheon Stream.',
+		date: new Date('2024-11-01'),
+		location: 'Cheonggyecheon Stream, Seoul',
+		category: 'cultural',
+		type: 'public'
 	},
 	{
 		id: 2,
@@ -99,5 +90,14 @@ export const events: Event[] = [
 		location: 'Olympic Stadium, Seoul',
 		type: 'public',
 		category: 'music'
+	},
+	{
+		id: 11,
+		title: 'Christmas Market',
+		description: 'Celebrate Christmas with a festive market in Myeong-dong',
+		date: new Date('2024-12-25'),
+		location: 'Myeong-dong, Seoul',
+		category: 'social',
+		type: 'public'
 	}
-]; 
+] as const; 

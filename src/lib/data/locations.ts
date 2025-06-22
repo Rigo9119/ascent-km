@@ -1,3 +1,5 @@
+export type Location = (typeof locations)[number];
+
 export const locations = [
 	{
 		id: 1,
