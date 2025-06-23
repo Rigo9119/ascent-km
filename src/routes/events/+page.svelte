@@ -7,8 +7,6 @@
 	import CalendarView from './components/calendar-view.svelte';
 	import { categories } from '@/lib/data/categories';
 
-	let localDate = today(getLocalTimeZone());
-
 	let dateValue = $state<DateValue >(null as unknown as DateValue);
 	let selectedCategory: string = $state<string>('all');
 	let selectedType: string = $state<string>('all');
@@ -18,8 +16,7 @@
 	let filteredEvents = $derived(
 		events.filter((event) => {
 			const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-			const matchesDate =
-				!dateValue || isSameDay(event.date, dateValue);
+			const matchesDate = !dateValue || isSameDay(event.date, dateValue);
 			const matchesType = selectedType === 'all' || event.type === selectedType;
 			const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
 			return matchesCategory && matchesDate && matchesType && matchesLocation;
