@@ -7,15 +7,19 @@
 	import Ticket from '@lucide/svelte/icons/ticket';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import Button from '../../lib/components/ui/button/button.svelte';
-	import { supabase } from '$lib/supabaseClient';
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { user, fetchUser } from '$lib/stores/user';
+	import { onMount } from 'svelte';
+	import SidebarMenuSkeleton from '$lib/components/ui/sidebar/sidebar-menu-skeleton.svelte';
 
-	let user: import('@supabase/supabase-js').User | null = null;
+	let loading = true;
 
 	onMount(async () => {
-		const { data } = await supabase.auth.getUser();
-		user = data?.user ?? null;
+		if (browser) {
+			await fetchUser();
+			loading = false;
+		}
 	});
 
 	async function handleLogin() {
@@ -27,8 +31,9 @@
 	}
 
 	async function handleLogout() {
+		const { supabase } = await import('$lib/supabaseClient');
 		await supabase.auth.signOut();
-		user = null;
+		await fetchUser();
 		goto('/');
 	}
 
@@ -48,15 +53,11 @@
 			title: 'Locations',
 			url: '/locations',
 			icon: Map
-		},
-		{
-			title: 'Settings',
-			url: '/settings',
-			icon: SettingsIcon
 		}
 	];
 </script>
 
+{#if browser}
 <Sidebar.Root>
 	<Sidebar.Content>
 		<Sidebar.Group>
@@ -75,7 +76,30 @@
 							</Sidebar.MenuButton>
 						</Sidebar.MenuItem>
 					{/each}
-					{#if user}
+					{#if loading}
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton>
+								<SidebarMenuSkeleton showIcon={true} />
+							</Sidebar.MenuButton>
+							<Sidebar.MenuSub>
+								<Sidebar.MenuSubItem>
+									<Sidebar.MenuSubButton>
+										<SidebarMenuSkeleton />
+									</Sidebar.MenuSubButton>
+								</Sidebar.MenuSubItem>
+								<Sidebar.MenuSubItem>
+									<Sidebar.MenuSubButton>
+										<SidebarMenuSkeleton />
+									</Sidebar.MenuSubButton>
+								</Sidebar.MenuSubItem>
+								<Sidebar.MenuSubItem>
+									<Sidebar.MenuSubButton>
+										<SidebarMenuSkeleton />
+									</Sidebar.MenuSubButton>
+								</Sidebar.MenuSubItem>
+							</Sidebar.MenuSub>
+						</Sidebar.MenuItem>
+					{:else if $user}
 						<Sidebar.MenuItem>
 							<Sidebar.MenuButton>
 								{#snippet child({ props })}
@@ -85,31 +109,36 @@
 									</a>
 								{/snippet}
 							</Sidebar.MenuButton>
-							<Sidebar.MenuSub>
 								<Sidebar.MenuSubItem>
 									<Sidebar.MenuSubButton>
-										<a href="/profile/favourites/locations">Favourite Locations</a>
+										<a href="/profile/favourites">Favourites</a>
 									</Sidebar.MenuSubButton>
 								</Sidebar.MenuSubItem>
 								<Sidebar.MenuSubItem>
 									<Sidebar.MenuSubButton>
-										<a href="/profile/favourites/communities">Favourite Communities</a>
+										<a href="/profile/history">History</a>
 									</Sidebar.MenuSubButton>
 								</Sidebar.MenuSubItem>
 								<Sidebar.MenuSubItem>
 									<Sidebar.MenuSubButton>
-										<a href="/profile/history/events">Event History</a>
+										<a href="/settings">
+											<SettingsIcon />
+											Settings
+										</a>
 									</Sidebar.MenuSubButton>
 								</Sidebar.MenuSubItem>
-							</Sidebar.MenuSub>
 						</Sidebar.MenuItem>
+					{:else}
+						<!-- Show nothing or auth links here if needed -->
 					{/if}
 				</Sidebar.Menu>
 			</Sidebar.GroupContent>
 		</Sidebar.Group>
 	</Sidebar.Content>
 	<Sidebar.Footer>
-		{#if !user}
+		{#if loading}
+			<!-- Optionally, show a spinner or nothing while loading -->
+		{:else if !$user}
 			<Button onclick={handleLogin}>Log in</Button>
 			<Button onclick={handleSignup}>Sign up</Button>
 		{:else}
@@ -117,3 +146,4 @@
 		{/if}
 	</Sidebar.Footer>
 </Sidebar.Root>
+{/if}

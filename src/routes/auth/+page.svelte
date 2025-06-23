@@ -10,8 +10,7 @@
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
 
-	let mode: 'login' | 'signup' =
-		$page.url.searchParams.get('mode') === 'signup' ? 'signup' : 'login';
+	$: mode = $page.url.searchParams.get('mode') === 'signup' ? 'signup' : 'login';
 	let isLoading = false;
 	let error = '';
 	let success = false;
@@ -202,11 +201,21 @@
 						/>
 					{/snippet}
 				</form.Field>
+				<div class="mt-6">
+					<Button
+						type="submit"
+						class="w-full"
+						disabled={isLoading}
+					>
+						{isLoading ? 'Loading...' : (mode === 'login' ? 'Login' : 'Sign Up')}
+					</Button>
+				</div>
 			</form>
 		{/if}
 
 		<div class="mt-4 text-center">
 			<Button
+        variant="ghost"
 				class="text-sm text-indigo-600 hover:text-indigo-500"
 				onclick={() => {
 					mode = mode === 'login' ? 'signup' : 'login';
