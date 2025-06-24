@@ -9,18 +9,8 @@
 	import Button from '../../lib/components/ui/button/button.svelte';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import { user, fetchUser } from '$lib/stores/user';
-	import { onMount } from 'svelte';
+	import { user } from '$lib/stores/user';
 	import SidebarMenuSkeleton from '$lib/components/ui/sidebar/sidebar-menu-skeleton.svelte';
-
-	let loading = true;
-
-	onMount(async () => {
-		if (browser) {
-			await fetchUser();
-			loading = false;
-		}
-	});
 
 	async function handleLogin() {
 		goto('/auth?mode=login');
@@ -33,7 +23,6 @@
 	async function handleLogout() {
 		const { supabase } = await import('$lib/supabaseClient');
 		await supabase.auth.signOut();
-		await fetchUser();
 		goto('/');
 	}
 
@@ -76,7 +65,7 @@
 							</Sidebar.MenuButton>
 						</Sidebar.MenuItem>
 					{/each}
-					{#if loading}
+					{#if $user === undefined}
 						<Sidebar.MenuItem>
 							<Sidebar.MenuButton>
 								<SidebarMenuSkeleton showIcon={true} />
@@ -122,7 +111,6 @@
 								<Sidebar.MenuSubItem>
 									<Sidebar.MenuSubButton>
 										<a href="/settings">
-											<SettingsIcon />
 											Settings
 										</a>
 									</Sidebar.MenuSubButton>
@@ -136,7 +124,7 @@
 		</Sidebar.Group>
 	</Sidebar.Content>
 	<Sidebar.Footer>
-		{#if loading}
+		{#if $user === undefined}
 			<!-- Optionally, show a spinner or nothing while loading -->
 		{:else if !$user}
 			<Button onclick={handleLogin}>Log in</Button>

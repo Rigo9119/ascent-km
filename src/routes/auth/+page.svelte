@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { createForm, Field } from '@tanstack/svelte-form';
 	import { authSchema, type AuthValues } from '$lib/schemas/auth';
@@ -33,6 +33,7 @@
 						password
 					});
 					if (signInError) throw signInError;
+					await invalidateAll();
 					goto('/');
 				} else {
 					const { error: signUpError, data } = await supabase.auth.signUp({
