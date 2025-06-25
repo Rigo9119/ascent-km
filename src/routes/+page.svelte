@@ -1,6 +1,6 @@
 <script lang="ts">
-	import HomeSection from '@/routes/components/home-section.svelte';
-	import TrendingSection from '@/routes/components/trending-section.svelte';
+	import HomeSection from '@/lib/components/home-carousel-section.svelte';
+	import TrendingSection from '@/lib/components/trending-section.svelte';
 	import { Input } from '$lib/components/ui/input';
 	import SearchIcon from '@lucide/svelte/icons/search';
 	import { events, type Event } from '$lib/data/events';
