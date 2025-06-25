@@ -45,16 +45,32 @@
 
 	const mockCarouselItems = [
 		{
-			name: 'thing 1'
+			id: 1,
+			name: 'Gyeongbokgung Palace',
+			address: '161 Sajik-ro, Jongno-gu, Seoul',
+			description: 'The main royal palace of the Joseon dynasty.',
+			image: 'https://source.unsplash.com/random/800x600?palace'
 		},
 		{
-			name: 'thing 2'
+			id: 2,
+			name: 'N Seoul Tower',
+			address: '105 Namsangongwon-gil, Yongsan-gu, Seoul',
+			description: 'An observation and communication tower on Namsan Mountain.',
+			image: 'https://source.unsplash.com/random/800x600?tower'
 		},
 		{
-			name: 'trending 3'
+			id: 3,
+			name: 'Bukchon Hanok Village',
+			address: 'Gye-dong-gil, Jongno-gu, Seoul',
+			description: 'A traditional Korean village with a long history.',
+			image: 'https://source.unsplash.com/random/800x600?village'
 		},
 		{
-			name: 'trending 4'
+			id: 4,
+			name: 'Myeongdong Shopping Street',
+			address: 'Myeongdong-gil, Jung-gu, Seoul',
+			description: 'One of the primary shopping districts in Seoul.',
+			image: 'https://source.unsplash.com/random/800x600?street'
 		}
 	];
 </script>
