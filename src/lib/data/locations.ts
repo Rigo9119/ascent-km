@@ -4,7 +4,8 @@ export type Location = 	{
 	description: string,
 	address: string,
 	lat: number,
-	lng:number
+	lng:number,
+	image?: string // Optional image property for card display
 }
 
 export const locations: Location[] = [
