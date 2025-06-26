@@ -3,7 +3,7 @@
   import { supabase } from '$lib/supabaseClient';
   import { page } from '$app/stores';
   import { goto } from '$app/navigation';
-  import { Loader2 } from 'lucide-svelte';
+  import Loader2 from '@lucide/svelte/icons/loader';
 
   let isLoading = true;
   let error = '';
