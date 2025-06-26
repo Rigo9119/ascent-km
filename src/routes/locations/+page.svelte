@@ -21,7 +21,7 @@
 	/>
 </svelte:head>
 
-<div class="h-full p-2">
+<div class="mx-auto max-w-7xl p-6">
 	<section class="mb-4 h-1/2">
 		{#if !apiKey}
 			<div class="flex h-full items-center justify-center">

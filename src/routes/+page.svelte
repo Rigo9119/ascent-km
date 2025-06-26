@@ -83,7 +83,7 @@
 	/>
 </svelte:head>
 
-<div class="w-full p-2">
+<div class="mx-auto max-w-7xl p-6">
 	<h1 class="py-4 text-5xl font-bold">Incredible page</h1>
 
 	<!-- Search Section -->
