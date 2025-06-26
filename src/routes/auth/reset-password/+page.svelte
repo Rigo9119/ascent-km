@@ -1,9 +1,12 @@
-<script lang="ts">
+<div>
+  Reset form
+</div>
+<!-- <script lang="ts">
   import { supabase } from '$lib/supabaseClient';
-  import { createForm } from '@tanstack/svelte-form-core';
+  import { createForm } from '@tanstack/svelte-form';
   import { zodValidator } from '@tanstack/zod-form-adapter';
   import { z } from 'zod';
-  import { Loader2 } from 'lucide-svelte';
+  import Loader2  from '@lucide/svelte/icons/loader';
 
   const resetSchema = z.object({
     email: z.string().email('Please enter a valid email')
@@ -15,7 +18,7 @@
   let error = '';
   let success = false;
 
-  const form = createForm<ResetValues>({
+  const form = createForm{
     defaultValues: {
       email: ''
     },
@@ -40,11 +43,11 @@
         isLoading = false;
       }
     },
-    validator: zodValidator(resetSchema)
+    validator: resetSchema
   });
-</script>
+</script> -->
 
-<div class="flex min-h-screen items-center justify-center">
+<!-- <div class="flex min-h-screen items-center justify-center">
   <div class="w-full max-w-md space-y-8 rounded-lg bg-white p-6 shadow-lg">
     <div class="text-center">
       <h2 class="text-3xl font-bold">Reset Password</h2>
@@ -66,7 +69,7 @@
             autocomplete="email"
             required
             class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-            use:form.register={{ name: "email" }}
+            
           />
           {#if $form.errors.email}
             <p class="mt-1 text-sm text-red-600">{$form.errors.email}</p>
@@ -124,4 +127,4 @@
       </a>
     </div>
   </div>
-</div> 
+</div>  -->
