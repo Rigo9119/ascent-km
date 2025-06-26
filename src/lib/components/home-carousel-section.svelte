@@ -23,10 +23,14 @@
 			<Carousel.Content>
 				{#each carouselItems as item (item)}
 					<Carousel.Item class="basis:1">
-						<div class="p-1">
-							<Card.Root>
-								<Card.Content class="flex items-center justify-center p-6">
-									<span class="text-4xl font-semibold">{item.name}</span>
+						<div class="p-1 h-full min-h-[20vh]">
+							<Card.Root class="overflow-hidden h-full min-h-[20vh] py-0">
+								<Card.Content class="relative w-full flex items-center justify-center p-0 h-full min-h-[20vh]">
+									<img src={item.image} alt={item.name} class="absolute inset-0 h-full w-full object-cover" />
+									<div class="absolute inset-0 bg-black/40" />
+									<span class="relative z-10 text-2xl font-bold text-white text-center px-2 drop-shadow-lg">
+										{item.name}
+									</span>
 								</Card.Content>
 							</Card.Root>
 						</div>

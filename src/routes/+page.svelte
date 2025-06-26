@@ -90,7 +90,7 @@
 	<section class="my-8">
 		<div class="relative">
 			<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-			<Input bind:value={searchQuery} placeholder="Search for events or locations..." class="pl-10 text-lg" />
+			<Input bind:value={searchQuery} placeholder="Search for events, locations and communities" class="pl-10 text-lg" />
 		</div>
 
 		{#if (searchResults ?? []).length > 0}
