@@ -32,7 +32,7 @@
           isLoading = true;
           error = '';       
           const { error: updateError } = await supabase.auth.updateUser({
-            password: values.password
+            password: values.value.password
           });
           
           if (updateError) throw updateError;
@@ -81,10 +81,10 @@
           type="password"
           required
           class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-          use:form.register={{ name: "password" }}
+          onchange={() => console.log('something')}
         />
-        {#if $form.errors.password}
-          <p class="mt-1 text-sm text-red-600">{$form.errors.password}</p>
+        {#if error}
+          <p class="mt-1 text-sm text-red-600">{error}</p>
         {/if}
       </div>
 
@@ -98,10 +98,10 @@
           type="password"
           required
           class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
-          use:form.register={{ name: "confirmPassword" }}
+          onchange={() => console.log('something')}
         />
-        {#if $form.errors.confirmPassword}
-          <p class="mt-1 text-sm text-red-600">{$form.errors.confirmPassword}</p>
+        {#if error}
+          <p class="mt-1 text-sm text-red-600">{error}</p>
         {/if}
       </div>
 
@@ -109,7 +109,7 @@
         <button
           type="submit"
           disabled={isLoading}
-          class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50"
+          class="group relative flex w-full justify-center rounded-md bg-amber-600 px-4 py-2 text-sm font-medium text-white hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50"
         >
           {#if isLoading}
             <Loader2 class="mr-2 h-4 w-4 animate-spin" />

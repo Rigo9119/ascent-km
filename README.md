@@ -49,11 +49,7 @@ This project is ready to deploy on [Netlify](https://www.netlify.com/) using the
    - **Build command:** `npm run build`
    - **Publish directory:** `.svelte-kit/netlify/edge` (for edge) or `build` (for standard)
    - Netlify will auto-detect these for most SvelteKit projects.
-4. **Set environment variables** (e.g., for Supabase):
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-   - `VITE_GOOGLE_MAPS_API_KEY`
-   - Add any other variables your app needs.
+4. **Set environment variables**
 5. **Deploy!**
 
 ### Notes
