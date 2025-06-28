@@ -89,28 +89,6 @@
 		}
 	}
 
-	async function signInWithApple() {
-		try {
-			isLoading = true;
-			error = '';
-			const { error: signInError } = await supabase.auth.signInWithOAuth({
-				provider: 'apple',
-				options: {
-					redirectTo: `${window.location.origin}/`
-				}
-			});
-			if (signInError) throw signInError;
-		} catch (e) {
-			if (e instanceof Error) {
-				error = e.message;
-			} else {
-				error = 'An unexpected error occurred';
-			}
-		} finally {
-			isLoading = false;
-		}
-	}
-
 	async function signInWithFacebook() {
 		try {
 			isLoading = true;
@@ -175,15 +153,6 @@
 					<Button
 						type="button"
 						disabled={isLoading}
-						onclick={signInWithApple}
-						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
-					>
-						<img src="/apple.svg" alt="Apple" class="h-5 w-5" />
-						Apple
-					</Button>
-					<Button
-						type="button"
-						disabled={isLoading}
 						onclick={signInWithFacebook}
 						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
 					>
@@ -194,9 +163,8 @@
 						type="button"
 						disabled={isLoading}
 						onclick={signInWithKakao}
-						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+						class="inline-flex items-center justify-center gap-2 rounded-md bg-[#FEE500] px-4 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-yellow-300 disabled:opacity-50"
 					>
-						<img src="/kakao.svg" alt="Kakao" class="h-5 w-5" />
 						Kakao
 					</Button>
 				</div>
@@ -237,6 +205,8 @@
 					event.stopPropagation();
 					form.handleSubmit();
 				}}
+
+				class="flex flex-col items-center justify-between gap-2 w-full"
 			>
 				<form.Field name="email">
 					{#snippet children(field)}

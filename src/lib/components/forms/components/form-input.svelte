@@ -19,7 +19,7 @@
   const { field, label, inputId, type, autocomplete, placeholder, required }: Props = $props()
 </script>
 
-<div class='mb-2'>
+<div class='mb-2 w-full'>
     <Label for="email" class="block text-sm font-medium text-gray-700">
       {label}
     </Label>
