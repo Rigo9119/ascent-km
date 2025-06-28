@@ -89,12 +89,56 @@
 		}
 	}
 
-	async function signInWithGithub() {
+	async function signInWithApple() {
 		try {
 			isLoading = true;
 			error = '';
 			const { error: signInError } = await supabase.auth.signInWithOAuth({
-				provider: 'github',
+				provider: 'apple',
+				options: {
+					redirectTo: `${window.location.origin}/`
+				}
+			});
+			if (signInError) throw signInError;
+		} catch (e) {
+			if (e instanceof Error) {
+				error = e.message;
+			} else {
+				error = 'An unexpected error occurred';
+			}
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	async function signInWithFacebook() {
+		try {
+			isLoading = true;
+			error = '';
+			const { error: signInError } = await supabase.auth.signInWithOAuth({
+				provider: 'facebook',
+				options: {
+					redirectTo: `${window.location.origin}/`
+				}
+			});
+			if (signInError) throw signInError;
+		} catch (e) {
+			if (e instanceof Error) {
+				error = e.message;
+			} else {
+				error = 'An unexpected error occurred';
+			}
+		} finally {
+			isLoading = false;
+		}
+	}
+
+	async function signInWithKakao() {
+		try {
+			isLoading = true;
+			error = '';
+			const { error: signInError } = await supabase.auth.signInWithOAuth({
+				provider: 'kakao',
 				options: {
 					redirectTo: `${window.location.origin}/`
 				}
@@ -118,12 +162,12 @@
 			<h2 class="text-3xl font-bold">{mode === 'login' ? 'Login' : 'Sign Up'}</h2>
 			{#if !success}
 				<p class="mt-2 text-sm text-gray-600">Or continue with</p>
-				<div class="mt-3 flex justify-center gap-3">
+				<div class="mt-3 flex flex-col justify-center gap-3">
 					<Button
 						type="button"
 						disabled={isLoading}
 						onclick={signInWithGoogle}
-						class="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
 					>
 						<img src="/google.svg" alt="Google" class="h-5 w-5" />
 						Google
@@ -131,11 +175,29 @@
 					<Button
 						type="button"
 						disabled={isLoading}
-						onclick={signInWithGithub}
-						class="inline-flex items-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+						onclick={signInWithApple}
+						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
 					>
-						<img src="/github.svg" alt="GitHub" class="h-5 w-5" />
-						GitHub
+						<img src="/apple.svg" alt="Apple" class="h-5 w-5" />
+						Apple
+					</Button>
+					<Button
+						type="button"
+						disabled={isLoading}
+						onclick={signInWithFacebook}
+						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+					>
+						<img src="/facebook.svg" alt="Facebook" class="h-5 w-5" />
+						Facebook
+					</Button>
+					<Button
+						type="button"
+						disabled={isLoading}
+						onclick={signInWithKakao}
+						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+					>
+						<img src="/kakao.svg" alt="Kakao" class="h-5 w-5" />
+						Kakao
 					</Button>
 				</div>
 				<div class="relative mt-6">
@@ -202,15 +264,18 @@
 						/>
 					{/snippet}
 				</form.Field>
-				<div class="mt-6">
-					<Button
-						type="submit"
-						class="w-full"
-						disabled={isLoading}
-					>
+				<form.Subscribe
+				selector={(state) => ({
+					canSubmit: state.canSubmit,
+					isSubmitting: state.isSubmitting
+				})}
+			>
+				{#snippet children({ canSubmit, isSubmitting })}
+					<Button type="submit" class="w-full">
 						{isLoading ? 'Loading...' : (mode === 'login' ? 'Login' : 'Sign Up')}
 					</Button>
-				</div>
+				{/snippet}
+			</form.Subscribe>
 			</form>
 		{/if}
 

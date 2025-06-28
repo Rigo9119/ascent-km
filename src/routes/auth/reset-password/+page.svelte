@@ -11,8 +11,6 @@
 		email: z.string().email('Please enter a valid email')
 	});
 
-	type ResetValues = z.infer<typeof resetSchema>;
-
 	let isLoading = false;
 	let error = '';
 	let success = false;
@@ -72,7 +70,7 @@
 						<FormInput
 							{field}
 							required
-							name="email"
+							name={field.name}
 							label="Email"
 							inputId="email"
 							type="email"

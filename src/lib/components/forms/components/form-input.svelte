@@ -7,11 +7,11 @@
 
   type Props = {
     field: AnyFieldApi,
-    name: 'email' | 'password' | 'rememberMe' ,
+    name: string ,
     label: string,
     inputId: string,
     type: string,
-    autocomplete: FullAutoFill | null | undefined,
+    autocomplete?: FullAutoFill | null | undefined,
     placeholder?: string
     required: boolean
   }
