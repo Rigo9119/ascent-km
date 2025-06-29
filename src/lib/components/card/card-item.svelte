@@ -5,15 +5,15 @@
 	import type { Item } from '../trending-section.svelte';
   import { goto } from '$app/navigation';
 
-  const { cardItem }: { cardItem: Item} = $props();
+  const { cardItem, urlSection }: { cardItem: Item, urlSection: string} = $props();
 
   function handleFavorite(item: Item) {
 		// Implement favorite logic here
 		console.log('Favorited:', item.name);
 	}
-console.log('item: ', cardItem)
+
 	function viewDetails(itemId: string | number) {
-		goto(`/locations/${itemId}`);
+		goto(`/${urlSection}/${itemId}`);
 	}
 </script>
 

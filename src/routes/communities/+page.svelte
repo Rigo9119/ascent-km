@@ -61,7 +61,7 @@ const communities = [
   <!-- Communities Grid -->
   <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">
     {#each communities as community (community.id)}
-      <CardItem cardItem={community} />
+      <CardItem cardItem={community} urlSection="communities"/>
     {/each}
   </div>
 </div>

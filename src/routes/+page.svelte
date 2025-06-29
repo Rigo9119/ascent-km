@@ -154,8 +154,8 @@
 	<HomeSection sectionTitle="Locations" carouselItems={mockCarouselItems} carouselDelay={5000} />
 	<HomeSection sectionTitle="Events" carouselItems={mockCarouselItems} carouselDelay={4500} />
 
-	<TrendingSection sectionTitle="Top locations" sectionItems={mockCarouselItems} />
-	<TrendingSection sectionTitle="Trending events" sectionItems={mockCarouselItems} />
-	<TrendingSection sectionTitle="Popular communities" sectionItems={mockCommunityItems} />
+	<TrendingSection sectionTitle="Top locations" sectionItems={mockCarouselItems} urlSection="locations" />
+	<TrendingSection sectionTitle="Trending events" sectionItems={mockCarouselItems} urlSection="events" />
+	<TrendingSection sectionTitle="Popular communities" sectionItems={mockCommunityItems} urlSection="communities" />
 	
 </div>

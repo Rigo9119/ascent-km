@@ -107,7 +107,13 @@
 	<!-- Blog Posts Grid -->
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 		{#each blogPosts as post (post.id)}
-			<div class="group overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer h-full bg-card border rounded-lg" onclick={() => goto(`/blog/${post.slug}`)}>
+			<div 
+				class="group overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer h-full bg-card border rounded-lg" 
+				role="button" 
+				tabindex="0"
+				onclick={() => goto(`/blog/${post.slug}`)}
+				onkeydown={(e) => e.key === 'Enter' && goto(`/blog/${post.slug}`)}
+			>
 				<!-- Image -->
 				<div class="relative aspect-[4/3] overflow-hidden">
 					<img
