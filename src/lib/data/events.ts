@@ -7,7 +7,8 @@ export type Event = 	{
 	date: DateValue,
 	location: string,
 	category: string,
-	type: string
+	type: string,
+	fee: boolean
 };
 
 export const events: Event[] = [
@@ -18,7 +19,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 11, 1),
 		location: 'Cheonggyecheon Stream, Seoul',
 		category: 'cultural',
-		type: 'public'
+		type: 'public',
+		fee: false
 	},
 	{
 		id: 2,
@@ -27,7 +29,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 3, 20), // April 20, 2024
 		location: 'Gangnam District, Seoul',
 		type: 'private',
-		category: 'food'
+		category: 'food',
+		fee: true
 	},
 	{
 		id: 3,
@@ -36,7 +39,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 3, 25), // April 25, 2024
 		location: 'Hongdae, Seoul',
 		type: 'public',
-		category: 'music'
+		category: 'music',
+		fee: true
 	},
 	{
 		id: 4,
@@ -45,7 +49,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 9, 5), // October 5, 2024
 		location: 'Busan Cinema Center',
 		type: 'public',
-		category: 'cultural'
+		category: 'cultural',
+		fee: true
 	},
 	{
 		id: 5,
@@ -54,7 +59,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 2, 17), // March 17, 2024
 		location: 'Seoul Olympic Stadium',
 		type: 'public',
-		category: 'sports'
+		category: 'sports',
+		fee: true
 	},
 	{
 		id: 6,
@@ -63,7 +69,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 4, 10), // May 10, 2024
 		location: 'Gangnam Startup Hub',
 		type: 'private',
-		category: 'technology'
+		category: 'technology',
+		fee: false
 	},
 	{
 		id: 7,
@@ -72,7 +79,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 5, 8), // June 8, 2024
 		location: 'Gyeongbokgung Palace, Seoul',
 		type: 'public',
-		category: 'cultural'
+		category: 'cultural',
+		fee: true
 	},
 	{
 		id: 8,
@@ -81,7 +89,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 4, 15), // May 15, 2024
 		location: 'Itaewon, Seoul',
 		type: 'private',
-		category: 'social'
+		category: 'social',
+		fee: false
 	},
 	{
 		id: 9,
@@ -90,7 +99,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 6, 12), // July 12, 2024
 		location: 'Myeongdong, Seoul',
 		type: 'public',
-		category: 'food'
+		category: 'food',
+		fee: true
 	},
 	{
 		id: 10,
@@ -99,7 +109,8 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 8, 20), // September 20, 2024
 		location: 'Olympic Stadium, Seoul',
 		type: 'public',
-		category: 'music'
+		category: 'music',
+		fee: true
 	},
 	{
 		id: 11,
@@ -108,6 +119,7 @@ export const events: Event[] = [
 		date: new CalendarDate(2024, 12, 25),
 		location: 'Myeong-dong, Seoul',
 		category: 'social',
-		type: 'public'
+		type: 'public',
+		fee: false
 	}
 ] as const; 

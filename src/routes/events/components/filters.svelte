@@ -47,7 +47,7 @@
 			<CardTitle>Filters</CardTitle>
 		</CardHeader>
 		
-		<CardContent class="flex flex-col gap-4 md:flex-row">
+		<CardContent class="flex flex-col gap-4">
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="category-select">Category</label>
 				<Select.Root

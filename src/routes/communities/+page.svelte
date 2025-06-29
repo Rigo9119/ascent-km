@@ -41,6 +41,14 @@ const communities = [
 ];
 </script>
 
+<svelte:head>
+  <title>Communities | Meet in Korea</title>
+	<meta
+		name="description"
+		content="a wonderfull page where you can find all the info to meet people and visit places in South Korea"
+	/>
+</svelte:head>
+
 <div class="mx-auto max-w-7xl p-6">
   <h2 class="mb-6 text-3xl font-bold">Communities</h2>
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

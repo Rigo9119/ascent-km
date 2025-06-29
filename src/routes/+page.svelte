@@ -73,6 +73,37 @@
 			image: 'https://source.unsplash.com/random/800x600?street'
 		}
 	];
+
+	const mockCommunityItems = [
+		{
+			id: 1,
+			name: 'K-Pop Fans Seoul',
+			address: 'Online & Seoul',
+			description: 'A vibrant community for K-Pop lovers to share news, music, and organize meetups.',
+			image: 'https://source.unsplash.com/random/800x600?kpop'
+		},
+		{
+			id: 2,
+			name: 'Korean Foodies',
+			address: 'Seoul & Busan',
+			description: 'Discover and share the best Korean food spots, recipes, and culinary experiences.',
+			image: 'https://source.unsplash.com/random/800x600?korean-food'
+		},
+		{
+			id: 3,
+			name: 'Language Exchange Korea',
+			address: 'Various locations',
+			description: 'Practice Korean and English with friendly members in a supportive environment.',
+			image: 'https://source.unsplash.com/random/800x600?language'
+		},
+		{
+			id: 4,
+			name: 'Seoul Explorers',
+			address: 'Seoul',
+			description: 'Join us to explore hidden gems and famous spots in Seoul with fellow adventurers.',
+			image: 'https://source.unsplash.com/random/800x600?seoul'
+		},
+	];
 </script>
 
 <svelte:head>
@@ -84,7 +115,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-7xl p-6">
-	<h1 class="py-4 text-5xl font-bold">Incredible page</h1>
+	<h1 class="py-4 text-4xl font-bold">Incredible page</h1>
 
 	<!-- Search Section -->
 	<section class="my-8">
@@ -125,4 +156,6 @@
 
 	<TrendingSection sectionTitle="Top locations" sectionItems={mockCarouselItems} />
 	<TrendingSection sectionTitle="Trending events" sectionItems={mockCarouselItems} />
+	<TrendingSection sectionTitle="Popular communities" sectionItems={mockCommunityItems} />
+	
 </div>
