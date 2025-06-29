@@ -7,6 +7,7 @@
 	import Heart from '@lucide/svelte/icons/heart'
 	import History from '@lucide/svelte/icons/history';
 	import Settings from '@lucide/svelte/icons/settings';
+	import BookOpen from '@lucide/svelte/icons/book-open';
 	import Skeleton from './skeleton.svelte';
 	import { user } from '$lib/stores/user';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
@@ -50,6 +51,11 @@
 			title: 'Communities',
 			url: '/communities',
 			icon: Handshake
+		},
+		{
+			title: 'Blog',
+			url: '/blog',
+			icon: BookOpen
 		}
 	];
 

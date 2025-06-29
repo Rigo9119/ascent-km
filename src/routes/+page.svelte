@@ -114,35 +114,35 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto max-w-7xl p-6">
-	<h1 class="py-4 text-4xl font-bold">Incredible page</h1>
+<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
+	<h1 class="py-2 text-2xl font-bold sm:py-4 sm:text-3xl md:text-4xl lg:text-5xl">Meet in Korea</h1>
 
 	<!-- Search Section -->
-	<section class="my-8">
+	<section class="my-4 sm:my-6 md:my-8">
 		<div class="relative">
-			<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-			<Input bind:value={searchQuery} placeholder="Search for events, locations and communities" class="pl-10 text-lg" />
+			<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
+			<Input bind:value={searchQuery} placeholder="Search for events, locations and communities" class="pl-8 sm:pl-10 text-base sm:text-lg" />
 		</div>
 
 		{#if (searchResults ?? []).length > 0}
-			<Card class="mt-4">
-				<CardHeader>
-					<CardTitle>Search Results</CardTitle>
+			<Card class="mt-3 sm:mt-4">
+				<CardHeader class="pb-3 sm:pb-4">
+					<CardTitle class="text-lg sm:text-xl">Search Results</CardTitle>
 				</CardHeader>
-				<CardContent class="grid gap-4">
+				<CardContent class="grid gap-3 sm:gap-4">
 					{#each searchResults as result (result)}
 						{@const item = result as any}
 						{#if item.type === 'event'}
-							<a href={'/events'} class="block p-4 rounded-lg hover:bg-muted">
-								<h3 class="font-semibold">{item.title}</h3>
-								<p class="text-sm text-muted-foreground">{item.description}</p>
-								<span class="text-xs font-bold uppercase text-primary">Event</span>
+							<a href={'/events'} class="block p-3 sm:p-4 rounded-lg hover:bg-muted transition-colors">
+								<h3 class="font-semibold text-sm sm:text-base">{item.title}</h3>
+								<p class="text-xs sm:text-sm text-muted-foreground mt-1">{item.description}</p>
+								<span class="text-xs font-bold uppercase text-primary mt-2 inline-block">Event</span>
 							</a>
 						{:else if item.type === 'location'}
-							<a href={'/locations'} class="block p-4 rounded-lg hover:bg-muted">
-								<h3 class="font-semibold">{item.name}</h3>
-								<p class="text-sm text-muted-foreground">{item.description}</p>
-								<span class="text-xs font-bold uppercase text-primary">Location</span>
+							<a href={'/locations'} class="block p-3 sm:p-4 rounded-lg hover:bg-muted transition-colors">
+								<h3 class="font-semibold text-sm sm:text-base">{item.name}</h3>
+								<p class="text-xs sm:text-sm text-muted-foreground mt-1">{item.description}</p>
+								<span class="text-xs font-bold uppercase text-primary mt-2 inline-block">Location</span>
 							</a>
 						{/if}
 					{/each}
