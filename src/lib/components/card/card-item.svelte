@@ -11,7 +11,7 @@
 		// Implement favorite logic here
 		console.log('Favorited:', item.name);
 	}
-
+console.log('item: ', cardItem)
 	function viewDetails(itemId: string | number) {
 		goto(`/locations/${itemId}`);
 	}
