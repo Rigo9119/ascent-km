@@ -9,7 +9,7 @@
 </script>
 
 <section class="py-2">
-	<h2 class="py-2 text-2xl font-semibold">{sectionTitle}</h2>
+	<h2 class="py-6 text-3xl font-semibold ">{sectionTitle}</h2>
 	<div class="w-full">
 		<Carousel.Root
 			opts={{
@@ -27,7 +27,7 @@
 							<Card.Root class="overflow-hidden h-full min-h-[20vh] py-0">
 								<Card.Content class="relative w-full flex items-center justify-center p-0 h-full min-h-[20vh]">
 									<img src={item.image} alt={item.name} class="absolute inset-0 h-full w-full object-cover" />
-									<div class="absolute inset-0 bg-black/40" />
+									<div class="absolute inset-0 bg-black/40"></div>
 									<span class="relative z-10 text-2xl font-bold text-white text-center px-2 drop-shadow-lg">
 										{item.name}
 									</span>

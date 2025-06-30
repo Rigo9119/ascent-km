@@ -24,7 +24,7 @@
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 	<!-- Header Section -->
 	<div class="mb-6 sm:mb-8">
-		<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4">Locations</h1>
+		<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-rose-600">Locations</h1>
 		<p class="text-sm sm:text-base text-muted-foreground">
 			Discover amazing places to visit and meet people in Korea
 		</p>

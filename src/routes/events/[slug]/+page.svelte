@@ -459,7 +459,7 @@
 						{#if currentEvent.website && currentEvent.website !== 'N/A'}
 							<div class="flex items-center gap-3">
 								<Share2 class="h-4 w-4 text-muted-foreground" />
-								<div>
+<div>
 									<p class="text-sm font-medium">Website</p>
 									<a href={currentEvent.website} target="_blank" rel="noopener noreferrer" class="text-sm text-primary hover:underline">
 										Visit Website
@@ -543,5 +543,5 @@
 		<Button.Root onclick={goBack}>
 			Return to Events
 		</Button.Root>
-	</div>
+</div>
 {/if}
