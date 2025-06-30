@@ -2,14 +2,20 @@
 	import * as Sidebar from '@/lib/components/ui/sidebar/index';
 	import '../app.css';
 	import AppSidebar from '@/lib/components/app-sidebar/app-sidebar.svelte';
+	import type { LayoutData } from './$types';
+	import { setContext } from 'svelte';
 
-	let { children } = $props();
+	export let data: LayoutData;
+
+	$: ({ supabase, session } = data);
+
+	setContext('supabase', supabase);
 </script>
 
 <Sidebar.Provider>
-	<AppSidebar />
+	<AppSidebar {session} />
 	<main class="w-full p-2">
 		<Sidebar.Trigger />
-		{@render children()}
+		<slot />
 	</main>
 </Sidebar.Provider>

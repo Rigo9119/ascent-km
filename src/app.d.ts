@@ -1,13 +1,13 @@
-// See https://svelte.dev/docs/kit/types#app.d.ts
+// See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: import('@supabase/supabase-js').User | null;
+			supabase: import('@supabase/supabase-js').SupabaseClient;
+			getSession(): Promise<import('@supabase/supabase-js').Session | null>;
 		}
 		// interface PageData {}
-		// interface PageState {}
 		// interface Platform {}
 	}
 }

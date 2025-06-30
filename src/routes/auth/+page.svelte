@@ -1,14 +1,15 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { createForm, Field } from '@tanstack/svelte-form';
-	import { authSchema, type AuthValues } from '$lib/schemas/auth';
-	import Loader2 from '@lucide/svelte/icons/loader';
-	import { browser } from '$app/environment';
-	import type { AuthError } from '@supabase/supabase-js';
+	import { createForm } from '@tanstack/svelte-form';
+	import { authSchema } from '$lib/schemas/auth';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
+	import type { PageData } from './$types';
+	import { browser } from '$app/environment';
+
+	export let data: PageData;
+	$: ({ supabase } = data);
 
 	$: mode = $page.url.searchParams.get('mode') === 'signup' ? 'signup' : 'login';
 	let isLoading = false;
@@ -33,8 +34,7 @@
 						password
 					});
 					if (signInError) throw signInError;
-					await invalidateAll();
-					goto('/');
+					goto('/', { invalidateAll: true });
 				} else {
 					const { error: signUpError, data } = await supabase.auth.signUp({
 						email,

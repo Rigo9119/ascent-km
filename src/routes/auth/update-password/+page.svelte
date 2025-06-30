@@ -1,12 +1,13 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
-	import { createForm, Field } from '@tanstack/svelte-form';
+	import { createForm } from '@tanstack/svelte-form';
 	import { z } from 'zod';
-	import Loader2 from '@lucide/svelte/icons/loader';
 	import { goto } from '$app/navigation';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
-	import { file } from 'zod/v4';
 	import Button from '@/lib/components/ui/button/button.svelte';
+	import type { PageData } from '../$types';
+
+	export let data: PageData;
+	$: ({ supabase } = data);
 
 	const updateSchema = z
 		.object({
@@ -44,7 +45,7 @@
 				if (updateError) throw updateError;
 
 				// Redirect to login page after successful password update
-				goto('/auth?mode=login');
+				await goto('/auth?mode=login', { invalidateAll: true });
 			} catch (e) {
 				if (e instanceof Error) {
 					error = e.message;

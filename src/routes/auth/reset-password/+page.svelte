@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { supabase } from '$lib/supabaseClient';
 	import { createForm } from '@tanstack/svelte-form';
 	import { zodValidator } from '@tanstack/zod-form-adapter';
 	import { z } from 'zod';
 	import Loader2 from '@lucide/svelte/icons/loader';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
+	import type { PageData } from '../$types';
+
+	export let data: PageData;
+	$: ({ supabase } = data);
 
 	const resetSchema = z.object({
 		email: z.string().email('Please enter a valid email')
