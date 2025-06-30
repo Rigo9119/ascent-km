@@ -1,9 +1,11 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { supabase } from '$lib/supabaseClient';
-  import { page } from '$app/stores';
   import { goto } from '$app/navigation';
   import Loader2 from '@lucide/svelte/icons/loader';
+  import type { PageData } from './$types';
+
+  export let data: PageData;
+  $: ({ supabase, url } = data);
 
   let isLoading = true;
   let error = '';
@@ -11,8 +13,8 @@
 
   onMount(async () => {
     try {
-      const token = $page.url.searchParams.get('token');
-      const type = $page.url.searchParams.get('type');
+      const token = url.searchParams.get('token');
+      const type = url.searchParams.get('type');
 
       if (!token || type !== 'email_verification') {
         error = 'Invalid verification link';
