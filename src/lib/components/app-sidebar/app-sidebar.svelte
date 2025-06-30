@@ -128,10 +128,12 @@
 			{#if session === undefined}
 				<!-- Optionally, show a spinner or nothing while loading -->
 			{:else if !session}
-				<Button class="bg-rose-500 hover:bg-rose-600" onclick={handleLogin}>Log in</Button>
-				<Button class="bg-rose-500 hover:bg-rose-600" onclick={handleSignup}>Sign up</Button>
+				<Button href="/auth?mode=login" class="bg-rose-500 hover:bg-rose-600">Log in</Button>
+				<Button href="/auth?mode=signup" class="bg-rose-500 hover:bg-rose-600">Sign up</Button>
 			{:else}
-				<Button class="bg-rose-500 hover:bg-rose-600" onclick={handleLogout}>Log out</Button>
+				<form action="/auth/logout" method="POST">
+					<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600">Log out</Button>
+				</form>
 			{/if}
 		</Sidebar.Footer>
 	</Sidebar.Root>
