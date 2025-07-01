@@ -4,7 +4,7 @@
 	import Button from '@/lib/components/ui/button/button.svelte';
 
 	export let data: PageData;
-	$: ({ session } = data);
+	$: ({ user } = data);
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
@@ -13,7 +13,7 @@
 			<CardTitle>Settings</CardTitle>
 		</CardHeader>
 		<CardContent>
-			{#if session}
+			{#if user}
 				<p>Here you will be able to update your profile information.</p>
 				<!-- TODO: Implement settings form -->
 			{:else}

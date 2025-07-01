@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HouseIcon from '@lucide/svelte/icons/house';
 	import Map from '@lucide/svelte/icons/map';
-	import User from '@lucide/svelte/icons/user';
+	import UserIcon from '@lucide/svelte/icons/user';
 	import Ticket from '@lucide/svelte/icons/ticket';
 	import Handshake from '@lucide/svelte/icons/handshake';
 	import CircleX from '@lucide/svelte/icons/circle-x';
@@ -16,10 +16,10 @@
 	import { browser } from '$app/environment';
 	import MenuItems from './menu-items.svelte';
 	import Separator from '../ui/separator/separator.svelte';
-	import type { Session, SupabaseClient } from '@supabase/supabase-js';
+	import type { SupabaseClient, User } from '@supabase/supabase-js';
 	import { getContext } from 'svelte';
 
-	export let session: Session | null;
+	export let user: User | null;
 
 	const sidebar = Sidebar.useSidebar();
 	const supabase = getContext<SupabaseClient>('supabase');
@@ -71,7 +71,7 @@
 		{
 			title: 'Profile',
 			url: '/profile',
-			icon: User
+			icon: UserIcon
 		},
 		{
 			title: 'Favourites',
@@ -111,9 +111,9 @@
 				</Sidebar.GroupContent>
 			</Sidebar.Group>
 			<Separator />
-			{#if session === undefined}
+			{#if user === undefined}
 				<Skeleton />
-			{:else if session}
+			{:else if user}
 				<Sidebar.Group>
 					<Sidebar.GroupLabel>Profile</Sidebar.GroupLabel>
 					<Sidebar.GroupContent>
@@ -125,9 +125,9 @@
 			{/if}
 		</Sidebar.Content>
 		<Sidebar.Footer>
-			{#if session === undefined}
+			{#if user === undefined}
 				<!-- Optionally, show a spinner or nothing while loading -->
-			{:else if !session}
+			{:else if !user}
 				<Button href="/auth?mode=login" class="bg-rose-500 hover:bg-rose-600">Log in</Button>
 				<Button href="/auth?mode=signup" class="bg-rose-500 hover:bg-rose-600">Sign up</Button>
 			{:else}

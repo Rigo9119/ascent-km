@@ -7,13 +7,13 @@
 
 	export let data: LayoutData;
 
-	$: ({ supabase, session } = data);
+	$: ({ supabase, user } = data);
 
 	setContext('supabase', supabase);
 </script>
 
 <Sidebar.Provider>
-	<AppSidebar {session} />
+	<AppSidebar {user} />
 	<main class="w-full p-2">
 		<Sidebar.Trigger />
 		<slot />

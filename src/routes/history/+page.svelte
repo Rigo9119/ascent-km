@@ -4,7 +4,7 @@
 	import Button from '@/lib/components/ui/button/button.svelte';
 
 	export let data: PageData;
-	$: ({ session } = data);
+	$: ({ user } = data);
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
@@ -13,7 +13,7 @@
 			<CardTitle>My History</CardTitle>
 		</CardHeader>
 		<CardContent>
-			{#if session}
+			{#if user}
 				<p>Your browsing and activity history will appear here.</p>
 				<!-- TODO: Implement history list -->
 			{:else}

@@ -13,7 +13,7 @@
     type: string,
     autocomplete?: FullAutoFill | null | undefined,
     placeholder?: string
-    required: boolean
+    required?: boolean
   }
 
   const { field, label, inputId, type, autocomplete, placeholder, required }: Props = $props()

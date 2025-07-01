@@ -3,10 +3,11 @@
 	import type { PageData } from './$types';
 	import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
 	import { Separator } from '$lib/components/ui/separator';
+	import Button from '@/lib/components/ui/button/button.svelte';
 
 	export let data: PageData;
 
-	$: ({ profile, session } = data);
+	$: ({ profile, user } = data);
 
 	function getInitials(name: string | null | undefined) {
 		if (!name) return '';
@@ -24,7 +25,7 @@
 			<CardTitle>Profile</CardTitle>
 		</CardHeader>
 		<CardContent class="space-y-6">
-			{#if session && profile}
+			{#if user && profile}
 				<div class="flex items-center space-x-4">
 					<Avatar class="h-24 w-24">
 						<AvatarImage src={profile.avatar_url ?? ''} alt="User avatar" />
@@ -32,7 +33,7 @@
 					</Avatar>
 					<div>
 						<h2 class="text-2xl font-bold">{profile.full_name}</h2>
-						<p class="text-muted-foreground">{session.user.email}</p>
+						<p class="text-muted-foreground">{user.email}</p>
 					</div>
 				</div>
 				<Separator />
@@ -46,9 +47,9 @@
 						<p>{profile.phone || 'Not provided'}</p>
 					</div>
 				</div>
-				<div class="mt-4 text-center">
-					<a href="/settings" class="text-blue-500 hover:underline">Edit Profile</a>
-				</div>
+				<Button href="/profile/edit" class="bg-rose-500 hover:bg-rose-600">
+					Edit profile
+				</Button>
 			{:else}
 				<p>You are not logged in or your profile could not be loaded.</p>
 				<a href="/auth" class="text-blue-500 hover:underline"> Login </a>

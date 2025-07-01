@@ -1,9 +1,9 @@
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ parent }) => {
-	const { session, supabase } = await parent();
+	const { user, supabase } = await parent();
 
-	if (!session) {
+	if (!user) {
 		return {
 			profile: null
 		};
@@ -12,7 +12,7 @@ export const load: PageLoad = async ({ parent }) => {
 	const { data: profile, error } = await supabase
 		.from('profiles')
 		.select('*')
-		.eq('id', session.user.id)
+		.eq('id', user.id)
 		.single();
 
 	if (error) {

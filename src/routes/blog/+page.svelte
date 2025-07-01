@@ -169,10 +169,10 @@
 		{/each}
 	</div>
 
-	<!-- Load More Button -->
+
 	<div class="mt-8 sm:mt-12 text-center">
-		<button class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors">
+		<Button class="inline-flex items-center justify-center rounded-md  bg-rose-500 hover:bg-rose-600 px-4 py-2 text-sm font-medium text-primary-foreground transition-colors">
 			Load More Posts
-		</button>
+		</Button>
 	</div>
 </div> 
