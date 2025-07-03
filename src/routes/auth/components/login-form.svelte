@@ -1,9 +1,16 @@
 <script lang="ts">
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
-	import type { AnyFieldApi, AnyFormState } from '@tanstack/svelte-form';
+	import type { AuthMode } from '@/lib/utils';
+	import type { AnyFieldApi, AnyFormApi, AnyFormState, FormApi } from '@tanstack/svelte-form';
 
-	let { form, mode, isLoading } = $props();
+	type LoginFormProps = {
+		form: any;
+		mode: AuthMode;
+		isLoading: boolean;
+	};
+
+	let { form, mode, isLoading }: LoginFormProps = $props();
 </script>
 
 <form

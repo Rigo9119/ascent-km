@@ -79,11 +79,6 @@
 			icon: Heart
 		},
 		{
-			title: 'History',
-			url: '/history',
-			icon: History
-		},
-		{
 			title: 'Settings',
 			url: '/settings',
 			icon: Settings

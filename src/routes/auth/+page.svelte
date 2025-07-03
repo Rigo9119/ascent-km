@@ -11,8 +11,8 @@
 	import SuccessMessage from './components/success-message.svelte';
 
 	export let data: PageData;
-	$: ({ supabase } = data);
-	$: mode = data.mode;
+	$: ({ supabase, mode } = data);
+
 
 	let isLoading = false;
 	let error = '';
