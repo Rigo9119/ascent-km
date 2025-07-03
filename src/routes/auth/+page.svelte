@@ -12,8 +12,8 @@
 
 	export let data: PageData;
 	$: ({ supabase } = data);
+	$: mode = data.mode;
 
-	export let mode: AuthMode;
 	let isLoading = false;
 	let error = '';
 	let success = false;
