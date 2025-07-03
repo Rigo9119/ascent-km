@@ -1,21 +1,23 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import { createForm } from '@tanstack/svelte-form';
 	import { authSchema } from '$lib/schemas/auth';
-	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import type { PageData } from './$types';
-	import { browser } from '$app/environment';
+	import LoginProviders from './components/login-providers.svelte';
+	import ErrorMessage from './components/error-mesage.svelte';
+	import { authMode, type AuthMode } from '@/lib/utils';
+	import LoginForm from './components/login-form.svelte';
+	import SuccessMessage from './components/success-message.svelte';
 
 	export let data: PageData;
 	$: ({ supabase } = data);
 
-	$: mode = $page.url.searchParams.get('mode') === 'signup' ? 'signup' : 'login';
+	export let mode: AuthMode;
 	let isLoading = false;
 	let error = '';
 	let success = false;
-	// Create form with TanStack Form
+
 	const form = createForm(() => ({
 		defaultValues: {
 			email: '',
@@ -139,151 +141,28 @@
 		<div class="text-center">
 			<h2 class="text-3xl font-bold">{mode === 'login' ? 'Login' : 'Sign Up'}</h2>
 			{#if !success}
-				<p class="mt-2 text-sm text-gray-600">Or continue with</p>
-				<div class="mt-3 flex flex-col justify-center gap-3">
-					<Button
-						type="button"
-						disabled={isLoading}
-						onclick={signInWithGoogle}
-						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
-					>
-						<img src="/google.svg" alt="Google" class="h-5 w-5" />
-						Google
-					</Button>
-					<Button
-						type="button"
-						disabled={isLoading}
-						onclick={signInWithFacebook}
-						class="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
-					>
-						<img src="/facebook.svg" alt="Facebook" class="h-5 w-5" />
-						Facebook
-					</Button>
-					<Button
-						type="button"
-						disabled={isLoading}
-						onclick={signInWithKakao}
-						class="inline-flex items-center justify-center gap-2 rounded-md bg-[#FEE500] px-4 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-yellow-300 disabled:opacity-50"
-					>
-						Kakao
-					</Button>
-				</div>
-				<div class="relative mt-6">
-					<div class="absolute inset-0 flex items-center">
-						<div class="w-full border-t border-gray-300"></div>
-					</div>
-					<div class="relative flex justify-center text-sm">
-						<p class="bg-white px-2 text-gray-500">Or continue with email</p>
-					</div>
-				</div>
+				<LoginProviders {isLoading} {signInWithGoogle} {signInWithFacebook} {signInWithKakao} />
 			{/if}
 		</div>
 
 		{#if success}
-			<div class="rounded-md bg-green-50 p-4">
-				<div class="flex">
-					<div class="flex-shrink-0">
-						<svg class="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-							<path
-								fill-rule="evenodd"
-								d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</div>
-					<div class="ml-3">
-						<p class="text-sm font-medium text-green-800">
-							Please check your email for a verification link to complete your registration.
-						</p>
-					</div>
-				</div>
-			</div>
+			<SuccessMessage />
 		{:else}
-			<form
-				onsubmit={(event) => {
-					event.preventDefault();
-					event.stopPropagation();
-					form.handleSubmit();
-				}}
-
-				class="flex flex-col items-center justify-between gap-2 w-full"
-			>
-				<form.Field name="email">
-					{#snippet children(field)}
-						<FormInput
-							{field}
-							required
-							name="email"
-							label="Email"
-							inputId="email"
-							type="email"
-							autocomplete="email"
-						/>
-					{/snippet}
-				</form.Field>
-				<form.Field name="password">
-					{#snippet children(field)}
-						<FormInput
-							{field}
-							required
-							name="password"
-							label="Password"
-							inputId="password"
-							type="password"
-							autocomplete={mode === 'login' ? 'current-password' : 'new-password'}
-						/>
-					{/snippet}
-				</form.Field>
-				<form.Subscribe
-				selector={(state) => ({
-					canSubmit: state.canSubmit,
-					isSubmitting: state.isSubmitting
-				})}
-			>
-				{#snippet children({ canSubmit, isSubmitting })}
-					<Button type="submit" class="w-full">
-						{isLoading ? 'Loading...' : (mode === 'login' ? 'Login' : 'Sign Up')}
-					</Button>
-				{/snippet}
-			</form.Subscribe>
-			</form>
+			<LoginForm {form} {mode} {isLoading} />
 		{/if}
 
 		<div class="mt-4 text-center">
 			<Button
-        variant="ghost"
+				variant="ghost"
 				class="text-sm text-indigo-600 hover:text-indigo-500"
-				onclick={() => {
-					mode = mode === 'login' ? 'signup' : 'login';
-					if (browser) {
-						const url = new URL(window.location.href);
-						url.searchParams.set('mode', mode);
-						window.history.replaceState({}, '', url.toString());
-					}
-				}}
+				onclick={() => authMode(mode as unknown as AuthMode)}
 			>
 				{mode === 'login' ? 'Need an account? Sign Up' : 'Already have an account? Login'}
 			</Button>
 		</div>
 
 		{#if error}
-			<div class="mt-4 rounded-md bg-red-50 p-4">
-				<div class="flex">
-					<div class="flex-shrink-0">
-						<svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-							<path
-								fill-rule="evenodd"
-								d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</div>
-					<div class="ml-3">
-						<p class="text-sm text-red-700">{error}</p>
-					</div>
-				</div>
-			</div>
+			<ErrorMessage {error} />
 		{/if}
 	</div>
 </div>
- 
