@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
-
-	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Button from '$lib/components/ui/button/index.js';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import type { AppLocation } from '@/lib/types';
@@ -11,16 +9,16 @@
 	import RelatedItems from '@/lib/components/related-items.svelte';
 	import RightContent from '../components/right-content.svelte';
 	import LeftContent from '../components/left-content.svelte';
+	import type { PageProps } from './$types';
 
-
-
+	let { data }: PageProps = $props();
+	const { locationSlug } = data;
 	// Get the current location based on the slug (ID)
 	let currentLocation = $state<AppLocation | undefined>(undefined);
 	let relatedLocations = $state<AppLocation[]>([]);
 
 	$effect(() => {
-		const locationId = parseInt($page.params.slug);
-		const foundLocation = locations.find((loc) => loc.id === locationId);
+		const foundLocation = locations.find((loc) => loc.id === locationSlug);
 		currentLocation = foundLocation;
 		relatedLocations = foundLocation
 			? locations.filter((loc) => loc.id !== foundLocation.id).slice(0, 3)
