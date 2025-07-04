@@ -54,7 +54,7 @@
 		})}
 	>
 		{#snippet children()}
-			<Button type="submit" class="w-full">
+			<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600">
 				{isLoading ? 'Loading...' : mode === 'login' ? 'Login' : 'Sign Up'}
 			</Button>
 		{/snippet}

@@ -2,15 +2,14 @@
 	import { GoogleMap } from '@beyonk/svelte-googlemaps';
 
 	import CardItem from '$lib/components/card/card-item.svelte';
-	import { locations } from '$lib/data/locations';
+
+	import type { AppLocation } from '@/lib/types';
+
+	export let data : { locations: AppLocation[] };
+
+	const { locations } = data;
 
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
-
-	// Add a fallback image to each location if missing
-	const locationsWithImages = locations.map((loc) => ({
-		...loc,
-		image: loc.image || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80'
-	}));
 </script>
 
 <svelte:head>
@@ -47,7 +46,7 @@
 	<section>
 		<h2 class="text-xl font-semibold sm:text-2xl md:text-3xl mb-4 sm:mb-6">Popular Locations</h2>
 		<ul class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6">
-			{#each locationsWithImages as location (location.id)}
+			{#each locations as location (location.id)}
 				<li>
 					<CardItem cardItem={location} urlSection="locations"/>
 				</li>

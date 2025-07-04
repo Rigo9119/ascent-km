@@ -1,6 +1,7 @@
 <script lang="ts">
   export let item_id: string;
   export let item_type: 'event' | 'community' | 'location';
+  
   let error = '';
   let success = false;
 
