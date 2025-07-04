@@ -1,7 +1,10 @@
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, locals }) => {
+export const load: PageServerLoad = async ({ params, locals, url }) => {
 	const locationSlug = Number(params.slug);
+	const pathname = url.pathname;
+	const urlSegments = pathname.split('/').filter(Boolean);
+
 	const { supabase } = locals
 
   const { data: locations, error } = await supabase
@@ -17,5 +20,5 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	? locations.filter((loc) => loc.id !== currentLocation.id).slice(0, 3)
 	: []
   
-	return { currentLocation, relatedLocations };
+	return { currentLocation, relatedLocations, urlSegments, locationSlug };
 };

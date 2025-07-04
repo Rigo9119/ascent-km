@@ -10,7 +10,7 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-	const { currentLocation, relatedLocations } = data;
+	const { currentLocation, relatedLocations, urlSegments } = data;
 
 	// Handle back navigation
 	function goBack() {
@@ -76,6 +76,9 @@
 
 	<!-- Related Locations -->
 	{#if relatedLocations.length > 0}
-		<RelatedItems relatedItems={relatedLocations as AppLocation[]} />
+		<RelatedItems
+			relatedItems={relatedLocations as AppLocation[]}
+			urlSegment={urlSegments[0]}
+		/>
 	{/if}
 </div>

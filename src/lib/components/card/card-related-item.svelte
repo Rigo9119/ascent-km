@@ -7,10 +7,10 @@
 	import { getCategoryColor } from '@/lib/utils';
 	import type { AppEvent, AppLocation, Item } from '@/lib/types';
 
-	const { relatedItem, goTo }: { relatedItem: AppEvent | AppLocation; goTo: string } = $props();
+	const { relatedItem, urlSegment }: { relatedItem: AppEvent | AppLocation; urlSegment: string } = $props();
 
 	function go() {
-		goto(goTo);
+		goto(`/${urlSegment}/${relatedItem.id}`);
 		//goto(`/locations/${location.id}`)
 	}
 </script>

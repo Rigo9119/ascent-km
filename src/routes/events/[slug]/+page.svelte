@@ -15,18 +15,14 @@
 	import type { AppEvent } from '@/lib/types';
 	import { getCategoryColor, getTypeColor, getFeeColor } from '@/lib/utils';
 	import RelatedItems from '@/lib/components/related-items.svelte';
+	import type { PageProps } from './$types';
 
-	interface EventPageProps {
-		data: { appEvent: AppEvent }
-	}
-
-	let { data }: EventPageProps= $props();
-	const { appEvent } = data
+	let { data }: PageProps= $props();
+	const { appEvent, urlSegments } = data;
 
 	let currentEvent = $state<AppEvent | undefined>({} as AppEvent);
 	let relatedEvents = $state<AppEvent[]>([] as AppEvent[]);
 	
-
 	$effect(() => {
 		currentEvent = appEvent;
 		relatedEvents = enhancedEvents.filter((event) => event.id !== appEvent.id).slice(0, 3);
@@ -294,6 +290,6 @@
 
 	<!-- Related Events -->
 	{#if relatedEvents.length > 0}
-		<RelatedItems relatedItems={relatedEvents as AppEvent[]} />
+		<RelatedItems relatedItems={relatedEvents as AppEvent[]} urlSegment={urlSegments[0]}/>
 	{/if}
 </div>

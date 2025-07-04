@@ -1,9 +1,10 @@
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { enhancedEvents } from '$lib/data/events';
-import type { AppEvent } from '$lib/types';
 
-export const load: PageLoad = async ({ params }): Promise<{ appEvent: AppEvent }> => {
+export const load: PageServerLoad = async ({ params, url }) => {
+	const pathname = url.pathname;
+	const urlSegments = pathname.split('/').filter(Boolean);
 
 	const appEvent = enhancedEvents.find((event) => event.id === Number(params.slug));
 
@@ -11,5 +12,5 @@ export const load: PageLoad = async ({ params }): Promise<{ appEvent: AppEvent }
 		throw error(404, 'Event not found');
 	}
 
-	return { appEvent };
+	return { appEvent, urlSegments };
 };
