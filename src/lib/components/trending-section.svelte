@@ -1,13 +1,9 @@
 <script lang="ts">
+	import type { AppEvent, AppLocation, Item } from '../types';
 	import CardItem from './card/card-item.svelte';
 
-	export interface Item {
-		id: string | number;
-		name: string;
-		address: string;
-		description: string;
-		image: string;
-	}
+
+
 
 	const {
 		sectionTitle,

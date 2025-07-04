@@ -14,6 +14,7 @@
 	import { enhancedEvents } from '$lib/data/events';
 	import type { AppEvent } from '@/lib/types';
 	import { getCategoryColor, getTypeColor, getFeeColor } from '@/lib/utils';
+	import RelatedItems from '@/lib/components/related-items.svelte';
 
 	interface EventPageProps {
 		data: { appEvent: AppEvent }
@@ -39,7 +40,7 @@
 	function shareEvent() {
 		if (navigator.share && currentEvent) {
 			navigator.share({
-				title: currentEvent.title,
+				title: currentEvent.name,
 				text: currentEvent.description,
 				url: window.location.href
 			});
@@ -51,20 +52,20 @@
 	}
 
 	function toggleFavorite() {
-		console.log('Toggled favorite for:', currentEvent?.title);
+		console.log('Toggled favorite for:', currentEvent?.name);
 	}
 
 	function registerForEvent() {
 		if (currentEvent) {
-			console.log('Registering for event:', currentEvent.title);
+			console.log('Registering for event:', currentEvent.name);
 
-			alert(`Registration for ${currentEvent.title} would open here!`);
+			alert(`Registration for ${currentEvent.name} would open here!`);
 		}
 	}
 </script>
 
 <svelte:head>
-	<title>{currentEvent?.title || 'Event'} | Meet in Korea</title>
+	<title>{currentEvent?.name || 'Event'} | Meet in Korea</title>
 	<meta
 		name="description"
 		content={currentEvent?.description || 'Discover exciting events happening in Korea'}
@@ -85,7 +86,7 @@
 		<div class="relative aspect-[2/1] overflow-hidden rounded-lg">
 			<img
 				src={currentEvent?.image || 'https://source.unsplash.com/random/1200x600?event'}
-				alt={currentEvent?.title}
+				alt={currentEvent?.name}
 				class="h-full w-full object-cover"
 			/>
 			<div class="absolute inset-0 bg-black/20"></div>
@@ -108,7 +109,7 @@
 					</span>
 				</div>
 				<h1 class="mb-2 text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl">
-					{currentEvent?.title}
+					{currentEvent?.name}
 				</h1>
 				<div class="flex items-center gap-4 text-white/90">
 					<div class="flex items-center gap-2">
@@ -293,60 +294,6 @@
 
 	<!-- Related Events -->
 	{#if relatedEvents.length > 0}
-		<section class="mt-12 border-t pt-8 sm:mt-16 sm:pt-12">
-			<h2 class="mb-6 text-xl font-semibold sm:mb-8 sm:text-2xl">Other Events You Might Like</h2>
-			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-				{#each relatedEvents as event (event.id)}
-					<Card.Root
-						class="group cursor-pointer overflow-hidden transition-all duration-200 hover:shadow-lg"
-						onclick={() => goto(`/events/${event.id}`)}
-					>
-						<Card.Content class="p-0">
-							<!-- Image -->
-							<div class="relative aspect-[4/3] overflow-hidden">
-								<img
-									src={event.image || 'https://source.unsplash.com/random/800x600?event'}
-									alt={event.title}
-									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-								/>
-								<div class="absolute top-2 left-2">
-									<span
-										class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(
-											event.category
-										)}"
-									>
-										{event.category.charAt(0).toUpperCase() + event.category.slice(1)}
-									</span>
-								</div>
-							</div>
-
-							<!-- Content -->
-							<div class="p-4">
-								<h3
-									class="group-hover:text-primary mb-2 line-clamp-2 text-base font-semibold transition-colors sm:text-lg"
-								>
-									{event.title}
-								</h3>
-								<p class="text-muted-foreground mb-3 line-clamp-2 text-sm">
-									{event.description}
-								</p>
-
-								<!-- Date and Location -->
-								<div class="text-muted-foreground flex items-center justify-between text-xs">
-									<div class="flex items-center gap-1">
-										<Calendar class="h-3 w-3" />
-										<span>{format(new Date(event.date), 'MMM do')}</span>
-									</div>
-									<div class="flex items-center gap-1">
-										<MapPin class="h-3 w-3" />
-										<span class="line-clamp-1">{event.location}</span>
-									</div>
-								</div>
-							</div>
-						</Card.Content>
-					</Card.Root>
-				{/each}
-			</div>
-		</section>
+		<RelatedItems relatedItems={relatedEvents as AppEvent[]} />
 	{/if}
 </div>
