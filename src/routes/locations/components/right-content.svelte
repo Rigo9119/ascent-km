@@ -7,6 +7,7 @@
 	import Phone from '@lucide/svelte/icons/phone';
 	import Globe from '@lucide/svelte/icons/globe';
 	import type { AppLocation } from '@/lib/types';
+	//import { DateFormatter, Time } from '@internationalized/date';
 
 	interface RightContentProps {
 		shareLocation: () => void;
@@ -14,7 +15,15 @@
 		currentLocation: AppLocation;
 	}
 
-	const { shareLocation, toggleFavorite, currentLocation } = $props();
+	const { shareLocation, toggleFavorite, currentLocation }: RightContentProps = $props();
+
+	function formatHours(hour: number) {
+		const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+		const ampm = hour < 12 ? 'AM' : 'PM';
+		return `${hour12}:00 ${ampm}`;
+	}
+
+	console.log('formatHours: ', formatHours(9));
 </script>
 
 <div class="space-y-6 sm:space-y-8">
@@ -34,17 +43,17 @@
 			<Card.Title>Information</Card.Title>
 		</Card.Header>
 		<Card.Content class="space-y-4">
-			{#if currentLocation?.openHour}
-				<div class="flex items-center gap-3">
-					<Clock class="text-muted-foreground h-4 w-4" />
-					<div>
-						<p class="text-sm font-medium">Hours</p>
-						<p class="text-muted-foreground text-sm">
-							{currentLocation.openHour} - {currentLocation.closeHour}
-						</p>
-					</div>
+			<div class="flex items-center gap-3">
+				<Clock class="text-muted-foreground h-4 w-4" />
+				<div>
+					<p class="text-sm font-medium">Hours</p>
+					<p class="text-muted-foreground text-sm">
+						{currentLocation.open_hour ? formatHours(currentLocation.open_hour) : 'N/A'} - {currentLocation.close_hour
+							? formatHours(currentLocation.close_hour)
+							: 'N/A'}
+					</p>
 				</div>
-			{/if}
+			</div>
 
 			{#if currentLocation?.phone}
 				<div class="flex items-center gap-3">
@@ -83,12 +92,12 @@
 				</div>
 			{/if}
 
-			{#if currentLocation?.bestTime}
+			{#if currentLocation?.best_time}
 				<div class="flex items-center gap-3">
 					<Clock class="text-muted-foreground h-4 w-4" />
 					<div>
 						<p class="text-sm font-medium">Best Time to Visit</p>
-						<p class="text-muted-foreground text-sm">{currentLocation.bestTime}</p>
+						<p class="text-muted-foreground text-sm">{currentLocation.best_time}</p>
 					</div>
 				</div>
 			{/if}

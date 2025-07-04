@@ -1,5 +1,3 @@
-import type { Time } from "@internationalized/date";
-
 export type Item = AppEvent | AppLocation;
 
 export type AppEvent = {
@@ -31,13 +29,13 @@ export type AppLocation = {
 	lat: number;
 	lng: number;
 	image?: string;
-	openHour?: Time;
-	closeHour?: Time;
-	daysOpen?: string | null;
+	open_hour?: number;
+	close_hour?: number;
+	days_open?: string | null;
 	phone?: string;
 	website?: string;
 	tags?: string[];
 	price?: string;
-	bestTime?: string;
+	best_time?: string;
 	tips?: string[];
 }
