@@ -17,6 +17,7 @@
 
 	const { shareLocation, toggleFavorite, currentLocation }: RightContentProps = $props();
 
+  // TODO: research how to format the hour using internationalized/date library
 	function formatHours(hour: number) {
 		const hour12 = hour % 12 === 0 ? 12 : hour % 12;
 		const ampm = hour < 12 ? 'AM' : 'PM';
