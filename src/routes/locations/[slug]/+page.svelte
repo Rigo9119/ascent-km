@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import * as Button from '$lib/components/ui/button/index.js';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import type { AppLocation } from '@/lib/types';
-	import { locations } from '@/lib/data/locations';
 	import HeroLocationsSlug from '@/routes/locations/components/hero-locations-slug.svelte';
 	import RelatedItems from '@/lib/components/related-items.svelte';
 	import RightContent from '../components/right-content.svelte';
@@ -12,18 +10,7 @@
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
-	const { locationSlug } = data;
-	// Get the current location based on the slug (ID)
-	let currentLocation = $state<AppLocation | undefined>(undefined);
-	let relatedLocations = $state<AppLocation[]>([]);
-
-	$effect(() => {
-		const foundLocation = locations.find((loc) => loc.id === locationSlug);
-		currentLocation = foundLocation;
-		relatedLocations = foundLocation
-			? locations.filter((loc) => loc.id !== foundLocation.id).slice(0, 3)
-			: [];
-	});
+	const { currentLocation, relatedLocations } = data;
 
 	// Handle back navigation
 	function goBack() {
@@ -81,7 +68,7 @@
 	<!-- Main Content Grid -->
 	<div class="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3">
 		<!-- Left Column - Main Content -->
-		<LeftContent currentLocation={currentLocation as AppLocation}/>
+		<LeftContent currentLocation={currentLocation as AppLocation} />
 
 		<!-- Right Column - Sidebar -->
 		<RightContent {shareLocation} {toggleFavorite} {currentLocation} />
