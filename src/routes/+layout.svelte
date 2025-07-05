@@ -9,11 +9,10 @@
 
 	export let data: LayoutData;
 
-	$: ({ supabase, user, pathname, urlSegments } = data);
+	$: ({ supabase, user, urlSegments } = data);
 
 	setContext('supabase', supabase);
 
-	// Generate breadcrumbs from current path
 	$: breadcrumbs = urlSegments.map((segment: string, index: number, array: string[]) => ({
 		label: segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' '),
 		href: '/' + array.slice(0, index + 1).join('/'),
