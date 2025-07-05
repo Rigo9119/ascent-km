@@ -1,6 +1,6 @@
 import type { Component } from "svelte";
 
-export type Item = AppEvent | AppLocation;
+export type Item = AppEvent | AppLocation | Community;
 
 export type AppEvent = {
 	id: number;
@@ -42,6 +42,14 @@ export type AppLocation = {
 	tips?: string[];
 }
 
+export type Community = {
+	id: number,
+	name: string,
+	description: string,
+	image: string,
+	address: string
+}
+
 export type Resource = {
 	title: string;
 	description: string;
@@ -50,3 +58,4 @@ export type Resource = {
 	icon: Component;
 	badge?: string;
 }
+

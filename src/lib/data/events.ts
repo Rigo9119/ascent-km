@@ -1,23 +1,11 @@
-import { CalendarDate, getLocalTimeZone, type DateValue } from "@internationalized/date";
 import type { AppEvent } from "../types";
 
-export type Event = 	{
-	id: number,
-	title: string,
-	description: string,
-	date: DateValue,
-	location: string,
-	category: string,
-	type: string,
-	fee: boolean
-};
-
-export const events: Event[] = [
+export const events: AppEvent[] = [
 	{
 		id: 1,
-		title: 'Seoul Lantern Festival',
+		name: 'Seoul Lantern Festival',
 		description: 'A festival of lights on the Cheonggyecheon Stream.',
-		date: new CalendarDate(2024, 11, 1),
+		date: new Date(2024, 10, 1), // November 1, 2024
 		location: 'Cheonggyecheon Stream, Seoul',
 		category: 'cultural',
 		type: 'public',
@@ -25,9 +13,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 2,
-		title: 'Korean BBQ Meetup',
+		name: 'Korean BBQ Meetup',
 		description: 'Join us for an authentic Korean BBQ experience and meet new people',
-		date: new CalendarDate(2024, 3, 20), // April 20, 2024
+		date: new Date(2024, 3, 20), // April 20, 2024
 		location: 'Gangnam District, Seoul',
 		type: 'private',
 		category: 'food',
@@ -35,9 +23,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 3,
-		title: 'K-Pop Dance Workshop',
+		name: 'K-Pop Dance Workshop',
 		description: 'Learn the latest K-pop dance moves with professional instructors',
-		date: new CalendarDate(2024, 3, 25), // April 25, 2024
+		date: new Date(2024, 3, 25), // April 25, 2024
 		location: 'Hongdae, Seoul',
 		type: 'public',
 		category: 'music',
@@ -45,9 +33,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 4,
-		title: 'Busan International Film Festival',
+		name: 'Busan International Film Festival',
 		description: 'Attend Asia\'s most prestigious film festival',
-		date: new CalendarDate(2024, 9, 5), // October 5, 2024
+		date: new Date(2024, 9, 5), // October 5, 2024
 		location: 'Busan Cinema Center',
 		type: 'public',
 		category: 'cultural',
@@ -55,9 +43,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 5,
-		title: 'Seoul Marathon',
+		name: 'Seoul Marathon',
 		description: 'Run through the beautiful streets of Seoul in this annual marathon',
-		date: new CalendarDate(2024, 2, 17), // March 17, 2024
+		date: new Date(2024, 2, 17), // March 17, 2024
 		location: 'Seoul Olympic Stadium',
 		type: 'public',
 		category: 'sports',
@@ -65,9 +53,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 6,
-		title: 'Tech Startup Meetup',
+		name: 'Tech Startup Meetup',
 		description: 'Network with Korean tech entrepreneurs and investors',
-		date: new CalendarDate(2024, 4, 10), // May 10, 2024
+		date: new Date(2024, 4, 10), // May 10, 2024
 		location: 'Gangnam Startup Hub',
 		type: 'private',
 		category: 'technology',
@@ -75,9 +63,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 7,
-		title: 'Traditional Hanbok Experience',
+		name: 'Traditional Hanbok Experience',
 		description: 'Try on traditional Korean hanbok and take photos at Gyeongbokgung',
-		date: new CalendarDate(2024, 5, 8), // June 8, 2024
+		date: new Date(2024, 5, 8), // June 8, 2024
 		location: 'Gyeongbokgung Palace, Seoul',
 		type: 'public',
 		category: 'cultural',
@@ -85,9 +73,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 8,
-		title: 'Language Exchange Meetup',
+		name: 'Language Exchange Meetup',
 		description: 'Practice Korean and English with native speakers',
-		date: new CalendarDate(2024, 4, 15), // May 15, 2024
+		date: new Date(2024, 4, 15), // May 15, 2024
 		location: 'Itaewon, Seoul',
 		type: 'private',
 		category: 'social',
@@ -95,9 +83,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 9,
-		title: 'Korean Street Food Tour',
+		name: 'Korean Street Food Tour',
 		description: 'Explore the best street food in Myeongdong with a local guide',
-		date: new CalendarDate(2024, 6, 12), // July 12, 2024
+		date: new Date(2024, 6, 12), // July 12, 2024
 		location: 'Myeongdong, Seoul',
 		type: 'public',
 		category: 'food',
@@ -105,9 +93,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 10,
-		title: 'BTS Concert',
+		name: 'BTS Concert',
 		description: 'Experience the biggest K-pop group live in concert',
-		date: new CalendarDate(2024, 8, 20), // September 20, 2024
+		date: new Date(2024, 8, 20), // September 20, 2024
 		location: 'Olympic Stadium, Seoul',
 		type: 'public',
 		category: 'music',
@@ -115,9 +103,9 @@ export const events: Event[] = [
 	},
 	{
 		id: 11,
-		title: 'Christmas Market',
+		name: 'Christmas Market',
 		description: 'Celebrate Christmas with a festive market in Myeong-dong',
-		date: new CalendarDate(2024, 12, 25),
+		date: new Date(2024, 11, 25), // December 25, 2024
 		location: 'Myeong-dong, Seoul',
 		category: 'social',
 		type: 'public',
@@ -128,9 +116,9 @@ export const events: Event[] = [
 export const enhancedEvents: AppEvent[] = [
 	{
 		id: 1,
-		title: 'Seoul Lantern Festival',
+		name: 'Seoul Lantern Festival',
 		description: 'A festival of lights on the Cheonggyecheon Stream.',
-		date: events[0].date.toDate(getLocalTimeZone()),
+		date: new Date(2024, 10, 1), // November 1, 2024
 		location: 'Cheonggyecheon Stream, Seoul',
 		category: 'cultural',
 		type: 'public',
@@ -155,9 +143,9 @@ export const enhancedEvents: AppEvent[] = [
 	},
 	{
 		id: 2,
-		title: 'Korean BBQ Meetup',
+		name: 'Korean BBQ Meetup',
 		description: 'Join us for an authentic Korean BBQ experience and meet new people',
-		date: events[0].date.toDate(getLocalTimeZone()),
+		date: new Date(2024, 3, 20), // April 20, 2024
 		location: 'Gangnam District, Seoul',
 		type: 'private',
 		category: 'food',
@@ -182,9 +170,9 @@ export const enhancedEvents: AppEvent[] = [
 	},
 	{
 		id: 3,
-		title: 'K-Pop Dance Workshop',
+		name: 'K-Pop Dance Workshop',
 		description: 'Learn the latest K-pop dance moves with professional instructors',
-		date: events[0].date.toDate(getLocalTimeZone()),
+		date: new Date(2024, 3, 25), // April 25, 2024
 		location: 'Hongdae, Seoul',
 		type: 'public',
 		category: 'music',
@@ -209,9 +197,9 @@ export const enhancedEvents: AppEvent[] = [
 	},
 	{
 		id: 4,
-		title: 'Busan International Film Festival',
+		name: 'Busan International Film Festival',
 		description: "Attend Asia's most prestigious film festival",
-		date: events[0].date.toDate(getLocalTimeZone()),
+		date: new Date(2024, 9, 5), // October 5, 2024
 		location: 'Busan Cinema Center',
 		type: 'public',
 		category: 'cultural',
@@ -240,9 +228,9 @@ export const enhancedEvents: AppEvent[] = [
 	},
 	{
 		id: 5,
-		title: 'Seoul Marathon',
+		name: 'Seoul Marathon',
 		description: 'Run through the beautiful streets of Seoul in this annual marathon',
-		date: events[0].date.toDate(getLocalTimeZone()),
+		date: new Date(2024, 2, 17), // March 17, 2024
 		location: 'Seoul Olympic Stadium',
 		type: 'public',
 		category: 'sports',

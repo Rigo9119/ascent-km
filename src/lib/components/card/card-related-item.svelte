@@ -5,9 +5,9 @@
 	import * as Card from '$lib/components/ui/card/index.js';
 	import MapPin from '@lucide/svelte/icons/map-pin';
 	import { getCategoryColor } from '@/lib/utils';
-	import type { AppEvent, AppLocation, Item } from '@/lib/types';
+	import type { AppEvent, AppLocation, Community } from '@/lib/types';
 
-	const { relatedItem, urlSegment }: { relatedItem: AppEvent | AppLocation; urlSegment: string } = $props();
+	const { relatedItem, urlSegment }: { relatedItem: AppEvent | AppLocation | Community; urlSegment: string } = $props();
 
 	function go() {
 		goto(`/${urlSegment}/${relatedItem.id}`);

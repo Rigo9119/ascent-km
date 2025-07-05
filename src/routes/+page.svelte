@@ -3,13 +3,14 @@
 	import TrendingSection from '@/lib/components/trending-section.svelte';
 	import { Input } from '$lib/components/ui/input';
 	import SearchIcon from '@lucide/svelte/icons/search';
-	import { events, type Event } from '$lib/data/events';
-	import { locations, type Location } from '$lib/data/locations';
+	import { events} from '$lib/data/events';
+	import { locations, } from '$lib/data/locations';
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
+	import type { AppEvent, AppLocation } from '@/lib/types';
 
 	type SearchResult =
-		| ({ type: 'event' } & Event)
-		| ({ type: 'location' } & Location);
+		| ({ type: 'event' } & AppEvent)
+		| ({ type: 'location' } & AppLocation);
 
 	let searchQuery = $state('');
 
@@ -18,7 +19,7 @@
 		const lowerCaseQuery = searchQuery.toLowerCase();
 		return events.filter(
 			(event) =>
-				event.title.toLowerCase().includes(lowerCaseQuery) ||
+				event.name.toLowerCase().includes(lowerCaseQuery) ||
 				event.description.toLowerCase().includes(lowerCaseQuery)
 		);
 	}) as unknown as Event[];

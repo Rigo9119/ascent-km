@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { AppEvent, AppLocation, Item } from '../types';
+	import type { Item } from '../types';
 	import CardItem from './card/card-item.svelte';
 
 
