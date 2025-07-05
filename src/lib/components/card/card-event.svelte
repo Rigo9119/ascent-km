@@ -12,6 +12,7 @@
 
 	import { format } from 'date-fns';
 	import { Button } from '../ui/button';
+	import Badge from '../ui/badge/badge.svelte';
 
 	let { appEvent } = $props();
 
@@ -31,16 +32,16 @@
 				</CardDescription>
 			</div>
 			<div class="flex flex-col items-end gap-2">
-				<span class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(appEvent.category)}">
+				<Badge class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(appEvent.category)}">
 					{appEvent.category.charAt(0).toUpperCase() + appEvent.category.slice(1)}
-				</span>
+				</Badge>
 				<div class="flex gap-1">
-					<span class="rounded-full px-2 py-1 text-xs font-medium {getTypeColor(appEvent.type)}">
+					<Badge class="rounded-full px-2 py-1 text-xs font-medium {getTypeColor(appEvent.type)}">
 						{appEvent.type.charAt(0).toUpperCase() + appEvent.type.slice(1)}
-					</span>
-					<span class="rounded-full px-2 py-1 text-xs font-medium {getFeeColor(appEvent.fee)}">
+					</Badge>
+					<Badge class="rounded-full px-2 py-1 text-xs font-medium {getFeeColor(appEvent.fee)}">
 						{appEvent.fee ? 'Paid' : 'Free'}
-					</span>
+					</Badge>
 				</div>
 			</div>
 		</div>

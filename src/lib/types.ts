@@ -1,3 +1,5 @@
+import type { Component } from "svelte";
+
 export type Item = AppEvent | AppLocation;
 
 export type AppEvent = {
@@ -38,4 +40,13 @@ export type AppLocation = {
 	price?: string;
 	best_time?: string;
 	tips?: string[];
+}
+
+export type Resource = {
+	title: string;
+	description: string;
+	url: string;
+	category: string;
+	icon: Component;
+	badge?: string;
 }

@@ -6,7 +6,7 @@
 	import Handshake from '@lucide/svelte/icons/handshake';
 	import CircleX from '@lucide/svelte/icons/circle-x';
 	import Heart from '@lucide/svelte/icons/heart';
-	import History from '@lucide/svelte/icons/history';
+	import FileSearch from '@lucide/svelte/icons/file-search';
 	import Settings from '@lucide/svelte/icons/settings';
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import Skeleton from './skeleton.svelte';
@@ -58,6 +58,11 @@
 			title: 'Communities',
 			url: '/communities',
 			icon: Handshake
+		},
+		{
+			title: 'Resources',
+			url: '/resources',
+			icon: FileSearch
 		},
 		{
 			title: 'Blog',
