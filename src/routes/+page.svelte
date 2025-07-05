@@ -115,7 +115,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
-	<h1 class="py-2 text-2xl font-bold sm:py-4 sm:text-3xl md:text-4xl lg:text-5xl text-rose-500">Meet in Korea</h1>
+	<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-rose-600">Meet in Korea</h1>
 
 	<!-- Search Section -->
 	<section class="my-4 sm:my-6 md:my-8">
