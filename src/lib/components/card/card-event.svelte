@@ -26,7 +26,7 @@
 	<CardHeader>
 		<div class="flex items-start justify-between">
 			<div class="flex-1">
-				<CardTitle>{appEvent.title}</CardTitle>
+				<CardTitle>{appEvent.name}</CardTitle>
 				<CardDescription class="mt-2">
 					{format(appEvent.date, 'EEEE, MMMM do, yyyy')} • {appEvent.location}
 				</CardDescription>

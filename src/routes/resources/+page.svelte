@@ -1,7 +1,11 @@
 <script lang="ts">
-	import { resources } from '@/lib/data/resources';
 	import QuickTips from './components/quick-tips.svelte';
 	import ResourceCategories from './components/resource-categories.svelte';
+	import type { Resource } from '@/lib/types';
+
+	export let data: { resources: Resource[] };
+
+	const { resources } = data;
 
 	const categories = [...new Set(resources.map((r) => r.category))];
 

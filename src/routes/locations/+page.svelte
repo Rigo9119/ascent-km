@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { GoogleMap } from '@beyonk/svelte-googlemaps';
-
 	import CardItem from '$lib/components/card/card-item.svelte';
-
 	import type { AppLocation } from '@/lib/types';
 
 	export let data : { locations: AppLocation[] };

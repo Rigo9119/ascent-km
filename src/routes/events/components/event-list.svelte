@@ -3,10 +3,10 @@
 		Card,
 		CardContent,
 	} from '$lib/components/ui/card';
-	import type { Event } from '$lib/data/events';
 	import CardEvent from '@/lib/components/card/card-event.svelte';
+	import type { AppEvent } from '@/lib/types';
 
-	let { filteredEvents } = $props<{ filteredEvents: Event[] }>();
+	let { filteredEvents } = $props<{ filteredEvents: AppEvent[] }>();
 </script>
 
 <div class="mb-6 flex items-center justify-between">

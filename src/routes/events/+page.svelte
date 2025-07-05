@@ -16,7 +16,8 @@
 	let filteredEvents = $derived(
 		events.filter((event) => {
 			const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-			const matchesDate = !dateValue || isSameDay(event.date, dateValue);
+			const eventDate = new CalendarDate(event.date.getFullYear(), event.date.getMonth() + 1, event.date.getDate());
+			const matchesDate = !dateValue || isSameDay(eventDate, dateValue);
 			const matchesType = selectedType === 'all' || event.type === selectedType;
 			const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
 			return matchesCategory && matchesDate && matchesType && matchesLocation;
