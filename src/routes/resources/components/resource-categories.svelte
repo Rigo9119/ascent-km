@@ -7,6 +7,7 @@
 
   const {categories, getResourcesByCategory, openResource} = $props();
 </script>
+
 <div class="space-y-8">
   {#each categories as category}
     <section>
