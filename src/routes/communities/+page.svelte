@@ -1,6 +1,7 @@
 <script lang="ts">
 import CardItem from '$lib/components/card/card-item.svelte';
-import type { Community } from '@/lib/types';
+	import type { Community } from '@/lib/types';
+
 import type { PageData } from './$types';
 
 const { data }: { data: PageData } = $props();

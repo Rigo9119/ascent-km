@@ -1,10 +1,14 @@
 <script lang="ts">
-	import { events } from '$lib/data/events';
-	import { isSameDay } from '@internationalized/date';
+	import { isSameDay, parseAbsolute, parseAbsoluteToLocal } from '@internationalized/date';
 	import { today, getLocalTimeZone, type DateValue, CalendarDate } from '@internationalized/date';
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
 	import { categories } from '@/lib/data/categories';
+	import { type PageData } from '../$types';
+	import type { AppEvent, AppLocation } from '@/lib/types';
+
+	const { data }: { data: PageData } = $props(); 
+	const { appEvents } = data; 
 
 	let dateValue = $state<DateValue>(null as unknown as DateValue);
 	let selectedCategory: string = $state<string>('all');
@@ -14,9 +18,10 @@
 		$state<{ value: string; label: string }[]>(categories);
 
 	let filteredEvents = $derived(
-		events.filter((event) => {
+		appEvents.filter((event) => {
+			const {year, month, day} = parseAbsoluteToLocal(event.date)
 			const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-			const eventDate = new CalendarDate(event.date.getFullYear(), event.date.getMonth() + 1, event.date.getDate());
+			const eventDate = new CalendarDate(year, month, day);
 			const matchesDate = !dateValue || isSameDay(eventDate, dateValue);
 			const matchesType = selectedType === 'all' || event.type === selectedType;
 			const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
@@ -24,7 +29,8 @@
 		})
 	);
 
-	const uniqueLocations = [...new Set(events.map((event) => event.location))];
+
+	const uniqueLocations = [...new Set(appEvents.map(({ event }: { event: AppEvent}) => event?.name))];
 </script>
 
 <svelte:head>
@@ -56,7 +62,7 @@
 		</div>
 
 		<div class="order-2 lg:order-2">
-			<EventList {filteredEvents} />
+			<EventList filteredEvents={appEvents} />
 		</div>
 	</div>
 </div>

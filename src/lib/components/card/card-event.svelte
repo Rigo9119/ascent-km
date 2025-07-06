@@ -32,16 +32,16 @@
 				</CardDescription>
 			</div>
 			<div class="flex flex-col items-end gap-2">
-				<Badge class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(appEvent.category)}">
+				<!-- <Badge class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(appEvent.category)}">
 					{appEvent.category.charAt(0).toUpperCase() + appEvent.category.slice(1)}
-				</Badge>
+				</Badge> -->
 				<div class="flex gap-1">
-					<Badge class="rounded-full px-2 py-1 text-xs font-medium {getTypeColor(appEvent.type)}">
+					<!-- <Badge class="rounded-full px-2 py-1 text-xs font-medium {getTypeColor(appEvent.type)}">
 						{appEvent.type.charAt(0).toUpperCase() + appEvent.type.slice(1)}
 					</Badge>
 					<Badge class="rounded-full px-2 py-1 text-xs font-medium {getFeeColor(appEvent.fee)}">
 						{appEvent.fee ? 'Paid' : 'Free'}
-					</Badge>
+					</Badge> -->
 				</div>
 			</div>
 		</div>

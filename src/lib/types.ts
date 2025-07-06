@@ -49,20 +49,37 @@ export type AppLocation = {
 	updated_at?: string;
 }
 
-export type Community = {
-	id: string; // UUID
+export interface Community {
+	id: string;
 	name: string;
 	description: string;
-	image?: string;
-	member_count: number;
-	is_public: boolean;
-	is_featured: boolean;
+	image: string;
+	address: string;
+	category: string;
+	memberCount: number;
+	createdDate: string;
+	organizer: string;
+	contact?: string;
+	website?: string;
+	meetingFrequency?: string;
+	nextMeeting?: string;
+	longDescription?: string;
 	tags?: string[];
 	rules?: string[];
-	contact_email?: string;
-	website?: string;
-	created_at?: string;
-	updated_at?: string;
+	upcomingEvents?: Array<{
+		id: number;
+		title: string;
+		date: string;
+		location: string;
+		description: string;
+	}>;
+	recentDiscussions?: Array<{
+		id: number;
+		title: string;
+		author: string;
+		date: string;
+		replies: number;
+	}>;
 }
 
 export type CommunityMember = {
