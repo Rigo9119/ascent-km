@@ -1,6 +1,11 @@
 # Ascent Knowledge Management
 
-A modern knowledge management platform built with SvelteKit, Supabase, and Sanity.
+A modern social and knowledge-sharing platform designed to help foreigners thrive in South Korea.
+
+Ascent connects expats, travelers, and locals with curated events, communities, and essential resources.
+Discover local insights, share your experiences, and find your community—all in one place.
+
+Built with SvelteKit, Supabase, and Sanity for a fast, modern, and scalable experience.
 
 ---
 
