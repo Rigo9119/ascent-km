@@ -11,7 +11,6 @@
 	const events = $derived(data.appEvents as AppEvent[]);
 	const featuredLocations = $derived(data.featuredLocations as AppLocation[]);
 	const trendingEvents = $derived(data.trendingEvents as AppEvent[]);
-	const communities = $derived(data.communities as Community[]);
 	const featuredCommunities = $derived(data.featuredCommunities as Community[]);
 	const carouselLocations = $derived([...locations].sort(() => Math.random() - 0.5));
 	const carouselEvents = $derived([...events].sort(() => Math.random() - 0.5));
@@ -40,11 +39,15 @@
 		sectionItems={featuredLocations}
 		urlSection="locations"
 	/>
-	<TrendingSection
-		sectionTitle="Trending events"
-		sectionItems={trendingEvents}
-		urlSection="events"
-	/>
+
+	{#if trendingEvents.length > 0}	
+		<TrendingSection
+			sectionTitle="Trending events"
+			sectionItems={trendingEvents}
+			urlSection="events"
+			/>
+	{/if}
+	
 	<TrendingSection
 		sectionTitle="Popular communities"
 		sectionItems={featuredCommunities}
