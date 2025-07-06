@@ -154,7 +154,7 @@
 		<div class="mt-4 text-center">
 			<Button
 				variant="ghost"
-				class="text-sm text-indigo-600 hover:text-indigo-500"
+				class="text-sm text-black-600 hover:underline underline-offset-4 cursor-pointer"
 				onclick={() => authMode(mode as unknown as AuthMode)}
 			>
 				{mode === 'login' ? 'Need an account? Sign Up' : 'Already have an account? Login'}

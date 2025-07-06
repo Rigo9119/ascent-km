@@ -23,7 +23,7 @@
 		<Button
 			variant="ghost"
 			size="icon"
-			class="absolute top-2 right-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white"
+			class="absolute top-2 right-2 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white cursor-pointer"
 			onclick={() => handleFavorite(cardItem)}
 		>
 			<Heart class="h-5 w-5 text-red-500" />
@@ -38,7 +38,7 @@
 		<p class="mt-2 text-sm">{cardItem.description}</p>
 	</Card.Content>
 	<Card.Footer class="p-4 pt-0">
-		<Button class="w-full bg-rose-500 hover:bg-rose-600" onclick={() => viewDetails(cardItem.id)}
+		<Button class="w-full bg-rose-500 hover:bg-rose-600 cursor-pointer" onclick={() => viewDetails(cardItem.id)}
 			>More</Button
 		>
 	</Card.Footer>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import HomeSection from '@/lib/components/home-carousel-section.svelte';
 	import TrendingSection from '@/lib/components/trending-section.svelte';
-	import type { AppEvent, AppLocation, Community, Item } from '@/lib/types';
+	import type { AppEvent, AppLocation, Community } from '@/lib/types';
 	import type { PageData } from './$types';
 	import SearchHome from '@/lib/components/search-home.svelte';
 

@@ -31,6 +31,7 @@
 				inputId="email"
 				type="email"
 				autocomplete="email"
+				placeholder="example@email.com"
 			/>
 		{/snippet}
 	</form.Field>
@@ -44,6 +45,7 @@
 				inputId="password"
 				type="password"
 				autocomplete={mode === 'login' ? 'current-password' : 'new-password'}
+				placeholder="passw@rd"
 			/>
 		{/snippet}
 	</form.Field>
@@ -54,7 +56,7 @@
 		})}
 	>
 		{#snippet children()}
-			<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600">
+			<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 cursor-pointer">
 				{isLoading ? 'Loading...' : mode === 'login' ? 'Login' : 'Sign Up'}
 			</Button>
 		{/snippet}
