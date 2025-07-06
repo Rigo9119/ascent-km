@@ -1,43 +1,86 @@
-# sv
+# Ascent Knowledge Management
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern knowledge management platform built with SvelteKit, Supabase, and Sanity.
 
-## Creating a project
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🛠 Tech Stack
 
-```bash
-# create a new project in the current directory
-npx sv create
+- **Frontend:** [SvelteKit](https://kit.svelte.dev/)
+- **Database & Auth:** [Supabase](https://supabase.com/)
+- **Content Management:** [Sanity.io](https://www.sanity.io/)
+- **Deployment:** [Netlify](https://www.netlify.com/)
+- **Styling:** Tailwind CSS
+- **Other:** TypeScript, Vite
 
-# create a new project in my-app
-npx sv create my-app
-```
+---
 
-## Developing
+## 🚀 Getting Started
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+### 1. Install dependencies
 
 ```bash
-npm run build
+bun install
 ```
 
-You can preview the production build with `npm run preview`.
+### 2. Run the main SvelteKit project
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+bun run dev
+```
+- The app will be available at [http://localhost:5173](http://localhost:5173) (or as shown in your terminal).
 
-## Deploying to Netlify
+### 3. Run the Sanity Studio (CMS)
+
+```bash
+cd sanity
+bun install
+bun run dev
+```
+- The Sanity Studio will be available at [http://localhost:3333](http://localhost:3333) by default.
+
+---
+
+## 🌳 Branching System
+
+- **main**: Production-ready code.
+- **develop**: Latest development changes (merge feature branches here first).
+- **feature/xyz**: Feature branches for new features or fixes.
+- **hotfix/xyz**: Hotfix branches for urgent production fixes.
+
+> Always branch from `develop` for new features and open PRs against `develop`.
+
+---
+
+## 📝 Project Structure
+
+- `/src` - SvelteKit app source code
+- `/sanity` - Sanity.io CMS project
+- `/static` - Static assets
+- `/supabase-schema.sql` - Database schema
+
+---
+
+## 🧑‍💻 Useful Commands
+
+| Command                     | Description                  |
+|-----------------------------|------------------------------|
+| `bun run dev`               | Start SvelteKit dev server   |
+| `bun run build`             | Build for production         |
+| `bun run preview`           | Preview production build     |
+| `bun run sanity`            | Start Sanity Studio          |
+
+---
+
+## 📖 Documentation
+
+- [SvelteKit Docs](https://kit.svelte.dev/docs)
+- [Supabase Docs](https://supabase.com/docs)
+- [Sanity Docs](https://www.sanity.io/docs)
+
+---
+
+## 🏗 Deploying to Netlify
 
 This project is ready to deploy on [Netlify](https://www.netlify.com/) using the official SvelteKit Netlify adapter.
 
