@@ -6,11 +6,11 @@ export type AppEvent = {
 	id: number;
 	name: string;
 	description: string;
-	date: Date;
-	location: string;
-	category: string;
-	type: string;
-	fee: boolean;
+	date: string; // ISO date string from database
+	location_id: number;
+	category_id: number;
+	event_type_id: number;
+	is_free: boolean;
 	image?: string;
 	time?: string;
 	capacity?: number;
@@ -20,7 +20,9 @@ export type AppEvent = {
 	price?: string;
 	requirements?: string[];
 	highlights?: string[];
-	longDescription?: string;
+	long_description?: string;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export type AppLocation = {
@@ -40,6 +42,11 @@ export type AppLocation = {
 	price?: string;
 	best_time?: string;
 	tips?: string[];
+	rating?: number;
+	review_count?: number;
+	is_featured?: boolean;
+	created_at?: string;
+	updated_at?: string;
 }
 
 export type Community = {
