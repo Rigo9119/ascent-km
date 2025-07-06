@@ -17,14 +17,14 @@
 </script>
 
 <section class="py-2">
-	<h2 class="py-6 text-3xl font-semibold">{sectionTitle}</h2>
+	<h2 class="py-2 text-3xl font-semibold">{sectionTitle}</h2>
 	<div class="w-full">
 		<Carousel.Root
 			opts={{
 				loop: true
 			}}
 			plugins={[plugin]}
-			class="w-full"
+			class="w-full pt-4"
 			onmouseenter={plugin.stop}
 			onmouseleave={plugin.reset}
 		>
@@ -32,9 +32,9 @@
 				{#each carouselItems as item (item)}
 					<Carousel.Item class="basis:1">
 						<div class="h-full min-h-[28vh] p-1">
-							<Card.Root class="h-full min-h-[20vh] overflow-hidden py-0">
+							<Card.Root class="h-full min-h-[28vh] overflow-hidden py-0">
 								<Card.Content
-									class="relative flex h-full min-h-[20vh] w-full items-center justify-center p-0"
+									class="relative flex h-full min-h-[28vh] w-full items-center justify-center p-0"
 								>
 									<img
 										src={item.image}

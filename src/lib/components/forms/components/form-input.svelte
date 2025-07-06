@@ -8,15 +8,16 @@
   type Props = {
     field: AnyFieldApi,
     name: string ,
-    label: string,
+    label?: string,
     inputId: string,
     type: string,
     autocomplete?: FullAutoFill | null | undefined,
     placeholder?: string
-    required?: boolean
+    required?: boolean, 
+    customClass?: string
   }
 
-  const { field, label, inputId, type, autocomplete, placeholder, required }: Props = $props()
+  const { field, label, inputId, type, autocomplete, placeholder, required, customClass }: Props = $props()
 </script>
 
 <div class='mb-2 w-full'>
@@ -31,7 +32,7 @@
       value={field.state.value}
       placeholder={placeholder}
       {required}
-      class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+      class={customClass ||  "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500"}
       oninput={(event) => {
         const target = event.target as HTMLInputElement
         field.handleChange(target.value)
