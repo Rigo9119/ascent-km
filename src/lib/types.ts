@@ -50,11 +50,29 @@ export type AppLocation = {
 }
 
 export type Community = {
-	id: number,
-	name: string,
-	description: string,
-	image: string,
-	address: string
+	id: number;
+	name: string;
+	description: string;
+	image: string;
+	address: string;
+	created_by?: string; // UUID of the user who created the community
+	member_count?: number;
+	is_public?: boolean;
+	is_featured?: boolean;
+	tags?: string[];
+	website?: string;
+	contact_email?: string;
+	contact_phone?: string;
+	created_at?: string;
+	updated_at?: string;
+}
+
+export type CommunityMember = {
+	id: number;
+	community_id: number;
+	user_id: string; // UUID
+	role: 'admin' | 'moderator' | 'member';
+	joined_at: string;
 }
 
 export type Resource = {

@@ -31,7 +31,7 @@
 			<Carousel.Content>
 				{#each carouselItems as item (item)}
 					<Carousel.Item class="basis:1">
-						<div class="h-full min-h-[20vh] p-1">
+						<div class="h-full min-h-[28vh] p-1">
 							<Card.Root class="h-full min-h-[20vh] overflow-hidden py-0">
 								<Card.Content
 									class="relative flex h-full min-h-[20vh] w-full items-center justify-center p-0"

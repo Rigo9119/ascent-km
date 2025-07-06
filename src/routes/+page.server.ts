@@ -41,16 +41,45 @@ export const load: PageServerLoad = async ({ locals }) => {
 	const { data: trendingEvents, error: trendingEventsError } = await supabase
 		.from('events')
 		.select('*')
+		.gte('date', new Date().toISOString())
+		.order('date', { ascending: true })
 		.limit(4);
 
 	if (trendingEventsError) {
 		console.error('Error fetching trending events:', trendingEventsError);
 	}
 
+	// Fetch communities data
+	const { data: communities, error: communitiesError } = await supabase
+		.from('communities')
+		.select('*')
+		.eq('is_public', true)
+		.order('created_at', { ascending: false })
+		.limit(10);
+
+	if (communitiesError) {
+		console.error('Error fetching communities:', communitiesError);
+	}
+
+	// Fetch featured communities
+	const { data: featuredCommunities, error: featuredCommunitiesError } = await supabase
+		.from('communities')
+		.select('*')
+		.eq('is_public', true)
+		.eq('is_featured', true)
+		.order('member_count', { ascending: false })
+		.limit(6);
+
+	if (featuredCommunitiesError) {
+		console.error('Error fetching featured communities:', featuredCommunitiesError);
+	}
+
 	return {
 		appLocations: locations || [],
 		appEvents: events || [],
 		featuredLocations: featuredLocations || [],
-		trendingEvents: trendingEvents || []
+		trendingEvents: trendingEvents || [],
+		communities: communities || [],
+		featuredCommunities: featuredCommunities || []
 	};
 };
