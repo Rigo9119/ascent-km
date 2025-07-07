@@ -7,6 +7,7 @@
 	import { RadioGroup, RadioGroupItem } from '$lib/components/ui/radio-group';
 	import CalendarIcon from '@lucide/svelte/icons/calendar';
 	import { DateFormatter, today, type DateValue, getLocalTimeZone } from '@internationalized/date';
+	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 
 	type Props = {
 		dateValue: DateValue;
@@ -53,23 +54,15 @@
 		</CardHeader>
 
 		<CardContent class="flex flex-col gap-4">
-			<div class="flex-1">
-				<label class="text-sm font-medium" for="category-select">Category</label>
-				<Select.Root
-					type="single"
-					onValueChange={(label: string) => (selectedCategory = label)}
-					value={selectedCategory}
-				>
-					<Select.SelectTrigger id="location-select" class="w-full capitalize">
-						{selectedCategory === 'all' ? 'All locations' : selectedCategory}
-					</Select.SelectTrigger>
-					<Select.SelectContent>
-						{#each categoryOptions as option (option)}
-							<Select.SelectItem value={option.value}>{option.label}</Select.SelectItem>
-						{/each}
-					</Select.SelectContent>
-				</Select.Root>
-			</div>
+			<FormSelect
+				forLabel="category-select"
+				placeholder={selectedCategory}
+				name="category-select"
+				label="Category"
+				selectId="category-select"
+				options={categoryOptions}
+				bind:value={selectedCategory}
+			/>
 
 			<div class="flex flex-1 flex-col">
 				<label class="text-sm font-medium" for="date-picker">Date</label>
@@ -90,22 +83,15 @@
 					</PopoverContent>
 				</Popover>
 			</div>
-			<div class="flex-1">
-				<label class="text-sm font-medium" for="location-select">Location</label>
-				<Select.Root type="single" name="locations-filter" bind:value={selectedLocation}>
-					<Select.SelectTrigger id="location-select" class="w-full">
-						{locationsSelectLabel}
-					</Select.SelectTrigger>
-					<Select.SelectContent>
-						<Select.SelectItem value="all">All locations</Select.SelectItem>
-						{#each locationsFilter as location (location.value)}
-							<Select.SelectItem value={location.value} label={location.label}
-								>{location.label}</Select.SelectItem
-							>
-						{/each}
-					</Select.SelectContent>
-				</Select.Root>
-			</div>
+			<FormSelect
+				forLabel="location-select"
+				placeholder={locationsSelectLabel}
+				name="locations-filter"
+				label="Location"
+				selectId="location-select"
+				options={locationsFilter}
+				value={selectedLocation}
+			/>
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="type-radio-group">Event Type</label>
 				<RadioGroup bind:value={selectedType} class="flex items-center space-x-2 pt-2">
