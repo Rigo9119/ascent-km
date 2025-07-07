@@ -4,11 +4,15 @@
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
 	import { categories } from '@/lib/data/categories';
-	import { type PageData } from '../$types';
-	
-	const { data }: {data: PageData } = $props();
-	const { appEvents, locationsFilter } = data;
 
+	interface EventsPageData {
+  appEvents: any[];
+  locationsFilter: { value: string; label: string }[];
+};
+
+	const { data }: { data: EventsPageData } = $props();
+	const { appEvents, locationsFilter } = data;
+	console.log('events page data: ', data)
 	const dateValue = $state<DateValue>(null as unknown as DateValue);
 	const selectedCategory: string = $state<string>('all');
 	const selectedType: string = $state<string>('all');

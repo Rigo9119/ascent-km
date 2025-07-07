@@ -7,21 +7,17 @@ export const load: PageServerLoad = async ({ locals, params, url }) => {
 	const pathname = url.pathname;
 	const urlSegments = pathname.split('/').filter(Boolean);
 
-	const { data: event, error: fetchError } = await supabase
-		.from('events')
-		.select(
-			`
-					*,
-					location:locations(*),
-					category:categories(*)
-				`
-		)
-		.eq('id', slug);
+	const { data: event, error: fetchError } = await supabase.rpc('get_event_by_id', {
+		event_id_param: `${slug}`
+	});
+
+	if (fetchError) {
+		throw error(404, 'Event not found');
+	}
 
 	if (fetchError || !event) {
 		throw error(404, 'Event not found');
-		return { event: {} }
 	}
 
-	return { appEvent: event, urlSegments };
+	return { appEvent: event[0], urlSegments };
 };
