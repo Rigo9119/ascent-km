@@ -30,8 +30,12 @@ export function getCategoryColor(category: string): string {
 		food: 'bg-orange-100 text-orange-800',
 		music: 'bg-purple-100 text-purple-800',
 		sports: 'bg-green-100 text-green-800',
-		technology: 'bg-gray-100 text-gray-800',
-		social: 'bg-pink-100 text-pink-800'
+		technology: 'bg-fuchsia-100 text-fuchsia-800',
+		social: 'bg-pink-100 text-pink-800',
+		travel: 'bg-teal-100 text-teal-800',
+		education: 'bg-indigo-100 text-indigo-800',
+		health: 'bg-emerald-100 text-emerald-800',
+		art: 'bg-yellow-100 text-yellow-800'
 	};
 	return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
 }

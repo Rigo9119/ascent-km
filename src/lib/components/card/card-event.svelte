@@ -15,10 +15,10 @@
 	import Badge from '../ui/badge/badge.svelte';
 
 	let { appEvent } = $props();
+	const { event_name, event_description, event_id, category_name, event_type_name } = appEvent
 
-  function viewEventDetails(appEvent: AppEvent) {
-
-		goto(`/events/${appEvent.id}`);
+  function viewEventDetails(eventId: string) {
+		goto(`/events/${eventId}`);
 	}
 </script>
 
@@ -26,34 +26,31 @@
 	<CardHeader>
 		<div class="flex items-start justify-between">
 			<div class="flex-1">
-				<CardTitle>{appEvent.name}</CardTitle>
+				<CardTitle>{event_name}</CardTitle>
 				<CardDescription class="mt-2">
-					{format(appEvent.date, 'EEEE, MMMM do, yyyy')} • {appEvent.location}
+					{format(appEvent.date, 'EEEE, MMMM do, yyyy')} • {appEvent.location_name}
 				</CardDescription>
 			</div>
 			<div class="flex flex-col items-end gap-2">
-				<!-- <Badge class="rounded-full px-2 py-1 text-xs font-medium {getCategoryColor(appEvent.category)}">
-					{appEvent.category.charAt(0).toUpperCase() + appEvent.category.slice(1)}
-				</Badge> -->
+				<Badge class="px-2 py-1 text-xs font-medium capitalize {getCategoryColor(category_name)}">
+					{category_name}
+				</Badge>
 				<div class="flex gap-1">
-					<!-- <Badge class="rounded-full px-2 py-1 text-xs font-medium {getTypeColor(appEvent.type)}">
-						{appEvent.type.charAt(0).toUpperCase() + appEvent.type.slice(1)}
+					<Badge class="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800">
+						{event_type_name}
 					</Badge>
-					<Badge class="rounded-full px-2 py-1 text-xs font-medium {getFeeColor(appEvent.fee)}">
-						{appEvent.fee ? 'Paid' : 'Free'}
-					</Badge> -->
 				</div>
 			</div>
 		</div>
 	</CardHeader>
 	<CardContent>
-		<p class="text-muted-foreground text-sm">{appEvent.description}</p>
+		<p class="text-muted-foreground text-sm">{event_description}</p>
 	</CardContent>
 	<CardContent class="flex justify-end pt-0">
 		<Button
     variant="outline"
     class="bg-black text-white"
-    onclick={() => viewEventDetails(appEvent)}>
+    onclick={() => viewEventDetails(event_id)}>
 			View Details
 		</Button>
 	</CardContent>

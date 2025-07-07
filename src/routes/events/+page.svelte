@@ -9,7 +9,7 @@
 
 	const { data }: { data: PageData } = $props(); 
 	const { appEvents } = data; 
-
+	console.log('event: ', appEvents[0])
 	let dateValue = $state<DateValue>(null as unknown as DateValue);
 	let selectedCategory: string = $state<string>('all');
 	let selectedType: string = $state<string>('all');
@@ -62,7 +62,7 @@
 		</div>
 
 		<div class="order-2 lg:order-2">
-			<EventList filteredEvents={appEvents} />
+			<EventList filteredEvents={filteredEvents} />
 		</div>
 	</div>
 </div>
