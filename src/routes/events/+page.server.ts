@@ -1,16 +1,31 @@
 import type { PageServerLoad } from '../$types';
-import { error } from '@sveltejs/kit';
+import { error as kitError } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase } = locals;
 
-	const { data: events, error: fetchError } = await supabase.rpc(
+	const { data: events, error: fetchEventsError } = await supabase.rpc(
 		'get_events_with_details_v2'
-		);
+	);
 
-	if (fetchError) {
-		throw error(404, 'Event not ');
+	if (fetchEventsError) {
+		throw kitError(404, 'Event not found');
 	}
 
-	return { appEvents: events };
+	const { data: locations, error: fetchLocationsSelectError } = await supabase.rpc(
+		'get_location_names_and_ids'
+	);
+
+	if (fetchLocationsSelectError) {
+		throw kitError(404, 'Error fetching unique locations');
+	}
+
+	const locationsFilter = locations.map(
+		(location: { location_id: string; location_name: string }) => ({
+			value: location.location_id,
+			label: location.location_name
+		})
+	);
+
+	return { appEvents: events, locationsFilter: locationsFilter };
 };

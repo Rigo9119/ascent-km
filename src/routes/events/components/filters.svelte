@@ -13,7 +13,7 @@
 		selectedCategory: string;
 		selectedType: string;
 		selectedLocation: string;
-		uniqueLocations: string[];
+		locationsFilter: {value: string, label: string}[];
 		categoryOptions: { value: string; label: string }[];
 	};
 
@@ -22,7 +22,7 @@
 		selectedCategory,
 		selectedType,
 		selectedLocation,
-		uniqueLocations,
+		locationsFilter,
 		categoryOptions
 	}: Props = $props();
 
@@ -38,7 +38,12 @@
 		categoryOptions 
 	}
 
-
+	let locationsSelectLabel: string;
+	$effect(() => {
+		locationsSelectLabel = selectedLocation === 'all'
+			? 'All locations'
+			: locationsFilter.find((location) => location.value === selectedLocation)?.label ?? selectedLocation;
+	});
 </script>
 
 <section class="mb-8">
@@ -87,17 +92,17 @@
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="location-select">Location</label>
 				<Select.Root
-				type='single'
-					onValueChange={(value: string | undefined) => (selectedLocation = value ?? 'all')}
-					value={selectedLocation}
+					type="single"
+					name="locations-filter"
+					bind:value={selectedLocation}
 				>
 					<Select.SelectTrigger id="location-select" class="w-full">
-							{selectedLocation === 'all' ? 'All locations' : selectedLocation}
+						{locationsSelectLabel}
 					</Select.SelectTrigger>
 					<Select.SelectContent>
 						<Select.SelectItem value="all">All locations</Select.SelectItem>
-						{#each uniqueLocations as location (location)}
-							<Select.SelectItem value={location}>{location}</Select.SelectItem>
+						{#each locationsFilter as location (location.value)}
+							<Select.SelectItem value={location.value} label={location.label}>{location.label}</Select.SelectItem>
 						{/each}
 					</Select.SelectContent>
 				</Select.Root>
