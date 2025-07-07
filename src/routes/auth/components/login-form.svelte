@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { files } from '$service-worker';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
+	import { type HtmlInputEvent } from '@/lib/types';
 	import type { AuthMode } from '@/lib/utils';
 	import type { AnyFieldApi, AnyFormApi, AnyFormState, FormApi } from '@tanstack/svelte-form';
 
@@ -26,12 +28,17 @@
 			<FormInput
 				{field}
 				required
-				name="email"
+				name={field.name}
 				label="Email"
-				inputId="email"
+				inputId={field.name}
 				type="email"
 				autocomplete="email"
 				placeholder="example@email.com"
+				value={field.state.value}
+				oninput={(event: HtmlInputEvent) => {
+					const target = event.target as HTMLInputElement;
+					field?.handleChange(target.value);
+				}}
 			/>
 		{/snippet}
 	</form.Field>
@@ -40,12 +47,17 @@
 			<FormInput
 				{field}
 				required
-				name="password"
+				name={field.name}
 				label="Password"
-				inputId="password"
+				inputId={field.name}
 				type="password"
 				autocomplete={mode === 'login' ? 'current-password' : 'new-password'}
 				placeholder="passw@rd"
+				value={field.state.value}
+				oninput={(event: HtmlInputEvent) => {
+					const target = event.target as HTMLInputElement;
+					field?.handleChange(target.value);
+				}}
 			/>
 		{/snippet}
 	</form.Field>
@@ -56,7 +68,7 @@
 		})}
 	>
 		{#snippet children()}
-			<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600 cursor-pointer">
+			<Button type="submit" class="w-full cursor-pointer bg-rose-500 hover:bg-rose-600">
 				{isLoading ? 'Loading...' : mode === 'login' ? 'Login' : 'Sign Up'}
 			</Button>
 		{/snippet}

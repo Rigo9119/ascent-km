@@ -1,6 +1,9 @@
 import type { Component } from "svelte";
 
 export type Item = AppEvent | AppLocation | Community;
+export type HtmlInputEvent = Event & {
+	currentTarget: EventTarget & HTMLInputElement;
+}
 
 export type AppEvent = {
 	id: string; // UUID

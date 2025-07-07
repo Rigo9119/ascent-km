@@ -13,7 +13,7 @@
 		selectedCategory: string;
 		selectedType: string;
 		selectedLocation: string;
-		locationsFilter: {value: string, label: string}[];
+		locationsFilter: { value: string; label: string }[];
 		categoryOptions: { value: string; label: string }[];
 	};
 
@@ -35,22 +35,23 @@
 		selectedCategory = 'all';
 		selectedType = 'all';
 		selectedLocation = 'all';
-		categoryOptions 
+		categoryOptions;
 	}
 
 	const locationsSelectLabel = $derived(
 		selectedLocation === 'all'
 			? 'All locations'
-			: locationsFilter.find((location) => location.value === selectedLocation)?.label ?? selectedLocation
+			: (locationsFilter.find((location) => location.value === selectedLocation)?.label ??
+					selectedLocation)
 	);
 </script>
 
 <section class="mb-8">
-	<Card class='gap-2'>
+	<Card class="gap-2">
 		<CardHeader>
 			<CardTitle>Filters</CardTitle>
 		</CardHeader>
-		
+
 		<CardContent class="flex flex-col gap-4">
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="category-select">Category</label>
@@ -59,9 +60,9 @@
 					onValueChange={(label: string) => (selectedCategory = label)}
 					value={selectedCategory}
 				>
-				<Select.SelectTrigger id="location-select" class="w-full">
-					{selectedCategory === 'all' ? 'All locations' : selectedCategory}
-			</Select.SelectTrigger>				
+					<Select.SelectTrigger id="location-select" class="w-full capitalize">
+						{selectedCategory === 'all' ? 'All locations' : selectedCategory}
+					</Select.SelectTrigger>
 					<Select.SelectContent>
 						{#each categoryOptions as option (option)}
 							<Select.SelectItem value={option.value}>{option.label}</Select.SelectItem>
@@ -83,25 +84,24 @@
 						<Calendar
 							type="single"
 							value={dateValue}
-							onValueChange={(value: DateValue | undefined) => (dateValue = value ?? today(getLocalTimeZone()))}
+							onValueChange={(value: DateValue | undefined) =>
+								(dateValue = value ?? today(getLocalTimeZone()))}
 						/>
 					</PopoverContent>
 				</Popover>
 			</div>
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="location-select">Location</label>
-				<Select.Root
-					type="single"
-					name="locations-filter"
-					bind:value={selectedLocation}
-				>
+				<Select.Root type="single" name="locations-filter" bind:value={selectedLocation}>
 					<Select.SelectTrigger id="location-select" class="w-full">
 						{locationsSelectLabel}
 					</Select.SelectTrigger>
 					<Select.SelectContent>
 						<Select.SelectItem value="all">All locations</Select.SelectItem>
 						{#each locationsFilter as location (location.value)}
-							<Select.SelectItem value={location.value} label={location.label}>{location.label}</Select.SelectItem>
+							<Select.SelectItem value={location.value} label={location.label}
+								>{location.label}</Select.SelectItem
+							>
 						{/each}
 					</Select.SelectContent>
 				</Select.Root>
