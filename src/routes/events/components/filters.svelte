@@ -38,12 +38,11 @@
 		categoryOptions 
 	}
 
-	let locationsSelectLabel: string;
-	$effect(() => {
-		locationsSelectLabel = selectedLocation === 'all'
+	const locationsSelectLabel = $derived(
+		selectedLocation === 'all'
 			? 'All locations'
-			: locationsFilter.find((location) => location.value === selectedLocation)?.label ?? selectedLocation;
-	});
+			: locationsFilter.find((location) => location.value === selectedLocation)?.label ?? selectedLocation
+	);
 </script>
 
 <section class="mb-8">

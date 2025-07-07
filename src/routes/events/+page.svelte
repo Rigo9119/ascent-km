@@ -6,17 +6,17 @@
 	import { categories } from '@/lib/data/categories';
 
 	interface EventsPageData {
-  appEvents: any[];
-  locationsFilter: { value: string; label: string }[];
-};
+		appEvents: any[];
+		locationsFilter: { value: string; label: string }[];
+	}
 
 	const { data }: { data: EventsPageData } = $props();
 	const { appEvents, locationsFilter } = data;
-	console.log('events page data: ', data)
+
 	const dateValue = $state<DateValue>(null as unknown as DateValue);
 	const selectedCategory: string = $state<string>('all');
 	const selectedType: string = $state<string>('all');
-	const selectedLocation: string = $state<string>('');
+	const selectedLocation: string = $state<string>('all');
 	const categoryOptions: { value: string; label: string }[] =
 		$state<{ value: string; label: string }[]>(categories);
 
