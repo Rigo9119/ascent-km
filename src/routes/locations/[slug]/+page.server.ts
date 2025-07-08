@@ -1,24 +1,30 @@
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals, url }) => {
-	const locationSlug = Number(params.slug);
+	const locationSlug = params.slug;
 	const pathname = url.pathname;
 	const urlSegments = pathname.split('/').filter(Boolean);
 
-	const { supabase } = locals
+	const { supabase } = locals;
 
-  const { data: locations, error } = await supabase
-    .from('locations')
-    .select('*');
+	const { data: location, error: locationError } = await supabase
+		.from('locations')
+		.select('*')
+		.eq('id', locationSlug)
+		.single();
 
-  if (error) {
-    throw new Error(error.message);
-  }
+	if (locationError) {
+		throw new Error(locationError.message);
+	}
 
-	const currentLocation = locations.find((loc) => loc.id === locationSlug)
-	const relatedLocations = currentLocation
-	? locations.filter((loc) => loc.id !== currentLocation.id).slice(0, 3)
-	: []
-  
-	return { currentLocation, relatedLocations, urlSegments, locationSlug };
+	const { data: locations, error: locationsError } = await supabase
+		.from('locations')
+		.select('*')
+		.limit(3);
+
+	if (locationsError) {
+		throw new Error(locationsError.message);
+	}
+
+	return { currentLocation: location, relatedLocations: locations, urlSegments, locationSlug };
 };

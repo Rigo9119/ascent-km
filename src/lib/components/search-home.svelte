@@ -15,7 +15,6 @@
 			search: ''
 		},
 		onSubmit: async ({ value }) => {
-			console.log('search value: ', value);
 			if (!value.search || value.search.trim() === '') {
 				searchResults = [];
 				return;
