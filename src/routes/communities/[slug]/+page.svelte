@@ -19,14 +19,11 @@
 	}
 
 	const { data }: { data: CommunityPageProps } = $props();
-	console.log('community: ', data);
 
-	// Get the current community based on the slug (ID)
 	let currentCommunity = $state(data.community);
 	let relatedCommunities = $state<Community[]>([]);
 	let isMember = $state(false);
 
-	// Handle back navigation
 	function goBack() {
 		goto('/communities');
 	}

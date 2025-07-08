@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { files } from '$service-worker';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import { type HtmlInputEvent } from '@/lib/types';
@@ -36,7 +35,7 @@
 				placeholder="example@email.com"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
-					const target = event.target as HTMLInputElement;
+					const target = event.currentTarget as HTMLInputElement;
 					field?.handleChange(target.value);
 				}}
 			/>
@@ -55,7 +54,7 @@
 				placeholder="passw@rd"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
-					const target = event.target as HTMLInputElement;
+					const target = event.currentTarget as HTMLInputElement;
 					field?.handleChange(target.value);
 				}}
 			/>
