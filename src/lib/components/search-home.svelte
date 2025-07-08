@@ -4,6 +4,7 @@
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { createForm } from '@tanstack/svelte-form';
 	import FormInput from './forms/components/form-input.svelte';
+	import { type HtmlInputEvent } from '../types';
 
 
 	let searchResults = $state<any[]>([]);
@@ -56,6 +57,10 @@
 					inputId="search"
 					type="search"
 					customClass="mt-1 block w-full rounded-md border border-gray-300 pl-8 pr-3 py-2 shadow-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 sm:pl-10"
+					oninput={(event: HtmlInputEvent) => {
+						const target = event.target as HTMLInputElement;
+						field?.handleChange(target.value);
+					}}
 				/>
 			{/snippet}
 		</form.Field>
