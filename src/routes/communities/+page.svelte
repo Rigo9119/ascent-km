@@ -5,6 +5,7 @@ import CardItem from '$lib/components/card/card-item.svelte';
 import type { PageData } from './$types';
 
 const { data }: { data: PageData } = $props();
+
 const communities = $derived(data.communities as Community[]);
 const featuredCommunities = $derived(data.featuredCommunities as Community[]);
 </script>

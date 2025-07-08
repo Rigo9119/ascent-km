@@ -52,37 +52,51 @@ export type AppLocation = {
 	updated_at?: string;
 }
 
-export interface Community {
-	id: string;
-	name: string;
-	description: string;
-	image: string;
-	address: string;
-	category: string;
-	memberCount: number;
-	createdDate: string;
-	organizer: string;
-	contact?: string;
-	website?: string;
-	meetingFrequency?: string;
-	nextMeeting?: string;
-	longDescription?: string;
-	tags?: string[];
-	rules?: string[];
-	upcomingEvents?: Array<{
-		id: number;
-		title: string;
-		date: string;
-		location: string;
-		description: string;
-	}>;
-	recentDiscussions?: Array<{
-		id: number;
-		title: string;
-		author: string;
-		date: string;
-		replies: number;
-	}>;
+export type Community = {
+  id: string; // UUID
+  name: string;
+  description: string;
+	long_description: string;
+  image: string;
+  member_count: number;
+  is_public: boolean;
+  is_featured: boolean;
+  tags: string[];
+  rules: string[];
+  contact_email: string;
+  website: string;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  image_url: string;
+  image_path: string;
+  location: string;
+  category: string;
+  meeting_frequency: string;
+  recent_discussions:  Discussion[]; // JSONB type
+  upcoming_events: Event[]; // JSONB type
+	organizer_id: string; // UUID reference to profiles
+	next_meeting_date: string; // ISO date string
+	next_meeting_location: string; 
+	next_meeting_details: string
+}
+
+export type Discussion = {
+  id: string;
+  title: string;
+  created_at: string;
+	author: string;
+	date: string;
+	replies: string[]
+  // other discussion properties
+}
+
+export type Event = {
+  id: string;
+  title: string;
+  date: string;
+  location: string;
+	description: string
+  // other event properties
 }
 
 export type CommunityMember = {

@@ -1,9 +1,9 @@
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase } = locals;
 
-	// Fetch all public communities
 	const { data: communities, error: communitiesError } = await supabase
 		.from('communities')
 		.select('*')
@@ -11,10 +11,10 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.order('created_at', { ascending: false });
 
 	if (communitiesError) {
-		console.error('Error fetching communities:', communitiesError);
+		throw error(404, communitiesError);
 	}
 
-	// Fetch featured communities
+
 	const { data: featuredCommunities, error: featuredCommunitiesError } = await supabase
 		.from('communities')
 		.select('*')
@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.limit(6);
 
 	if (featuredCommunitiesError) {
-		console.error('Error fetching featured communities:', featuredCommunitiesError);
+		throw error(404, featuredCommunitiesError)
 	}
 
 	return {

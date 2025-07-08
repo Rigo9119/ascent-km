@@ -15,9 +15,5 @@ export const load: PageServerLoad = async ({ locals, params, url }) => {
 		throw error(404, 'Event not found');
 	}
 
-	if (fetchError || !event) {
-		throw error(404, 'Event not found');
-	}
-
 	return { appEvent: event[0], urlSegments };
 };

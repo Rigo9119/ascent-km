@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, locals, url }) => {
@@ -14,7 +15,7 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 		.single();
 
 	if (locationError) {
-		throw new Error(locationError.message);
+		throw error(404, locationError);
 	}
 
 	const { data: locations, error: locationsError } = await supabase
@@ -23,8 +24,13 @@ export const load: PageServerLoad = async ({ params, locals, url }) => {
 		.limit(3);
 
 	if (locationsError) {
-		throw new Error(locationsError.message);
+		throw error(404, locationsError);
 	}
 
-	return { currentLocation: location, relatedLocations: locations, urlSegments, locationSlug };
+	return {
+		currentLocation: location,
+		relatedLocations: locations, 
+		urlSegments, 
+		locationSlug 
+	};
 };

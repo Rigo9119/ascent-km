@@ -51,3 +51,19 @@ export function getTypeColor(type: string): string {
 export function getFeeColor(fee: boolean): string {
 	return fee ? 'bg-yellow-100 text-yellow-800' : 'bg-emerald-100 text-emerald-800';
 }
+
+export function getCommunityTypeColor(type: string): string {
+	const colors = {
+		interest_group: 'bg-blue-100 text-blue-800',
+		professional_network: 'bg-fuchsia-100 text-fuchsia-800',
+		local_community: 'bg-green-100 text-green-800',
+		support_group: 'bg-rose-100 text-rose-800',
+		educational: 'bg-indigo-100 text-indigo-800',
+		advocacy: 'bg-yellow-100 text-yellow-800',
+		social_club: 'bg-pink-100 text-pink-800',
+		religious: 'bg-purple-100 text-purple-800',
+		sports_fitness: 'bg-orange-100 text-orange-800',
+		cultural: 'bg-teal-100 text-teal-800'
+	};
+	return colors[type as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+}
