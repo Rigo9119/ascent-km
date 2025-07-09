@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -11,7 +12,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.limit(10);
 
 	if (locationsError) {
-		console.error('Error fetching locations:', locationsError);
+		throw error(404, locationsError)
 	}
 
 	// Fetch events data - simplified query without joins for now
@@ -22,10 +23,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.limit(10);
 
 	if (eventsError) {
-		console.error('Error fetching events:', eventsError);
+		throw error(404, eventsError)
 	}
 
-	// Fetch featured/top locations
 	const { data: featuredLocations, error: featuredLocationsError } = await supabase
 		.from('locations')
 		.select('*')
@@ -34,10 +34,9 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.limit(4);
 
 	if (featuredLocationsError) {
-		console.error('Error fetching featured locations:', featuredLocationsError);
+		throw error(404, featuredLocationsError)
 	}
 
-	// Fetch trending events (upcoming events) - simplified query
 	const { data: trendingEvents, error: trendingEventsError } = await supabase
 		.from('events')
 		.select('*')
@@ -46,32 +45,30 @@ export const load: PageServerLoad = async ({ locals }) => {
 		.limit(4);
 
 	if (trendingEventsError) {
-		console.error('Error fetching trending events:', trendingEventsError);
+		throw error(404, trendingEventsError)
 	}
 
-	// Fetch communities data
 	const { data: communities, error: communitiesError } = await supabase
 		.from('communities')
 		.select('*')
 		.eq('is_public', true)
 		.order('created_at', { ascending: false })
-		.limit(10);
+		.limit(4);
 
 	if (communitiesError) {
-		console.error('Error fetching communities:', communitiesError);
+		throw error(404, communitiesError)
 	}
 
-	// Fetch featured communities
 	const { data: featuredCommunities, error: featuredCommunitiesError } = await supabase
 		.from('communities')
 		.select('*')
 		.eq('is_public', true)
 		.eq('is_featured', true)
 		.order('member_count', { ascending: false })
-		.limit(6);
+		.limit(4);
 
 	if (featuredCommunitiesError) {
-		console.error('Error fetching featured communities:', featuredCommunitiesError);
+		throw error(404, featuredCommunitiesError)
 	}
 
 	return {

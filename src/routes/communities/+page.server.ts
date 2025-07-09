@@ -2,33 +2,36 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
-	const { supabase } = locals;
+	try {
+		const { supabase } = locals;
 
-	const { data: communities, error: communitiesError } = await supabase
-		.from('communities')
-		.select('*')
-		.eq('is_public', true)
-		.order('created_at', { ascending: false });
+		const { data: communities, error: communitiesError } = await supabase
+			.from('communities')
+			.select('*')
+			.eq('is_public', true)
+			.order('created_at', { ascending: false });
 
-	if (communitiesError) {
-		throw error(404, communitiesError);
+		if (communitiesError) {
+			throw error(404, communitiesError);
+		}
+
+		const { data: featuredCommunities, error: featuredCommunitiesError } = await supabase
+			.from('communities')
+			.select('*')
+			.eq('is_public', true)
+			.eq('is_featured', true)
+			.order('member_count', { ascending: false })
+			.limit(6);
+
+		if (featuredCommunitiesError) {
+			throw error(404, featuredCommunitiesError);
+		}
+
+		return {
+			communities: communities || [],
+			featuredCommunities: featuredCommunities || []
+		};
+	} catch (communitiesPageServerError) {
+		throw error(404, `eventPageServerError ==> ${communitiesPageServerError}`);
 	}
-
-
-	const { data: featuredCommunities, error: featuredCommunitiesError } = await supabase
-		.from('communities')
-		.select('*')
-		.eq('is_public', true)
-		.eq('is_featured', true)
-		.order('member_count', { ascending: false })
-		.limit(6);
-
-	if (featuredCommunitiesError) {
-		throw error(404, featuredCommunitiesError)
-	}
-
-	return {
-		communities: communities || [],
-		featuredCommunities: featuredCommunities || []
-	};
-}; 
+};
