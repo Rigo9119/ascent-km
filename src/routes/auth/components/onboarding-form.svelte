@@ -8,6 +8,7 @@
 	import { countryCodes } from '@/lib/utils/countryCodesOptions';
 	import { countryOptions } from '@/lib/utils/countryOptions';
 	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
+	import { Checkbox } from '@/lib/components/ui/checkbox';
 
 	const props = $props();
 	const { form } = props;
@@ -259,15 +260,15 @@
 			<div class="flex flex-col gap-2">
 				{#each preferenceOptions as pref}
 					<label class="flex items-center gap-2">
-						<input
-							type="checkbox"
+						<Checkbox
 							checked={Array.isArray(field.state.value) && field.state.value.includes(pref.value)}
-							onchange={() => {
+							onchange={(e: Event) => {
+								const checked = (e.target as HTMLInputElement).checked;
 								let prefs = Array.isArray(field.state.value) ? [...field.state.value] : [];
-								if (prefs.includes(pref.value)) {
-									prefs = prefs.filter(v => v !== pref.value);
+								if (checked) {
+									if (!prefs.includes(pref.value)) prefs.push(pref.value);
 								} else {
-									prefs.push(pref.value);
+									prefs = prefs.filter(v => v !== pref.value);
 								}
 								field.handleChange(prefs);
 							}}
