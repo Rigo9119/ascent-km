@@ -10,6 +10,7 @@
 		selectId: string;
 		placeholder: string;
 		options: { value: string; label: string }[];
+		customClass?: string;
 	}
 
 	let {
@@ -19,11 +20,12 @@
 		value = $bindable(),
 		selectId,
 		placeholder,
-		options
+		options,
+		customClass
 	}: SelectProps = $props();
 </script>
 
-<div class="w-auto">
+<div class={customClass}>
 	<Label class="text-sm font-medium" for={forLabel}>{label}</Label>
 	<Select.Root type='single' {name} bind:value>
 		<Select.SelectTrigger id={selectId} class="w-full">

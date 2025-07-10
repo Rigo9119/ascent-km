@@ -54,7 +54,9 @@
 	}));
 </script>
 
-<svelte:head>title: "On boarding | Meet in Korea"</svelte:head>
+<svelte:head>
+	<title>On boarding | Meet in Korea</title>
+</svelte:head>
 
 <div class="flex flex-col items-center justify-center min-h-screen w-full">
 	<h2 class="mb-6 text-2xl font-bold">Complete your profile</h2>
