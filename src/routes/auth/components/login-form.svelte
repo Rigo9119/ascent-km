@@ -6,7 +6,7 @@
 	import type { AnyFieldApi, AnyFormApi, AnyFormState, FormApi } from '@tanstack/svelte-form';
 
 	type LoginFormProps = {
-		form: any;
+		form: AnyFormApi;
 		mode: AuthMode;
 		isLoading: boolean;
 	};

@@ -47,12 +47,13 @@
 					});
 					if (signUpError) throw signUpError;
 
-					// Show verification message instead of redirecting
+					// Show error if email is already registered
 					if (data?.user?.identities?.length === 0) {
 						error = 'This email is already registered. Please try logging in.';
 						return;
 					}
-					success = true;
+					// Redirect to onboarding after successful signup
+					await goto('/auth/onboarding');
 					return;
 				}
 			} catch (e) {
