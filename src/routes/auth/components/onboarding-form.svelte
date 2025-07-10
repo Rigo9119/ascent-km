@@ -9,6 +9,8 @@
 	import { countryOptions } from '@/lib/utils/countryOptions';
 	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
 	import { Checkbox } from '@/lib/components/ui/checkbox';
+	import Button from '@/lib/components/ui/button/button.svelte';
+	import Label from '@/lib/components/ui/label/label.svelte';
 
 	const props = $props();
 	const { form } = props;
@@ -57,7 +59,14 @@
 	});
 </script>
 
-<form>
+<form
+class="flex flex-col items-center justify-between gap-4"
+	onsubmit={(event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		form.handleSubmit();
+	}}
+>
 	<form.Field name="username">
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
@@ -94,7 +103,7 @@
 	</form.Field>
 	<form.Field name="avatar">
 		{#snippet children(field: AnyFieldApi)}
-			<div class="flex items-center gap-4">
+			<div class="flex items-center gap-4 w-full">
 				<Avatar class="size-16">
 					<AvatarImage src={field.state.value} alt="Avatar preview" />
 					<AvatarFallback>?</AvatarFallback>
@@ -122,7 +131,7 @@
 	</form.Field>
 	<form.Field name="phone">
 		{#snippet children(field: AnyFieldApi)}
-			<div class="flex flex-row items-center justify-between gap-2">
+			<div class="flex flex-row items-center justify-between gap-2 w-full">
 				<FormSelect
 					forLabel="country-code"
 					label="Code"
@@ -193,7 +202,7 @@
 	</form.Field>
 	<form.Field name="bio">
 		{#snippet children(field: AnyFieldApi)}
-			<label for={field.name} class="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+			<Label for={field.name} class="block text-sm font-medium text-gray-700 mb-1">Bio</Label>
 			<Textarea
 				id={field.name}
 				name={field.name}
@@ -201,14 +210,14 @@
 				bind:value={field.state.value}
 				rows={4}
 				maxlength={280}
-				class="resize-none"
+				class="resize-none w-full"
 			/>
 			<div class="text-xs text-gray-500 text-right mt-1">{field.state.value?.length || 0}/280</div>
 		{/snippet}
 	</form.Field>
 	<form.Field name="location">
 		{#snippet children(field: AnyFieldApi)}
-			<div class="flex gap-2">
+			<div class="flex gap-2 w-full">
 				<FormSelect
 					forLabel="country-select"
 					label="Country"
@@ -233,7 +242,7 @@
 
 	<form.Field name="social_links">
 		{#snippet children(field: AnyFieldApi)}
-			<div class="space-y-2">
+			<div class="space-y-2 w-full">
 				{#each socialTypes as social, i}
 					<FormInput
 						name={social.type}
@@ -258,6 +267,7 @@
 	<form.Field name="preferences">
 		{#snippet children(field: AnyFieldApi)}
 			<div class="flex flex-col gap-2">
+				<Label for="preferences">Check boxes </Label>
 				{#each preferenceOptions as pref}
 					<label class="flex items-center gap-2">
 						<Checkbox
@@ -279,4 +289,11 @@
 			</div>
 		{/snippet}
 	</form.Field>
+	<form.Subscribe selector={(state: any) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting })}>
+		{#snippet children({ canSubmit, isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
+			<Button type="submit" class="w-full cursor-pointer bg-rose-500 hover:bg-rose-600 mt-6" disabled={!canSubmit || isSubmitting}>
+				{isSubmitting ? 'Submitting...' : 'Complete your profile'}
+			</Button>
+		{/snippet}
+	</form.Subscribe>
 </form>

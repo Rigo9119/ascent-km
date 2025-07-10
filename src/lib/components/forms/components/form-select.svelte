@@ -23,7 +23,7 @@
 	}: SelectProps = $props();
 </script>
 
-<div>
+<div class="w-auto">
 	<Label class="text-sm font-medium" for={forLabel}>{label}</Label>
 	<Select.Root type='single' {name} bind:value>
 		<Select.SelectTrigger id={selectId} class="w-full">

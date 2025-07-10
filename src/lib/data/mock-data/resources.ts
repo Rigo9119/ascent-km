@@ -1,4 +1,4 @@
-import type { Resource } from "../types";
+import type { Resource } from "../../types";
 import Users from '@lucide/svelte/icons/users';
 import Camera from '@lucide/svelte/icons/camera';
 import Utensils from '@lucide/svelte/icons/utensils';

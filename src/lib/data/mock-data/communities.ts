@@ -1,4 +1,4 @@
-import type { Community } from "../types";
+import type { Community } from "../../types";
 
 export const communities: Community[] = [
   {

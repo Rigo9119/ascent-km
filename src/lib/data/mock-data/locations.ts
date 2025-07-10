@@ -1,4 +1,4 @@
-import type { AppLocation } from "../types";
+import type { AppLocation } from "../../types";
 
 export const locations: AppLocation[] =  [
 		{

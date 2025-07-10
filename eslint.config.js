@@ -22,7 +22,6 @@ export default ts.config(
 		},
 		rules: {
 			'no-undef': 'off',
-			'quotes': ['error', 'single']
 		}
 	},
 	{
