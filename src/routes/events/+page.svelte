@@ -3,7 +3,7 @@
 	import { type DateValue, CalendarDate } from '@internationalized/date';
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
-	import { categories } from '@/lib/data/categories';
+	import { categories } from '@/lib/data/mock-data/categories';
 
 	interface EventsPageData {
 		appEvents: any[];
