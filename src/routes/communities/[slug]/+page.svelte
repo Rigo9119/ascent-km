@@ -78,7 +78,7 @@
 </script>
 
 <svelte:head>
-	<title>{currentCommunity?.name || 'Community'} | Meet in Korea</title>
+	<title>{currentCommunity?.name || 'Community'} | Next Roots</title>
 	<meta
 		name="description"
 		content={currentCommunity?.description ||

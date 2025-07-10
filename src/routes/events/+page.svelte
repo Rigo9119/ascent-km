@@ -34,7 +34,7 @@
 </script>
 
 <svelte:head>
-	<title>Events | Meet in Korea</title>
+	<title>Events | Next Roots</title>
 	<meta
 		name="description"
 		content="a wonderful page where you can find all the info to meet people and visit places in South Korea"

@@ -55,7 +55,7 @@
 </script>
 
 <svelte:head>
-	<title>On boarding | Meet in Korea</title>
+	<title>On boarding | Next Roots </title>
 </svelte:head>
 
 <div class="flex flex-col items-center justify-center min-h-screen w-full">

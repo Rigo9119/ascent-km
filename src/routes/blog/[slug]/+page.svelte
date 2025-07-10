@@ -286,7 +286,7 @@
 </script>
 
 <svelte:head>
-	<title>{currentPost?.title || 'Blog Post'} | Meet in Korea</title>
+	<title>{currentPost?.title || 'Blog Post'} | Next Roots</title>
 	<meta
 		name="description"
 		content={currentPost?.description || 'Read our latest blog post about Korean culture, travel, and community'}

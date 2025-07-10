@@ -19,7 +19,7 @@
 </script>
 
 <svelte:head>
-	<title>Resources | Meet in Korea</title>
+	<title>Resources | Next Roots</title>
 	<meta
 		name="description"
 		content="Essential resources for visiting Korea - travel guides, language learning, transportation, and practical information"

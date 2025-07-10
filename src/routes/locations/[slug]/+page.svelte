@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-	<title>{currentLocation?.name || 'Location'} | Meet in Korea</title>
+	<title>{currentLocation?.name || 'Location'} | Next Roots</title>
 	<meta
 		name="description"
 		content={currentLocation?.description ||

@@ -11,7 +11,7 @@ const featuredCommunities = $derived(data.featuredCommunities as Community[]);
 </script>
 
 <svelte:head>
-  <title>Communities | Meet in Korea</title>
+  <title>Communities | Next Roots</title>
 	<meta
 		name="description"
 		content="a wonderfull page where you can find all the info to meet people and visit places in South Korea"

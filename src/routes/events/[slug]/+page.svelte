@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>{appEvent?.name || 'Event'} | Meet in Korea</title>
+	<title>{appEvent?.name || 'Event'} | Next Roots</title>
 	<meta
 		name="description"
 		content={appEvent?.description || 'Discover exciting events happening in Korea'}
