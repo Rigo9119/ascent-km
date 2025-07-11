@@ -23,20 +23,24 @@
 		options,
 		customClass
 	}: SelectProps = $props();
+
+	// Compute the label for the current value as a function (since $derived is not working with destructured props)
+	function getSelectedLabel() {
+	  return options.find(opt => opt.value === value)?.label;
+	}
 </script>
 
 <div class={customClass}>
 	<Label class="text-sm font-medium" for={forLabel}>{label}</Label>
 	<Select.Root type='single' {name} bind:value>
 		<Select.SelectTrigger id={selectId} class="w-full">
-			{placeholder}
+			{getSelectedLabel() || placeholder}
 		</Select.SelectTrigger>
 		<Select.SelectContent>
-			<Select.SelectItem value="all">All locations</Select.SelectItem>
 			{#each options as option (option.value)}
-				<Select.SelectItem value={option.value} label={option.label}
-					>{option.label}</Select.SelectItem
-				>
+				<Select.SelectItem value={option.value} label={option.label}>
+					{option.label}
+				</Select.SelectItem>
 			{/each}
 		</Select.SelectContent>
 	</Select.Root>

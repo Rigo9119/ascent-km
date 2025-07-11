@@ -6,15 +6,15 @@
 	import { type AnyFieldApi } from '@tanstack/svelte-form';
 	import { Avatar, AvatarImage, AvatarFallback } from '@/lib/components/ui/avatar';
 	import { countryCodes } from '@/lib/utils/countryCodesOptions';
-	import { countryOptions } from '@/lib/utils/countryOptions';
 	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
 	import { Checkbox } from '@/lib/components/ui/checkbox';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import Label from '@/lib/components/ui/label/label.svelte';
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
+	import { type FormEventHandler } from 'svelte/elements';
 
 	const props = $props();
-	const { form } = props;
+	const { form, countryOptions } = props;
 
 	const interestOptions = [
 		{ value: 'music', label: 'Music' },
@@ -164,34 +164,15 @@
 			</div>
 		{/snippet}
 	</form.Field>
-	<form.Field name="email">
-		{#snippet children(field: AnyFieldApi)}
-			<FormInput
-				{field}
-				required
-				name={field.name}
-				label="Email"
-				inputId={field.name}
-				type="email"
-				autocomplete="email"
-				placeholder="example@email.com"
-				value={field.state.value}
-				oninput={(event: HtmlInputEvent) => {
-					const target = event.currentTarget as HTMLInputElement;
-					field?.handleChange(target.value);
-				}}
-			/>
-		{/snippet}
-	</form.Field>
 	<form.Field name="country">
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
 				forLabel="country"
 				label="Country of Birth"
-				name="country"
+				name={field.name}
 				bind:value={field.state.value}
-				selectId="country"
-				placeholder="Select your country"
+				selectId={field.name}
+				placeholder="Select your country..."
 				options={countryOptions}
 				customClass="w-full"
 			/>
@@ -216,6 +197,8 @@
 				name={field.name}
 				placeholder="Tell us about yourself..."
 				bind:value={field.state.value}
+				oninput={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+				onblur={() => field.handleBlur()}
 				rows={4}
 				maxlength={280}
 				class="w-full resize-none"

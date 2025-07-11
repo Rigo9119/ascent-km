@@ -1,4 +1,5 @@
 export const countryOptions: { value: string; label: string }[] = [
+	{ value: 'all', label: 'Select your country...'},
 	{ value: 'AD', label: 'Andorra' },
 	{ value: 'AE', label: 'United Arab Emirates' },
 	{ value: 'AF', label: 'Afghanistan' },

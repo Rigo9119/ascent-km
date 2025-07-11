@@ -88,7 +88,7 @@
 </script>
 
 <svelte:head>
-	<title>Blog | Meet in Korea</title>
+	<title>Blog | Next Roots</title>
 	<meta
 		name="description"
 		content="Discover insights, tips, and stories about Korean culture, travel, food, and community"
