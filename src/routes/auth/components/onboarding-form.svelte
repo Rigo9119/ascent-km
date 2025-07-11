@@ -12,6 +12,7 @@
 	import Label from '@/lib/components/ui/label/label.svelte';
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
 	import { type FormEventHandler } from 'svelte/elements';
+	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
 
 	const { form, countryOptions, selectedCountry = $bindable() } = $props();
 
@@ -149,7 +150,7 @@
 					placeholder="Code"
 					options={countryCodes}
 					onValueChange={(value) => {
-						field.handleChange(value)
+						field.handleChange(value);
 					}}
 				/>
 				<FormInput
@@ -180,7 +181,7 @@
 				options={countryOptions}
 				customClass="w-full"
 				onValueChange={(value) => {
-					field.handleChange(value)
+					field.handleChange(value);
 				}}
 			/>
 		{/snippet}
@@ -198,19 +199,20 @@
 	</form.Field>
 	<form.Field name="bio">
 		{#snippet children(field: AnyFieldApi)}
-			<Label for={field.name} class="mb-1 block text-sm font-medium text-gray-700">Bio</Label>
-			<Textarea
+			<FormTextarea
 				id={field.name}
+				forLabel={field.name}
+				label="Bio"
 				name={field.name}
-				placeholder="Tell us about yourself..."
-				bind:value={field.state.value}
-				oninput={(e) => field.handleChange((e.target as HTMLInputElement).value)}
+				placeholder="Tell us about yourself ..."
+				value={field.state.value}
+				oninput={(event: Event) => {
+					field.handleChange((event.target as HTMLInputElement).value);
+				}}
 				onblur={() => field.handleBlur()}
 				rows={4}
 				maxlength={280}
-				class="w-full resize-none"
 			/>
-			<div class="mt-1 text-right text-xs text-gray-500">{field.state.value?.length || 0}/280</div>
 		{/snippet}
 	</form.Field>
 	<form.Field name="location">
@@ -226,7 +228,7 @@
 	<form.Field name="social_links">
 		{#snippet children(field: AnyFieldApi)}
 			<div class="w-full space-y-2">
-				{#each socialTypes as social, i}
+				{#each socialTypes as social, i (social.type)}
 					<FormInput
 						name={social.type}
 						label={social.label}
@@ -250,9 +252,9 @@
 	<form.Field name="preferences">
 		{#snippet children(field: AnyFieldApi)}
 			<div class="flex flex-col gap-2">
-				<Label for="preferences">Check boxes</Label>
+				<Label class="mb-2" for="preferences">Preferences</Label>
 				{#each preferenceOptions as pref}
-					<label class="flex items-center gap-2">
+					<div class="flex items-center gap-2">
 						<Checkbox
 							checked={Array.isArray(field.state.value) && field.state.value.includes(pref.value)}
 							onchange={(e: Event) => {
@@ -266,8 +268,8 @@
 								field.handleChange(prefs);
 							}}
 						/>
-						<span>{pref.label}</span>
-					</label>
+						<Label>{pref.label}</Label>
+					</div>
 				{/each}
 			</div>
 		{/snippet}
