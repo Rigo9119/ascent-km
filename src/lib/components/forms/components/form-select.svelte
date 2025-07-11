@@ -38,7 +38,7 @@
 			{selectLabel}
 		</Select.SelectTrigger>
 		<Select.SelectContent>
-			{#each options as option (option.value)}
+			{#each options as option, i (i)}
 				<Select.SelectItem value={option.value} label={option.label}>
 					{option.label}
 				</Select.SelectItem>

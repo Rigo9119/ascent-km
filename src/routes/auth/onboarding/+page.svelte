@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import { type PageData } from '../$types';
 
-	let { data }: {data: PageData} = $props();
+	let { data }: { data: PageData } = $props();
 	const { supabase } = data;
 
 	const onBoardingForm = createForm(() => ({
@@ -17,7 +17,8 @@
 			avatar_url: '',
 			updated_at: '',
 			created_at: '',
-			phone: '',
+			phone_number: '',
+			country_code: '',
 			country: '',
 			interests: [],
 			bio: '',
@@ -28,12 +29,12 @@
 		},
 		onSubmit: async ({ value }) => {
 			console.log('onboarding form: ', {
-								...value,
+				...value,
 				location: value.location ? JSON.stringify(value.location) : null,
 				updated_at: new Date().toISOString(),
-				created_at: new Date().toISOString(),
-			//	email: user.email
-			})
+				created_at: new Date().toISOString()
+				//	email: user.email
+			});
 			// const { data: { user } } = await supabase.auth.getUser();
 			// if (!user) {
 			// 	alert('You must be logged in to complete onboarding.');
@@ -64,12 +65,12 @@
 </script>
 
 <svelte:head>
-	<title>On boarding | Next Roots </title>
+	<title>On boarding | Next Roots</title>
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center min-h-screen w-full">
+<div class="flex min-h-screen w-full flex-col items-center justify-center">
 	<h2 class="mb-6 text-2xl font-bold">Complete your profile</h2>
-	<Card class="w-[90vw] max-w-3xl mx-auto p-6">
+	<Card class="mx-auto w-[90vw] max-w-3xl p-6">
 		<OnboardingForm {countryOptions} {selectedCountry} form={onBoardingForm} />
 	</Card>
 </div>

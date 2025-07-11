@@ -3,7 +3,7 @@
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormMultiSelect from '@/lib/components/forms/components/form-multiselect.svelte';
 	import { type HtmlInputEvent } from '@/lib/types';
-	import { type AnyFieldApi } from '@tanstack/svelte-form';
+	import { Field, type AnyFieldApi, AnyFormState } from '@tanstack/svelte-form';
 	import { Avatar, AvatarImage, AvatarFallback } from '@/lib/components/ui/avatar';
 	import { countryCodes } from '@/lib/utils/countryCodesOptions';
 	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
@@ -13,6 +13,7 @@
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
 	import { type FormEventHandler } from 'svelte/elements';
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
+	import FormCheckboxes from '@/lib/components/forms/components/form-checkboxes.svelte';
 
 	const { form, countryOptions, selectedCountry = $bindable() } = $props();
 
@@ -37,7 +38,7 @@
 		{ country: 'Japan', code: 'JP', cities: ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'] },
 		{ country: 'USA', code: 'US', cities: ['New York', 'Los Angeles', 'Chicago', 'San Francisco'] }
 	];
-
+	// TODO: the preferences have to come from supabase
 	const preferenceOptions = [
 		{ value: 'email_notifications', label: 'Email Notifications' },
 		{ value: 'sms_alerts', label: 'SMS Alerts' },
@@ -138,9 +139,9 @@
 			/>
 		{/snippet}
 	</form.Field>
-	<form.Field name="phone">
-		{#snippet children(field: AnyFieldApi)}
-			<div class="flex w-full flex-row items-center justify-between gap-2">
+	<div class="flex w-full flex-row items-center justify-between gap-2">
+		<form.Field name="country_code">
+			{#snippet children(field: AnyFieldApi)}
 				<FormSelect
 					forLabel="country-code"
 					label="Code"
@@ -153,22 +154,26 @@
 						field.handleChange(value);
 					}}
 				/>
+			{/snippet}
+		</form.Field>
+		<form.Field name="phone_number">
+			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					name="phone-number"
 					label="Phone"
 					inputId="phone-number"
 					type="tel"
 					placeholder="Phone number"
-					value={field.state.value?.number || ''}
+					value={field.state.value}
 					oninput={(e: Event) => {
 						const target = e.target as HTMLInputElement;
-						field.handleChange({ ...(field.state.value || {}), number: target.value });
+						field.handleChange(target.value);
 					}}
 					customClass="flex-1"
 				/>
-			</div>
-		{/snippet}
-	</form.Field>
+			{/snippet}
+		</form.Field>
+	</div>
 	<form.Field name="country">
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
@@ -251,31 +256,20 @@
 
 	<form.Field name="preferences">
 		{#snippet children(field: AnyFieldApi)}
-			<div class="flex flex-col gap-2">
-				<Label class="mb-2" for="preferences">Preferences</Label>
-				{#each preferenceOptions as pref}
-					<div class="flex items-center gap-2">
-						<Checkbox
-							checked={Array.isArray(field.state.value) && field.state.value.includes(pref.value)}
-							onchange={(e: Event) => {
-								const checked = (e.target as HTMLInputElement).checked;
-								let prefs = Array.isArray(field.state.value) ? [...field.state.value] : [];
-								if (checked) {
-									if (!prefs.includes(pref.value)) prefs.push(pref.value);
-								} else {
-									prefs = prefs.filter((v) => v !== pref.value);
-								}
-								field.handleChange(prefs);
-							}}
-						/>
-						<Label>{pref.label}</Label>
-					</div>
-				{/each}
-			</div>
+			<FormCheckboxes
+				{field}
+				label="Preferences"
+				forLabel={field.name}
+				wrapperClass="flex flex-col gap-2"
+				options={preferenceOptions}
+			/>
 		{/snippet}
 	</form.Field>
 	<form.Subscribe
-		selector={(state: any) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting })}
+		selector={(state: AnyFormState) => ({
+			canSubmit: state.canSubmit,
+			isSubmitting: state.isSubmitting
+		})}
 	>
 		{#snippet children({ canSubmit, isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
 			<Button
