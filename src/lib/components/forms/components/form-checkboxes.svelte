@@ -1,6 +1,15 @@
 <script lang="ts">
+	import type { AnyFieldApi } from '@tanstack/svelte-form';
 	import { Checkbox } from '../../ui/checkbox';
 	import { Label } from '../../ui/label';
+
+	interface CheckboxProps {
+		label: string;
+		forLabel: string;
+		wrapperClass: string;
+		options: {value: string, label: string}[];
+		field: AnyFieldApi;
+	}
 
 	const { label, forLabel, wrapperClass, options, field } = $props();
 </script>

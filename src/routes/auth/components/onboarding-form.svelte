@@ -3,7 +3,7 @@
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormMultiSelect from '@/lib/components/forms/components/form-multiselect.svelte';
 	import { type HtmlInputEvent } from '@/lib/types';
-	import { Field, type AnyFieldApi, AnyFormState } from '@tanstack/svelte-form';
+	import { Field, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
 	import { Avatar, AvatarImage, AvatarFallback } from '@/lib/components/ui/avatar';
 	import { countryCodes } from '@/lib/utils/countryCodesOptions';
 	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
