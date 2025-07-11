@@ -13,8 +13,7 @@
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
 	import { type FormEventHandler } from 'svelte/elements';
 
-	const props = $props();
-	const { form, countryOptions } = props;
+	const { form, countryOptions, selectedCountry = $bindable() } = $props();
 
 	const interestOptions = [
 		{ value: 'music', label: 'Music' },
@@ -50,17 +49,19 @@
 		{ type: 'kakao', label: 'Kakao', placeholder: 'https://open.kakao.com/yourprofile' }
 	];
 
-	let selectedCountry = $state(form.state.values.location?.country || countryCityOptions[0].code);
+	let selectedCountryCode = $state(
+		form.state.values.location?.country || countryCityOptions[0].code
+	);
 	let selectedCity = $state(form.state.values.location?.city || countryCityOptions[0].cities[0]);
 
 	let citiesForSelectedCountry: string[] = $derived([]);
 	$effect(() => {
 		citiesForSelectedCountry =
-			countryCityOptions.find((c) => c.code === selectedCountry)?.cities || [];
+			countryCityOptions.find((c) => c.code === selectedCountryCode)?.cities || [];
 	});
 	$effect(() => {
 		if (form && form.fields && form.fields.location) {
-			form.fields.location.handleChange({ country: selectedCountry, city: selectedCity });
+			form.fields.location.handleChange({ country: selectedCountryCode, city: selectedCity });
 		}
 	});
 </script>
@@ -111,7 +112,7 @@
 				inputId={field.name}
 				type="text"
 				placeholder="Your username"
-				value={field.state.value}
+				value={selectedCountry}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
 					field.handleChange(target.value);
@@ -143,7 +144,7 @@
 					forLabel="country-code"
 					label="Code"
 					name="country-code"
-					bind:value={field.state.value}
+					value={field.state.value}
 					selectId="country-code"
 					placeholder="Code"
 					options={countryCodes}
@@ -172,7 +173,7 @@
 				name={field.name}
 				bind:value={field.state.value}
 				selectId={field.name}
-				placeholder="Select your country..."
+				placeholder="Select your country ..."
 				options={countryOptions}
 				customClass="w-full"
 			/>

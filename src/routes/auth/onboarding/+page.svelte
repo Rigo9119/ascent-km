@@ -60,7 +60,8 @@
 			// }
 		}
 	}));
-	let selectedCountry = $state(onBoardingForm.state.values.country || countryOptions[0].value);
+	let selectedCountry = $state(onBoardingForm.state.values.country);
+	console.log('selected country: ', selectedCountry)
 </script>
 
 <svelte:head>
@@ -70,6 +71,6 @@
 <div class="flex flex-col items-center justify-center min-h-screen w-full">
 	<h2 class="mb-6 text-2xl font-bold">Complete your profile</h2>
 	<Card class="w-[90vw] max-w-3xl mx-auto p-6">
-		<OnboardingForm {countryOptions} form={onBoardingForm} />
+		<OnboardingForm {countryOptions} {selectedCountry} form={onBoardingForm} />
 	</Card>
 </div>
