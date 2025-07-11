@@ -148,6 +148,9 @@
 					selectId="country-code"
 					placeholder="Code"
 					options={countryCodes}
+					onValueChange={(value) => {
+						field.handleChange(value)
+					}}
 				/>
 				<FormInput
 					name="phone-number"
@@ -176,6 +179,9 @@
 				placeholder="Select your country ..."
 				options={countryOptions}
 				customClass="w-full"
+				onValueChange={(value) => {
+					field.handleChange(value)
+				}}
 			/>
 		{/snippet}
 	</form.Field>

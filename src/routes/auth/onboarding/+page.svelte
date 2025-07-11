@@ -61,7 +61,6 @@
 		}
 	}));
 	let selectedCountry = $state(onBoardingForm.state.values.country);
-	console.log('selected country: ', selectedCountry)
 </script>
 
 <svelte:head>

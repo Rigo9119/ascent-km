@@ -11,6 +11,7 @@
 		placeholder: string;
 		options: { value: string; label: string }[];
 		customClass?: string;
+		onValueChange: (value: string) => void;
 	}
 
 	let {
@@ -21,7 +22,8 @@
 		selectId,
 		placeholder,
 		options,
-		customClass
+		customClass,
+		onValueChange
 	}: SelectProps = $props();
 
 	const selectLabel = $derived(
@@ -31,7 +33,7 @@
 
 <div class={customClass}>
 	<Label class="text-sm font-medium" for={forLabel}>{label}</Label>
-	<Select.Root {name} type="single" onValueChange={(value) => console.log('select value', value)} bind:value>
+	<Select.Root {name} type="single" onValueChange={onValueChange} bind:value>
 		<Select.SelectTrigger id={selectId} class="w-full">
 			{selectLabel}
 		</Select.SelectTrigger>
