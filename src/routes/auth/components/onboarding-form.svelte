@@ -92,7 +92,7 @@
 		form.handleSubmit();
 	}}
 >
-	<form.Field name="avatar">
+	<form.Field name="avatar_url">
 		{#snippet children(field: AnyFieldApi)}
 			<div class="flex w-full items-center gap-4">
 				<Avatar class="size-16">
@@ -100,9 +100,9 @@
 					<AvatarFallback>?</AvatarFallback>
 				</Avatar>
 				<FormInput
-					name="avatar"
+					name={field.name}
 					label="Avatar"
-					inputId="avatar"
+					inputId={field.name}
 					type="file"
 					customClass="block"
 					oninput={(e: Event) => {

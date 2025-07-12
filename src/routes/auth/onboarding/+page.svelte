@@ -2,12 +2,13 @@
 	import { createForm } from '@tanstack/svelte-form';
 	import OnboardingForm from '../components/onboarding-form.svelte';
 	import Card from '@/lib/components/ui/card/card.svelte';
-	import { countryOptions } from '@/lib/utils/countryOptions';
-	import { getContext } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { type PageData } from '../$types';
+	import { error } from '@sveltejs/kit';
+	import { dataURLtoBlob } from '@/lib/utils';
 
-	type LocationValue = {city: string, country: string}
+	type LocationValue = { city: string; country: string };
+
 
 	let { data }: { data: PageData } = $props();
 	const { supabase } = data;
@@ -16,7 +17,7 @@
 		defaultValues: {
 			username: '',
 			full_name: '',
-			avatar: '',
+			avatar_url: '',
 			updated_at: '',
 			created_at: '',
 			phone_number: '',
@@ -29,40 +30,58 @@
 			last_active: ''
 		},
 		onSubmit: async ({ value }) => {
-			console.log('onboarding form: ', {
-				...value, 
-				city: value.location.city,
-				country: value.location.country,
-				updated_at: new Date().toISOString(),
-				created_at: new Date().toISOString()
-	
-			});
-			const { data: { user } } = await supabase.auth.getUser();
+			let avatarBlob = dataURLtoBlob(value.avatar_url);
+			let avatarPath;
+			// gets user data
+			const {
+				data: { user }
+			} = await supabase.auth.getUser();
 			if (!user) {
-				alert('You must be logged in to complete onboarding.');
-				return;
+				throw error(404, 'You must be logged in to complete onboarding.');
+			}
+			//stores the avatar image on the avatars bucket and gets the path
+			const { data: avatarUrl, error: avartUploadError } = await supabase.storage
+				.from('user_avatars')
+				.upload(`${user.id}.png`, avatarBlob, {
+					cacheControl: '3600',
+					upsert: true
+				});
+			if (avartUploadError) {
+				throw error(404, avartUploadError);
+			} else {
+				const { data } = supabase.storage.from('user_avatars').getPublicUrl(avatarUrl.path);
+				avatarPath = data.publicUrl;
 			}
 
 			const profileData = {
-				...value,
 				id: user.id,
-				location: value.location ? JSON.stringify(value.location) : null,
+				username: value.username,
+				full_name: value.full_name,
+				avatar_url: avatarPath,
 				updated_at: new Date().toISOString(),
 				created_at: new Date().toISOString(),
+				phone_number: value.phone_number,
+				email: user.email,
+				country_code: value.country_code,
+				interests: [],
+				bio: value.bio,
 				city: value.location.city,
 				country: value.location.country,
-				email: user.email
+				social_links: value.social_links,
+				preferences: value.preferences,
+				last_active: new Date().toISOString()
 			};
 
-			// const { error } = await supabase
-			// 	.from('profiles')
-			// 	.upsert(profileData, { onConflict: 'id' });
+			// updates user profile
+			const { error: updateUserProfileError } = await supabase
+				.from('profiles')
+				.upsert(profileData, { onConflict: 'id' });
 
-			// if (error) {
-			// 	alert('Error saving profile: ' + error.message);
-			// } else {
-			// 	goto('/profile');
-			// }
+			if (updateUserProfileError) {
+				throw error(404, `Error saving profile: ${updateUserProfileError.message}`);
+			} else {
+				goto('/profile');
+			}
 		}
 	}));
 </script>
