@@ -1,8 +1,11 @@
 <script lang="ts">
+	import type { AnyFieldApi } from '@tanstack/svelte-form';
 	import Label from '../../ui/label/label.svelte';
 	import * as Select from '../../ui/select';
+	import FieldInfo from './field-info.svelte';
 
 	interface SelectProps {
+		field?: AnyFieldApi;
 		forLabel: string;
 		label: string;
 		name: string;
@@ -15,6 +18,7 @@
 	}
 
 	let {
+		field,
 		forLabel,
 		label,
 		name,
@@ -33,7 +37,7 @@
 
 <div class={customClass}>
 	<Label class="text-sm font-medium" for={forLabel}>{label}</Label>
-	<Select.Root {name} type="single" onValueChange={onValueChange} bind:value>
+	<Select.Root {name} type="single" {onValueChange} bind:value>
 		<Select.SelectTrigger id={selectId} class="w-full">
 			{selectLabel}
 		</Select.SelectTrigger>
@@ -45,4 +49,7 @@
 			{/each}
 		</Select.SelectContent>
 	</Select.Root>
+	{#if field?.state.meta.errors}
+		<FieldInfo {field} />
+	{/if}
 </div>

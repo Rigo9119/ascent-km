@@ -66,6 +66,21 @@
 			form.fields.location.handleChange({ country: selectedCountryCode, city: selectedCity });
 		}
 	});
+
+	$inspect(() => {
+		console.log('Form state updated:', form.state.values);
+	});
+
+	function handleCheckboxChange(field: AnyFieldApi, optionValue: string, checked: boolean) {
+		let prefs = Array.isArray(field.state.value) ? [...field.state.value] : [];
+		if (checked) {
+			if (!prefs.includes(optionValue)) prefs.push(optionValue);
+		} else {
+			prefs = prefs.filter((v) => v !== optionValue);
+		}
+		field.handleChange(prefs);
+		console.log('Checkbox changed:', { optionValue, checked, newPrefs: prefs, fieldName: field.name });
+	}
 </script>
 
 <form
@@ -262,6 +277,7 @@
 				forLabel={field.name}
 				wrapperClass="flex flex-col gap-2"
 				options={preferenceOptions}
+				onChange={(optionValue, checked) => handleCheckboxChange(field, optionValue, checked)}
 			/>
 		{/snippet}
 	</form.Field>
