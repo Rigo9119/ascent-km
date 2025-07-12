@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Input } from '$lib/components/ui/input';
 	import SearchIcon from '@lucide/svelte/icons/search';
 	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
 	import { createForm } from '@tanstack/svelte-form';

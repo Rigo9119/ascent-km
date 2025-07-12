@@ -15,7 +15,7 @@
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
 	import FormCheckboxes from '@/lib/components/forms/components/form-checkboxes.svelte';
 
-	const { form, countryOptions, selectedCountry = $bindable() } = $props();
+	const { form } = $props();
 
 	const interestOptions = [
 		{ value: 'music', label: 'Music' },
@@ -67,10 +67,6 @@
 		}
 	});
 
-	$inspect(() => {
-		console.log('Form state updated:', form.state.values);
-	});
-
 	function handleCheckboxChange(field: AnyFieldApi, optionValue: string, checked: boolean) {
 		let prefs = Array.isArray(field.state.value) ? [...field.state.value] : [];
 		if (checked) {
@@ -79,7 +75,12 @@
 			prefs = prefs.filter((v) => v !== optionValue);
 		}
 		field.handleChange(prefs);
-		console.log('Checkbox changed:', { optionValue, checked, newPrefs: prefs, fieldName: field.name });
+		console.log('Checkbox changed:', {
+			optionValue,
+			checked,
+			newPrefs: prefs,
+			fieldName: field.name
+		});
 	}
 </script>
 
@@ -129,7 +130,7 @@
 				inputId={field.name}
 				type="text"
 				placeholder="Your username"
-				value={selectedCountry}
+				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
 					field.handleChange(target.value);
@@ -151,6 +152,16 @@
 					const target = event.currentTarget as HTMLInputElement;
 					field.handleChange(target.value);
 				}}
+			/>
+		{/snippet}
+	</form.Field>
+	<form.Field name="location">
+		{#snippet children(field: AnyFieldApi)}
+			<LocationSearch
+				value={field.state.value}
+				placeholder="Search for your city..."
+				label='Where are you from ?'
+				onChange={(result) => field.handleChange(result)}
 			/>
 		{/snippet}
 	</form.Field>
@@ -189,23 +200,6 @@
 			{/snippet}
 		</form.Field>
 	</div>
-	<form.Field name="country">
-		{#snippet children(field: AnyFieldApi)}
-			<FormSelect
-				forLabel="country"
-				label="Country of Birth"
-				name={field.name}
-				bind:value={field.state.value}
-				selectId={field.name}
-				placeholder="Select your country ..."
-				options={countryOptions}
-				customClass="w-full"
-				onValueChange={(value) => {
-					field.handleChange(value);
-				}}
-			/>
-		{/snippet}
-	</form.Field>
 	<form.Field name="interest">
 		{#snippet children(field: AnyFieldApi)}
 			<FormMultiSelect
@@ -235,16 +229,6 @@
 			/>
 		{/snippet}
 	</form.Field>
-	<form.Field name="location">
-		{#snippet children(field: AnyFieldApi)}
-			<LocationSearch
-				value={field.state.value}
-				placeholder="Search for your city..."
-				on:change={(e) => field.handleChange(e.detail)}
-			/>
-		{/snippet}
-	</form.Field>
-
 	<form.Field name="social_links">
 		{#snippet children(field: AnyFieldApi)}
 			<div class="w-full space-y-2">
