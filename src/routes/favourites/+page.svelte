@@ -26,5 +26,4 @@
 			<!-- TODO: Render user's favourite communities here -->
 			<div class="min-h-[40px] text-muted-foreground">No communities to show.</div>
 		</div>
-
 </div>
