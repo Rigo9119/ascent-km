@@ -4,6 +4,10 @@
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
 	import { categories } from '@/lib/data/mock-data/categories';
+	import { page } from '$app/stores';
+	import Button from '@/lib/components/ui/button/button.svelte';
+	import * as Sheet from '@/lib/components/ui/sheet';
+
 
 	interface EventsPageData {
 		appEvents: any[];
@@ -59,6 +63,49 @@
 				{locationsFilter}
 				{categoryOptions}
 			/>
+			{#if $page.data.user}
+				<Sheet.Root>
+					<Sheet.Trigger class='w-full'>
+						<Button class="mt-4 w-full bg-rose-500 hover:bg-rose-600">Create Event</Button>
+					</Sheet.Trigger>
+					<Sheet.Content side="right">
+						<Sheet.Header>
+							<Sheet.Title>Create Event</Sheet.Title>
+						</Sheet.Header>
+						<!-- Inline event creation form -->
+						<script lang="ts">
+							let title = '';
+							let description = '';
+							let location_id = '';
+							let error = '';
+							let success = false;
+
+							async function createEvent() {
+								error = '';
+								const res = await fetch('/api/events', {
+									method: 'POST',
+									body: JSON.stringify({ title, description, location_id }),
+									headers: { 'Content-Type': 'application/json' }
+								});
+								if (!res.ok) {
+									error = await res.text();
+								} else {
+									success = true;
+								}
+							}
+						</script>
+						<form class="flex flex-col gap-4 mt-4">
+							create event form
+						</form>
+						<!-- {#if error}
+							<p class="text-red-500 mt-2">{error}</p>
+						{/if}
+						{#if success}
+							<p class="text-green-600 mt-2">Event created!</p>
+						{/if} -->
+					</Sheet.Content>
+				</Sheet.Root>
+			{/if}
 		</div>
 
 		<div class="order-2 lg:order-2">

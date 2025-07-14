@@ -3,6 +3,9 @@ import CardItem from '$lib/components/card/card-item.svelte';
 	import type { Community } from '@/lib/types';
 
 import type { PageData } from './$types';
+import { page } from '$app/stores';
+import Button from '@/lib/components/ui/button/button.svelte';
+import * as Sheet from '@/lib/components/ui/sheet';
 
 const { data }: { data: PageData } = $props();
 
@@ -22,9 +25,26 @@ const featuredCommunities = $derived(data.featuredCommunities as Community[]);
   <!-- Header Section -->
   <div class="mb-6 sm:mb-8">
     <h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-rose-600">Communities</h1>
-    <p class="text-sm sm:text-base text-muted-foreground">
-      Join communities and connect with people who share your interests
-    </p>
+    <div class="flex items-center justify-between">
+      <p class="text-sm sm:text-base text-muted-foreground mb-0">
+        Join communities and connect with people who share your interests
+      </p>
+      {#if $page.data.user}
+        <Sheet.Root>
+          <Sheet.Trigger class="ml-4">
+            <Button class="bg-rose-500 hover:bg-rose-600">Create Community</Button>
+          </Sheet.Trigger>
+          <Sheet.Content side="right">
+            <Sheet.Header>
+              <Sheet.Title>Create Community</Sheet.Title>
+            </Sheet.Header>
+            <form class="flex flex-col gap-4 mt-4">
+              create community form
+            </form>
+          </Sheet.Content>
+        </Sheet.Root>
+      {/if}
+    </div>
   </div>
 
   <!-- Featured Communities Section -->
