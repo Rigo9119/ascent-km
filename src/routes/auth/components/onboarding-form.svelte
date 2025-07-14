@@ -13,6 +13,7 @@
 
 	const { form } = $props();
 
+	// TODO: the preferences have to come from supabase
 	const interestOptions = [
 		{ value: 'music', label: 'Music' },
 		{ value: 'sports', label: 'Sports' },
@@ -35,7 +36,8 @@
 	const socialTypes = [
 		{ type: 'instagram', label: 'Instagram', placeholder: 'https://instagram.com/yourprofile' },
 		{ type: 'facebook', label: 'Facebook', placeholder: 'https://facebook.com/yourprofile' },
-		{ type: 'kakao', label: 'Kakao', placeholder: 'https://open.kakao.com/yourprofile' }
+		{ type: 'kakao', label: 'Kakao', placeholder: 'https://open.kakao.com/yourprofile' },
+		{ type: 'twitter', label: 'Twitter', placeholder: 'https://twitter.com/yourprofile' }
 	];
 
 	function handleCheckboxChange(field: AnyFieldApi, optionValue: string, checked: boolean) {
@@ -131,7 +133,7 @@
 			<LocationSearch
 				value={field.state.value}
 				placeholder="Search for your city..."
-				label='Where are you from ?'
+				label="Where are you from ?"
 				onChange={(result) => field.handleChange(result)}
 			/>
 		{/snippet}
@@ -177,7 +179,7 @@
 				forLabel={field.name}
 				selectId={field.name}
 				label="Interests"
-				placeholder='Select your interests...'
+				placeholder="Select your interests..."
 				name={field.name}
 				value={field.state.value || []}
 				options={interestOptions}
