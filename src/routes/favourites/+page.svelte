@@ -1,29 +1,31 @@
 <script lang="ts">
-	import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-	import type { PageData } from './$types';
-	import Button from '@/lib/components/ui/button/button.svelte';
-
-	export let data: PageData;
-	$: ({ user } = data);
+	import { Separator } from '$lib/components/ui/separator';
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
-	<Card class="mx-auto w-full">
-		<CardHeader>
-			<CardTitle>My Favourites</CardTitle>
-		</CardHeader>
-		<CardContent>
-			{#if user}
-				<p>Your saved favourites will appear here.</p>
-				<!-- TODO: Implement favourites list -->
-			{:else}
-				<div class="text-center">
-					<p class="mb-4">Please log in to see your favourites.</p>
-					<a href="/auth">
-						<Button>Login</Button>
-					</a>
-				</div>
-			{/if}
-		</CardContent>
-	</Card>
+	<h2 class="mb-2 text-2xl font-bold text-rose-600 sm:mb-4 sm:text-3xl md:text-4xl">
+		My Favourites
+	</h2>
+
+		<!-- Favourites: Events -->
+		<div class="mb-8">
+			<h2 class="text-lg font-bold mb-2">Favourite Events</h2>
+			<!-- TODO: Render user's favourite events here -->
+			<div class="min-h-[40px] text-muted-foreground">No events to show.</div>
+		</div>
+		<Separator />
+		<!-- Favourites: Locations -->
+		<div class="mb-8 mt-8">
+			<h2 class="text-lg font-bold mb-2">Favourite Locations</h2>
+			<!-- TODO: Render user's favourite locations here -->
+			<div class="min-h-[40px] text-muted-foreground">No locations to show.</div>
+		</div>
+		<Separator />
+		<!-- Favourites: Communities -->
+		<div class="mt-8">
+			<h2 class="text-lg font-bold mb-2">Favourite Communities</h2>
+			<!-- TODO: Render user's favourite communities here -->
+			<div class="min-h-[40px] text-muted-foreground">No communities to show.</div>
+		</div>
+
 </div>
