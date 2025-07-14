@@ -3,15 +3,11 @@
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormMultiSelect from '@/lib/components/forms/components/form-multiselect.svelte';
 	import { type HtmlInputEvent } from '@/lib/types';
-	import { Field, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
+	import { type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
 	import { Avatar, AvatarImage, AvatarFallback } from '@/lib/components/ui/avatar';
 	import { countryCodes } from '@/lib/utils/countryCodesOptions';
-	import Textarea from '@/lib/components/ui/textarea/textarea.svelte';
-	import { Checkbox } from '@/lib/components/ui/checkbox';
 	import Button from '@/lib/components/ui/button/button.svelte';
-	import Label from '@/lib/components/ui/label/label.svelte';
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
-	import { type FormEventHandler } from 'svelte/elements';
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
 	import FormCheckboxes from '@/lib/components/forms/components/form-checkboxes.svelte';
 
@@ -203,11 +199,14 @@
 	<form.Field name="interest">
 		{#snippet children(field: AnyFieldApi)}
 			<FormMultiSelect
+				forLabel={field.name}
+				selectId={field.name}
 				label="Interests"
+				placeholder='Select your interests...'
 				name={field.name}
 				value={field.state.value || []}
 				options={interestOptions}
-				onChange={(selected) => field.handleChange(selected)}
+				onValueChange={(selected) => field.handleChange(selected)}
 			/>
 		{/snippet}
 	</form.Field>
