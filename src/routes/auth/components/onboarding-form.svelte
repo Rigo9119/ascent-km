@@ -25,15 +25,6 @@
 		{ value: 'nature', label: 'Nature' }
 	];
 
-	const countryCityOptions = [
-		{
-			country: 'South Korea',
-			code: 'KR',
-			cities: ['Seoul', 'Busan', 'Incheon', 'Daegu', 'Daejeon']
-		},
-		{ country: 'Japan', code: 'JP', cities: ['Tokyo', 'Osaka', 'Kyoto', 'Nagoya'] },
-		{ country: 'USA', code: 'US', cities: ['New York', 'Los Angeles', 'Chicago', 'San Francisco'] }
-	];
 	// TODO: the preferences have to come from supabase
 	const preferenceOptions = [
 		{ value: 'email_notifications', label: 'Email Notifications' },
@@ -46,22 +37,6 @@
 		{ type: 'facebook', label: 'Facebook', placeholder: 'https://facebook.com/yourprofile' },
 		{ type: 'kakao', label: 'Kakao', placeholder: 'https://open.kakao.com/yourprofile' }
 	];
-
-	let selectedCountryCode = $state(
-		form.state.values.location?.country || countryCityOptions[0].code
-	);
-	let selectedCity = $state(form.state.values.location?.city || countryCityOptions[0].cities[0]);
-
-	let citiesForSelectedCountry: string[] = $derived([]);
-	$effect(() => {
-		citiesForSelectedCountry =
-			countryCityOptions.find((c) => c.code === selectedCountryCode)?.cities || [];
-	});
-	$effect(() => {
-		if (form && form.fields && form.fields.location) {
-			form.fields.location.handleChange({ country: selectedCountryCode, city: selectedCity });
-		}
-	});
 
 	function handleCheckboxChange(field: AnyFieldApi, optionValue: string, checked: boolean) {
 		let prefs = Array.isArray(field.state.value) ? [...field.state.value] : [];
