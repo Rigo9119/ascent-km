@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	try {
-		const { supabase } = locals;
+		const { supabase, getUser } = locals;
 
 		const { data: communities, error: communitiesError } = await supabase
 			.from('communities')
@@ -27,9 +27,12 @@ export const load: PageServerLoad = async ({ locals }) => {
 			throw error(404, featuredCommunitiesError);
 		}
 
+		const user = getUser ? await getUser() : null;
+
 		return {
 			communities: communities || [],
-			featuredCommunities: featuredCommunities || []
+			featuredCommunities: featuredCommunities || [],
+			user
 		};
 	} catch (communitiesPageServerError) {
 		throw error(404, `eventPageServerError ==> ${communitiesPageServerError}`);

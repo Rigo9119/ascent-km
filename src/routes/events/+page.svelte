@@ -4,18 +4,19 @@
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
 	import { categories } from '@/lib/data/mock-data/categories';
-	import { page } from '$app/stores';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
+	import type { User } from '@supabase/supabase-js';
 
 
 	interface EventsPageData {
 		appEvents: any[];
 		locationsFilter: { value: string; label: string }[];
+		user: User
 	}
 
 	const { data }: { data: EventsPageData } = $props();
-	const { appEvents, locationsFilter } = data;
+	const { appEvents, locationsFilter, user } = data;
 
 	const dateValue = $state<DateValue>(null as unknown as DateValue);
 	const selectedCategory: string = $state<string>('all');
@@ -63,7 +64,7 @@
 				{locationsFilter}
 				{categoryOptions}
 			/>
-			{#if $page.data.user}
+			{#if user}
 				<Sheet.Root>
 					<Sheet.Trigger class='w-full'>
 						<Button class="mt-4 w-full bg-rose-500 hover:bg-rose-600">Create Event</Button>
@@ -72,37 +73,9 @@
 						<Sheet.Header>
 							<Sheet.Title>Create Event</Sheet.Title>
 						</Sheet.Header>
-						<!-- Inline event creation form -->
-						<script lang="ts">
-							let title = '';
-							let description = '';
-							let location_id = '';
-							let error = '';
-							let success = false;
-
-							async function createEvent() {
-								error = '';
-								const res = await fetch('/api/events', {
-									method: 'POST',
-									body: JSON.stringify({ title, description, location_id }),
-									headers: { 'Content-Type': 'application/json' }
-								});
-								if (!res.ok) {
-									error = await res.text();
-								} else {
-									success = true;
-								}
-							}
-						</script>
 						<form class="flex flex-col gap-4 mt-4">
 							create event form
 						</form>
-						<!-- {#if error}
-							<p class="text-red-500 mt-2">{error}</p>
-						{/if}
-						{#if success}
-							<p class="text-green-600 mt-2">Event created!</p>
-						{/if} -->
 					</Sheet.Content>
 				</Sheet.Root>
 			{/if}
