@@ -7,6 +7,7 @@
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
 	import type { User } from '@supabase/supabase-js';
+	import CreateEventForm from './components/create-event-form.svelte';
 
 
 	interface EventsPageData {
@@ -73,9 +74,7 @@
 						<Sheet.Header>
 							<Sheet.Title>Create Event</Sheet.Title>
 						</Sheet.Header>
-						<form class="flex flex-col gap-4 mt-4">
-							create event form
-						</form>
+						<CreateEventForm />
 					</Sheet.Content>
 				</Sheet.Root>
 			{/if}
