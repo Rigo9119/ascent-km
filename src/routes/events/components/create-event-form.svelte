@@ -8,7 +8,7 @@
 	import { createForm, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
 	import { Switch } from 'bits-ui';
 	import { DateRangeField } from 'bits-ui';
-  import { unstable_RatingGroup as RatingGroup } from "bits-ui";
+	import { unstable_RatingGroup as RatingGroup } from 'bits-ui';
 
 	// TODO: image, image_url, image_path are the same columns, have to delete tow
 	// from supabase
@@ -46,7 +46,7 @@
 	}));
 </script>
 
-<form class="p-4 overflow-y-auto">
+<form class="overflow-y-auto p-4">
 	<createEventForm.Field name={'name'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
@@ -106,9 +106,7 @@
 					<DateRangeField.Label class="block text-sm font-medium select-none">
 						Date
 					</DateRangeField.Label>
-					<div
-						class=""
-					>
+					<div class="">
 						{#each ['start', 'end'] as const as type (type)}
 							<DateRangeField.Input {type}>
 								{#snippet children({ segments })}
@@ -119,10 +117,7 @@
 													{value}
 												</DateRangeField.Segment>
 											{:else}
-												<DateRangeField.Segment
-													{part}
-													class=""
-												>
+												<DateRangeField.Segment {part} class="">
 													{value}
 												</DateRangeField.Segment>
 											{/if}
@@ -183,17 +178,17 @@
 	</createEventForm.Field>
 	<createEventForm.Field name={'is_free'}>
 		{#snippet children(field: AnyFieldApi)}
-			<div>
+			<div class="flex items-center space-x-3">
 				<Switch.Root
 					id={field.name}
 					name={field.name}
-					class=""
+					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-foreground data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-foreground peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-pink-100"
 				>
 					<Switch.Thumb
-						class=""
+						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label>Is it public ?</Label>
+				<Label for={field.name} class="text-sm font-medium">Is it a free event ?</Label>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
@@ -226,9 +221,7 @@
 					<DateRangeField.Label class="block text-sm font-medium select-none">
 						Time range
 					</DateRangeField.Label>
-					<div
-						class=""
-					>
+					<div class="">
 						{#each ['start', 'end'] as const as type (type)}
 							<DateRangeField.Input {type}>
 								{#snippet children({ segments })}
@@ -281,10 +274,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Capacity"
+				label="Organizer"
 				inputId={field.name}
 				type="number"
-				placeholder="Capacity"
+				placeholder="Organizer"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -365,89 +358,85 @@
 						{/snippet}
 					</createEventForm.Field>
 				{/each}
-				<Button onclick={() => field.pushValue('')} type="button">
-					Add a requirement
-				</Button>
+				<Button onclick={() => field.pushValue('')} type="button">Add a requirement</Button>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
 	<createEventForm.Field name={'highlights'}>
-    {#snippet children(field: AnyFieldApi)}
-    <div>
-      <Label class="text-base font-medium">Requirements</Label>
-      {#each field.state.value as highlit, i (i)}
-        <createEventForm.Field name={`highlights[${i}]`}>
-          {#snippet children(subfield)}
-            <FormInput
-              name={subfield.name}
-              inputId={subfield.name}
-              type="text"
-              placeholder="Your username"
-              value={highlit}
-              oninput={(event: HtmlInputEvent) => {
-                const target = event.currentTarget as HTMLInputElement;
-                subfield.handleChange(target.value);
-              }}
-            />
-          {/snippet}
-        </createEventForm.Field>
-      {/each}
-      <Button onclick={() => field.pushValue('')} type="button">
-        Add a highlight
-      </Button>
-    </div>
-  {/snippet}
-  </createEventForm.Field>
-	<createEventForm.Field name={'is_featured'}>
 		{#snippet children(field: AnyFieldApi)}
 			<div>
+				<Label class="text-base font-medium">Requirements</Label>
+				{#each field.state.value as highlit, i (i)}
+					<createEventForm.Field name={`highlights[${i}]`}>
+						{#snippet children(subfield)}
+							<FormInput
+								name={subfield.name}
+								inputId={subfield.name}
+								type="text"
+								placeholder="Your username"
+								value={highlit}
+								oninput={(event: HtmlInputEvent) => {
+									const target = event.currentTarget as HTMLInputElement;
+									subfield.handleChange(target.value);
+								}}
+							/>
+						{/snippet}
+					</createEventForm.Field>
+				{/each}
+				<Button onclick={() => field.pushValue('')} type="button">Add a highlight</Button>
+			</div>
+		{/snippet}
+	</createEventForm.Field>
+	<createEventForm.Field name={'is_featured'}>
+		{#snippet children(field: AnyFieldApi)}
+			<div class="flex items-center space-x-3">
 				<Switch.Root
 					id={field.name}
 					name={field.name}
-					class=""
+					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-foreground data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-foreground peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-pink-100"
 				>
 					<Switch.Thumb
-						class=""
+						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label>Want to feature it ?</Label>
+        <Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
 	<createEventForm.Field name={'rating'}>
-    {#snippet children(field)}
-      <div>
-        <Label>Rating</Label>
-        <RatingGroup.Root max={5} class="flex flex-row">
-          {#snippet children({ items })}
-            {#each items as item (item.index)}
-              <RatingGroup.Item index={item.index}>
-                {#if item.state === "active"}
-                  ⭐
-                {:else}
-                  ☆
-                {/if}
-              </RatingGroup.Item>
-            {/each}
-          {/snippet}
-        </RatingGroup.Root>
-      </div>
-    {/snippet}
-  </createEventForm.Field>
-  <createEventForm.Subscribe
-  selector={(state: AnyFormState) => ({
-    canSubmit: state.canSubmit,
-    isSubmitting: state.isSubmitting
-  })}
->
-  {#snippet children({ canSubmit, isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
-    <Button
-      type="submit"
-      class="mt-6 w-full cursor-pointer bg-rose-500 hover:bg-rose-600"
-      disabled={!canSubmit || isSubmitting}
-    >
-      {isSubmitting ? 'Submitting...' : 'Complete your profile'}
-    </Button>
-  {/snippet}
-</createEventForm.Subscribe>
+		{#snippet children(field)}
+			<div>
+				<Label>Rating</Label>
+				<RatingGroup.Root max={5} class="flex flex-row">
+					{#snippet children({ items })}
+						{#each items as item (item.index)}
+							<RatingGroup.Item index={item.index}>
+								{#if item.state === 'active'}
+									⭐
+								{:else}
+									☆
+								{/if}
+							</RatingGroup.Item>
+						{/each}
+					{/snippet}
+				</RatingGroup.Root>
+			</div>
+		{/snippet}
+	</createEventForm.Field>
+	<createEventForm.Subscribe
+		selector={(state: AnyFormState) => ({
+			canSubmit: state.canSubmit,
+			isSubmitting: state.isSubmitting
+		})}
+	>
+		{#snippet children({ canSubmit, isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
+			<Button
+				type="submit"
+				class="mt-6 w-full cursor-pointer bg-rose-500 hover:bg-rose-600"
+				disabled={!canSubmit || isSubmitting}
+			>
+				{isSubmitting ? 'Submitting...' : 'Complete your profile'}
+			</Button>
+		{/snippet}
+	</createEventForm.Subscribe>
 </form>
