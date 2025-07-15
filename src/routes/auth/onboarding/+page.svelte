@@ -3,15 +3,22 @@
 	import OnboardingForm from '../components/onboarding-form.svelte';
 	import Card from '@/lib/components/ui/card/card.svelte';
 	import { goto } from '$app/navigation';
-	import { type PageData } from '../$types';
 	import { error } from '@sveltejs/kit';
 	import { dataURLtoBlob } from '@/lib/utils';
+	import type { Category, Preference } from './+page.server';
+	import type { SupabaseClient, User } from '@supabase/supabase-js';
+
+	interface OnboardingPageProps {
+		supabase: SupabaseClient;
+		interests: Category;
+		preferences: Preference;
+		user: User;
+	}
 
 	type LocationValue = { city: string; country: string };
 
-
-	let { data }: { data: PageData } = $props();
-	const { supabase } = data;
+	let { data }: { data: OnboardingPageProps } = $props();
+	const { supabase, interests, preferences, user } = data;
 
 	const onBoardingForm = createForm(() => ({
 		defaultValues: {
@@ -32,13 +39,6 @@
 		onSubmit: async ({ value }) => {
 			let avatarBlob = dataURLtoBlob(value.avatar_url);
 			let avatarPath;
-			// gets user data
-			const {
-				data: { user }
-			} = await supabase.auth.getUser();
-			if (!user) {
-				throw error(404, 'You must be logged in to complete onboarding.');
-			}
 			//stores the avatar image on the avatars bucket and gets the path
 			const { data: avatarUrl, error: avartUploadError } = await supabase.storage
 				.from('user_avatars')
@@ -93,6 +93,10 @@
 <div class="flex min-h-screen w-full flex-col items-center justify-center">
 	<h2 class="mb-6 text-2xl font-bold">Complete your profile</h2>
 	<Card class="mx-auto w-[90vw] max-w-3xl p-6">
-		<OnboardingForm form={onBoardingForm} />
+		<OnboardingForm
+			form={onBoardingForm}
+			interestsOptions={interests}
+			preferencesOptions={preferences}
+		/>
 	</Card>
 </div>

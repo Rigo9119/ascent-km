@@ -11,27 +11,7 @@
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
 	import FormCheckboxes from '@/lib/components/forms/components/form-checkboxes.svelte';
 
-	const { form } = $props();
-
-	// TODO: the preferences have to come from supabase
-	const interestOptions = [
-		{ value: 'music', label: 'Music' },
-		{ value: 'sports', label: 'Sports' },
-		{ value: 'travel', label: 'Travel' },
-		{ value: 'food', label: 'Food' },
-		{ value: 'art', label: 'Art' },
-		{ value: 'technology', label: 'Technology' },
-		{ value: 'reading', label: 'Reading' },
-		{ value: 'gaming', label: 'Gaming' },
-		{ value: 'nature', label: 'Nature' }
-	];
-
-	// TODO: the preferences have to come from supabase
-	const preferenceOptions = [
-		{ value: 'email_notifications', label: 'Email Notifications' },
-		{ value: 'sms_alerts', label: 'SMS Alerts' },
-		{ value: 'newsletter', label: 'Newsletter' }
-	];
+	const { form, interestsOptions, preferencesOptions } = $props();
 
 	const socialTypes = [
 		{ type: 'instagram', label: 'Instagram', placeholder: 'https://instagram.com/yourprofile' },
@@ -48,12 +28,6 @@
 			prefs = prefs.filter((v) => v !== optionValue);
 		}
 		field.handleChange(prefs);
-		console.log('Checkbox changed:', {
-			optionValue,
-			checked,
-			newPrefs: prefs,
-			fieldName: field.name
-		});
 	}
 </script>
 
@@ -182,7 +156,7 @@
 				placeholder="Select your interests..."
 				name={field.name}
 				value={field.state.value || []}
-				options={interestOptions}
+				options={interestsOptions}
 				onValueChange={(selected) => field.handleChange(selected)}
 			/>
 		{/snippet}
@@ -236,7 +210,7 @@
 				label="Preferences"
 				forLabel={field.name}
 				wrapperClass="flex flex-col gap-2"
-				options={preferenceOptions}
+				options={preferencesOptions}
 				onChange={(optionValue, checked) => handleCheckboxChange(field, optionValue, checked)}
 			/>
 		{/snippet}
