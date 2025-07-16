@@ -145,6 +145,18 @@
 					</p>
 				</section>
 
+				<!-- Recent Discussions Section -->
+				<section>
+					<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Recent Discussions</h2>
+					<ul class="list-disc pl-6 space-y-2">
+						<!-- Placeholder discussions -->
+						<li><a href="/communities/discussions/1" class="text-rose-600 hover:underline">How to find housing in Seoul?</a></li>
+						<li><a href="/communities/discussions/2" class="text-rose-600 hover:underline">Best places to eat Korean BBQ</a></li>
+						<li><a href="/communities/discussions/3" class="text-rose-600 hover:underline">Tips for learning Korean fast</a></li>
+						<li><a href="/communities/discussions/4" class="text-rose-600 hover:underline">Making friends as an expat</a></li>
+					</ul>
+				</section>
+
 				<!-- Tags -->
 				{#if currentCommunity.tags && currentCommunity.tags.length > 0}
 					<section>

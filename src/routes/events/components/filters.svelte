@@ -58,10 +58,13 @@
 				forLabel="category-select"
 				placeholder={selectedCategory}
 				name="category-select"
+				value={''}
 				label="Category"
 				selectId="category-select"
 				options={categoryOptions}
-				bind:value={selectedCategory}
+				onValueChange={(value) => {
+					console.log(value);
+				}}
 			/>
 
 			<div class="flex flex-1 flex-col">
@@ -91,6 +94,9 @@
 				selectId="location-select"
 				options={locationsFilter}
 				value={selectedLocation}
+				onValueChange={(value) => {
+					console.log(value);
+				}}
 			/>
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="type-radio-group">Event Type</label>

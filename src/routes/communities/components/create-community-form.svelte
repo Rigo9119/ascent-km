@@ -8,11 +8,9 @@
 	import { Button } from '@/lib/components/ui/button';
 	import Label from '@/lib/components/ui/label/label.svelte';
 	import { type HtmlInputEvent } from '@/lib/types';
-	import CreateEventForm from '@/routes/events/components/create-event-form.svelte';
-	import { createForm, Field, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
-	import { Switch, TimeRangeField } from 'bits-ui';
-	import { DateRangeField, DateField } from 'bits-ui';
-	import { unstable_RatingGroup as RatingGroup } from 'bits-ui';
+	import { createForm, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
+	import { Switch } from 'bits-ui';
+	import { DateField } from 'bits-ui';
 
 	// TODO: image, image_url, image_path are the same columns, have to delete tow
 	// from supabase
