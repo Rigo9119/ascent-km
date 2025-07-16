@@ -4,7 +4,6 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals }) => {
 	const { supabase } = locals;
 
-	// Fetch locations data with all fields
 	const { data: locations, error: locationsError } = await supabase
 		.from('locations')
 		.select('*')
@@ -15,7 +14,6 @@ export const load: PageServerLoad = async ({ locals }) => {
 		throw error(404, locationsError)
 	}
 
-	// Fetch events data - simplified query without joins for now
 	const { data: events, error: eventsError } = await supabase
 		.from('events')
 		.select('*')
