@@ -44,9 +44,27 @@
 			console.log('create event form: ', value);
 		}
 	}));
+
+	function addItem(fieldName: 'requirements' | 'highlights') {
+		createEventForm.pushFieldValue(fieldName, '');
+	}
+
+	function removeItem(fieldName: 'requirements' | 'highlights', index: number) {
+		createEventForm.removeFieldValue(fieldName, index);
+	}
+
+	let highlights = $derived(createEventForm.getFieldValue('highlights'));
+	let requirements = $derived(createEventForm.getFieldValue('requirements'));
 </script>
 
-<form class="overflow-y-auto p-4">
+<form
+	class="overflow-y-auto p-4"
+	onsubmit={(e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		createEventForm.handleSubmit();
+	}}
+>
 	<createEventForm.Field name={'name'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
@@ -276,7 +294,7 @@
 				name={field.name}
 				label="Organizer"
 				inputId={field.name}
-				type="number"
+				type="text"
 				placeholder="Organizer"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
@@ -291,10 +309,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Capacity"
+				label="Contact"
 				inputId={field.name}
-				type="number"
-				placeholder="Capacity"
+				type="text"
+				placeholder="Contact"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -308,10 +326,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Capacity"
+				label="Website"
 				inputId={field.name}
-				type="number"
-				placeholder="Capacity"
+				type="text"
+				placeholder="Website"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -325,10 +343,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Capacity"
+				label="Price"
 				inputId={field.name}
 				type="number"
-				placeholder="Capacity"
+				placeholder="Price"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -337,44 +355,58 @@
 			/>
 		{/snippet}
 	</createEventForm.Field>
-	<createEventForm.Field name={'requirements'}>
+	<createEventForm.Field name={'requirements'} mode="array">
 		{#snippet children(field: AnyFieldApi)}
 			<div>
 				<Label class="text-base font-medium">Requirements</Label>
-				{#each field.state.value as requirement, i (i)}
-					<createEventForm.Field name={`requirements[${i}]`}>
-						{#snippet children(subfield)}
-							<FormInput
-								name={subfield.name}
-								inputId={subfield.name}
-								type="text"
-								placeholder="Your username"
-								value={requirement}
-								oninput={(event: HtmlInputEvent) => {
-									const target = event.currentTarget as HTMLInputElement;
-									subfield.handleChange(target.value);
-								}}
-							/>
-						{/snippet}
-					</createEventForm.Field>
+				{#each field.state.value as requirement, index (index)}
+          <div class="flex flex-row justify-between items-center gap-2">
+            <createEventForm.Field name={`requirements[${index}]`}>
+              {#snippet children(subfield)}
+                <FormInput
+                  name={subfield.name}
+                  inputId={subfield.name}
+                  type="text"
+                  placeholder={`requirement ${index + 1}`}
+                  value={requirement}
+                  oninput={(event: HtmlInputEvent) => {
+                    const target = event.currentTarget as HTMLInputElement;
+                    subfield.handleChange(target.value);
+                  }}
+                />
+                {#if field.state.value.length > 1}
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onclick={() => removeItem('requirements', index)}
+                  >
+                    Remove
+                  </Button>
+                {/if}
+              {/snippet}
+            </createEventForm.Field>
+          </div>
 				{/each}
-				<Button onclick={() => field.pushValue('')} type="button">Add a requirement</Button>
+				<Button onclick={() => addItem('requirements')} type="button" class="cursor-pointer">
+					Add a requirement
+				</Button>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
-	<createEventForm.Field name={'highlights'}>
+	<createEventForm.Field name={'highlights'} mode="array">
 		{#snippet children(field: AnyFieldApi)}
 			<div>
 				<Label class="text-base font-medium">Requirements</Label>
-				{#each field.state.value as highlit, i (i)}
-					<createEventForm.Field name={`highlights[${i}]`}>
+				{#each field.state.value as highlight, index (index)}
+					<createEventForm.Field name={`highlights[${index}]`}>
 						{#snippet children(subfield)}
 							<FormInput
 								name={subfield.name}
 								inputId={subfield.name}
 								type="text"
-								placeholder="Your username"
-								value={highlit}
+								placeholder={`highlights ${index + 1}`}
+								value={highlight}
 								oninput={(event: HtmlInputEvent) => {
 									const target = event.currentTarget as HTMLInputElement;
 									subfield.handleChange(target.value);
@@ -382,8 +414,20 @@
 							/>
 						{/snippet}
 					</createEventForm.Field>
+					{#if requirements.length > 1}
+						<Button
+							type="button"
+							variant="outline"
+							size="sm"
+							onclick={() => removeItem('highlights', index)}
+						>
+							✕
+						</Button>
+					{/if}
 				{/each}
-				<Button onclick={() => field.pushValue('')} type="button">Add a highlight</Button>
+				<Button onclick={() => addItem('highlights')} type="button" class="cursor-pointer">
+					Add a highlight
+				</Button>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
@@ -399,7 +443,7 @@
 						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-        <Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
+				<Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
