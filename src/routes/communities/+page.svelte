@@ -5,6 +5,7 @@
 	import type { PageData } from './$types';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
+	import CreateCommunityForm from './components/create-community-form.svelte';
 
 	const { data }: { data: PageData } = $props();
 	const user = data.user;
@@ -41,7 +42,7 @@
 						<Sheet.Header>
 							<Sheet.Title>Create Community</Sheet.Title>
 						</Sheet.Header>
-						<form class="mt-4 flex flex-col gap-4">create community form</form>
+						<CreateCommunityForm />
 					</Sheet.Content>
 				</Sheet.Root>
 			{/if}
