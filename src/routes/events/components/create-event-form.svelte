@@ -1,4 +1,5 @@
 <script lang="ts">
+	import FormArrayInput from '@/lib/components/forms/components/form-array-input.svelte';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
 	import FormMultiSelect from '@/lib/components/forms/components/form-multiselect.svelte';
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
@@ -44,17 +45,6 @@
 			console.log('create event form: ', value);
 		}
 	}));
-
-	function addItem(fieldName: 'requirements' | 'highlights') {
-		createEventForm.pushFieldValue(fieldName, '');
-	}
-
-	function removeItem(fieldName: 'requirements' | 'highlights', index: number) {
-		createEventForm.removeFieldValue(fieldName, index);
-	}
-
-	let highlights = $derived(createEventForm.getFieldValue('highlights'));
-	let requirements = $derived(createEventForm.getFieldValue('requirements'));
 </script>
 
 <form
@@ -357,78 +347,24 @@
 	</createEventForm.Field>
 	<createEventForm.Field name={'requirements'} mode="array">
 		{#snippet children(field: AnyFieldApi)}
-			<div>
-				<Label class="text-base font-medium">Requirements</Label>
-				{#each field.state.value as requirement, index (index)}
-          <div class="flex flex-row justify-between items-center gap-2">
-            <createEventForm.Field name={`requirements[${index}]`}>
-              {#snippet children(subfield)}
-                <FormInput
-                  name={subfield.name}
-                  inputId={subfield.name}
-                  type="text"
-                  placeholder={`requirement ${index + 1}`}
-                  value={requirement}
-                  oninput={(event: HtmlInputEvent) => {
-                    const target = event.currentTarget as HTMLInputElement;
-                    subfield.handleChange(target.value);
-                  }}
-                />
-                {#if field.state.value.length > 1}
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onclick={() => removeItem('requirements', index)}
-                  >
-                    Remove
-                  </Button>
-                {/if}
-              {/snippet}
-            </createEventForm.Field>
-          </div>
-				{/each}
-				<Button onclick={() => addItem('requirements')} type="button" class="cursor-pointer">
-					Add a requirement
-				</Button>
-			</div>
+			<FormArrayInput
+				{field}
+				form={createEventForm}
+				label={'Requirements'}
+				addButtonText={'Add another requirement'}
+				removeButtonText={'Remove'}
+			/>
 		{/snippet}
 	</createEventForm.Field>
 	<createEventForm.Field name={'highlights'} mode="array">
 		{#snippet children(field: AnyFieldApi)}
-			<div>
-				<Label class="text-base font-medium">Requirements</Label>
-				{#each field.state.value as highlight, index (index)}
-					<createEventForm.Field name={`highlights[${index}]`}>
-						{#snippet children(subfield)}
-							<FormInput
-								name={subfield.name}
-								inputId={subfield.name}
-								type="text"
-								placeholder={`highlights ${index + 1}`}
-								value={highlight}
-								oninput={(event: HtmlInputEvent) => {
-									const target = event.currentTarget as HTMLInputElement;
-									subfield.handleChange(target.value);
-								}}
-							/>
-						{/snippet}
-					</createEventForm.Field>
-					{#if requirements.length > 1}
-						<Button
-							type="button"
-							variant="outline"
-							size="sm"
-							onclick={() => removeItem('highlights', index)}
-						>
-							✕
-						</Button>
-					{/if}
-				{/each}
-				<Button onclick={() => addItem('highlights')} type="button" class="cursor-pointer">
-					Add a highlight
-				</Button>
-			</div>
+			<FormArrayInput
+				{field}
+				form={createEventForm}
+				label={'Highlights'}
+				addButtonText={'Add another highlight'}
+				removeButtonText={'Remove'}
+			/>
 		{/snippet}
 	</createEventForm.Field>
 	<createEventForm.Field name={'is_featured'}>
