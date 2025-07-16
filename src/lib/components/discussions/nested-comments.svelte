@@ -37,7 +37,7 @@
         <button class="reply-btn" on:click={() => toggleReply(comment.id)} aria-label="Reply">Reply</button>
       </div>
       {#if replying[comment.id]}
-        <div class="mb-2">
+        <div class="mb-2 pr-2">
           <textarea class="border rounded px-2 py-1 w-full min-h-[40px]" placeholder="Write your reply..."></textarea>
           <div class="flex gap-2 mt-1">
             <button class="send-btn" disabled>Send</button>

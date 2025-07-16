@@ -25,7 +25,7 @@
 </svelte:head>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
-	<h1 class="mb-2 text-2xl font-bold text-rose-600 sm:mb-4 sm:text-3xl md:text-4xl">
+	<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">
 NextRoots
 	</h1>
 

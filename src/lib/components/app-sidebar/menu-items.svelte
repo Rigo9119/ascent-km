@@ -13,8 +13,8 @@
           href={item.url}
           {...props}
           class={page.url.pathname === item.url
-            ? 'text-rose-600 font-semibold bg-rose-50 flex items-center gap-2 rounded px-2 py-1'
-            : 'flex items-center gap-2 rounded px-2 py-1 hover:bg-rose-50 hover:text-rose-600 transition-colors'}
+            ? 'text-emerald-600 font-semibold bg-emerald-50 flex items-center gap-2 rounded px-2 py-1'
+            : 'flex items-center gap-2 rounded px-2 py-1 hover:bg-emerald-50 hover:text-emerald-600 transition-colors'}
         >
           <item.icon class="w-4 h-4 stroke-2" />
           <span>{item.title}</span>

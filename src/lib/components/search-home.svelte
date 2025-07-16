@@ -54,7 +54,7 @@
 					placeholder="Search for locations, resources, events or communities"
 					inputId="search"
 					type="search"
-					customClass="mt-1 block w-full rounded-md border border-gray-300 pl-8 pr-3 py-2 shadow-sm focus:border-rose-500 focus:outline-none focus:ring-rose-500 sm:pl-10"
+					customClass="mt-1 block w-full rounded-md border border-gray-300 pl-8 pr-3 py-2 shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-emerald-500 sm:pl-10"
 					oninput={(event: HtmlInputEvent) => {
 						const target = event.currentTarget as HTMLInputElement;
 						field?.handleChange(target.value);
@@ -68,7 +68,7 @@
 		<Card class="mt-3 sm:mt-4">
 			<CardContent class="p-4">
 				<div class="flex items-center justify-center">
-					<div class="animate-spin rounded-full h-6 w-6 border-b-2 border-rose-500"></div>
+					<div class="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-500"></div>
 					<span class="ml-2 text-sm text-gray-600">Searching...</span>
 				</div>
 			</CardContent>

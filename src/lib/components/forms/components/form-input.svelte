@@ -48,7 +48,7 @@
 		{placeholder}
 		{required}
 		class={customClass ||
-			'mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-rose-500 focus:ring-rose-500 focus:outline-none'}
+			'mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 focus:outline-none'}
 		oninput={oninput}
 	/>
 	{#if field?.state.meta.errors}

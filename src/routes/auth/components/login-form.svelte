@@ -6,7 +6,7 @@
 	import type { AnyFieldApi, AnyFormApi, AnyFormState, FormApi } from '@tanstack/svelte-form';
 
 	type LoginFormProps = {
-		form: AnyFormApi;
+		form: any;
 		mode: AuthMode;
 		isLoading: boolean;
 	};
@@ -67,7 +67,7 @@
 		})}
 	>
 		{#snippet children()}
-			<Button type="submit" class="w-full cursor-pointer bg-rose-500 hover:bg-rose-600">
+			<Button type="submit" class="w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600">
 				{isLoading ? 'Loading...' : mode === 'login' ? 'Login' : 'Sign Up'}
 			</Button>
 		{/snippet}

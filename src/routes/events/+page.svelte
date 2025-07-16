@@ -49,7 +49,7 @@
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 	<div class="mb-6 sm:mb-8">
-		<h1 class="mb-2 text-2xl font-bold text-rose-600 sm:mb-4 sm:text-3xl md:text-4xl">Events</h1>
+		<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">Events</h1>
 		<p class="text-muted-foreground text-sm sm:text-base">
 			Discover exciting events happening in Korea
 		</p>
@@ -68,7 +68,7 @@
 			{#if user}
 				<Sheet.Root>
 					<Sheet.Trigger class='w-full'>
-						<Button class="mt-4 w-full bg-rose-500 hover:bg-rose-600">Create Event</Button>
+						<Button class="mt-4 w-full bg-emerald-500 hover:bg-emerald-600">Create Event</Button>
 					</Sheet.Trigger>
 					<Sheet.Content side="right">
 						<Sheet.Header>

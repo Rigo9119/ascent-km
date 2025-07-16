@@ -110,7 +110,7 @@
 	</Label>
 	<input
 		type="text"
-		class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-rose-500 focus:ring-rose-500 focus:outline-none"
+		class="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 focus:outline-none"
 		{placeholder}
 		bind:value={searchInput}
 		oninput={handleInput}
@@ -122,7 +122,7 @@
 			<Card class="absolute right-0 left-0 z-10 mt-1">
 				<CardContent class="p-4">
 					<div class="flex items-center justify-center">
-						<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-rose-500"></div>
+						<div class="h-4 w-4 animate-spin rounded-full border-b-2 border-emerald-500"></div>
 						<span class="ml-2 text-sm text-gray-600">Searching...</span>
 					</div>
 				</CardContent>
@@ -133,7 +133,7 @@
 					<ul>
 						{#each searchResults as result, i (i)}
 							<li
-								class="cursor-pointer border-b border-gray-100 px-4 py-2 last:border-b-0 hover:bg-rose-100"
+								class="cursor-pointer border-b border-gray-100 px-4 py-2 last:border-b-0 hover:bg-emerald-100"
 								onmousedown={() => selectResult(result)}
 							>
 								{result.city}, {result.country}

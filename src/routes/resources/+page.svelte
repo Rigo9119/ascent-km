@@ -29,7 +29,7 @@
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 	<!-- Header -->
 	<div class="mb-8 text-left">
-		<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-rose-600">
+		<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-emerald-600">
 			Resources for Korea
 		</h1>
 		<p class="text-muted-foreground">

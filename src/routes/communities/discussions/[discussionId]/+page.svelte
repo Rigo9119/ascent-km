@@ -98,7 +98,7 @@
 					<img
 						src={author.avatar}
 						alt={author.name}
-						class="mb-2 h-20 w-20 rounded-full border-2 border-rose-400"
+						class="mb-2 h-20 w-20 rounded-full border-2 border-emerald-400"
 					/>
 					<CardTitle class="text-center">{author.name}</CardTitle>
 				</div>
@@ -122,7 +122,7 @@
 				<ul class="flex flex-col gap-2">
 					{#each popularCommunities as community}
 						<li>
-							<a href={community.url} class="text-rose-600 hover:underline">{community.name}</a>
+							<a href={community.url} class="text-emerald-600 hover:underline">{community.name}</a>
 						</li>
 					{/each}
 				</ul>
@@ -138,7 +138,7 @@
 				<ul class="flex flex-col gap-2">
 					{#each relatedCommunities as community}
 						<li>
-							<a href={community.url} class="text-rose-600 hover:underline">{community.name}</a>
+							<a href={community.url} class="text-emerald-600 hover:underline">{community.name}</a>
 						</li>
 					{/each}
 				</ul>

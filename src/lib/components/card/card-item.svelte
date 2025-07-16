@@ -38,7 +38,7 @@
 		<p class="mt-2 text-sm">{cardItem.description}</p>
 	</Card.Content>
 	<Card.Footer class="p-4 pt-0">
-		<Button class="w-full bg-rose-500 hover:bg-rose-600 cursor-pointer" onclick={() => viewDetails(cardItem.id)}
+		<Button class="w-full bg-emerald-500 hover:bg-emerald-600 cursor-pointer" onclick={() => viewDetails(cardItem.id)}
 			>More</Button
 		>
 	</Card.Footer>

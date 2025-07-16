@@ -95,9 +95,9 @@
 	<Sidebar.Root>
 		<Sidebar.Header>
 			<div class="flex flex-row items-center justify-between">
-				<h2 class="font-semibold text-rose-600">Menu</h2>
+				<h2 class="font-semibold text-emerald-600">Menu</h2>
 				<Button variant="ghost" size="icon" onclick={() => sidebar.toggle()}>
-					<CircleX color="oklch(58.6% 0.253 17.585)" />
+					<CircleX color="oklch(59.6% 0.145 163.225)" />
 				</Button>
 			</div>
 		</Sidebar.Header>
@@ -128,11 +128,11 @@
 			{#if user === undefined}
 				<!-- Optionally, show a spinner or nothing while loading -->
 			{:else if !user}
-				<Button href="/auth?mode=login" class="bg-rose-500 hover:bg-rose-600">Log in</Button>
-				<Button href="/auth?mode=signup" class="bg-rose-500 hover:bg-rose-600">Sign up</Button>
+				<Button href="/auth?mode=login" class="bg-emerald-500 hover:bg-emerald-600">Log in</Button>
+				<Button href="/auth?mode=signup" class="bg-emerald-500 hover:bg-emerald-600">Sign up</Button>
 			{:else}
 				<form action="/auth/logout" method="POST">
-					<Button type="submit" class="w-full bg-rose-500 hover:bg-rose-600">Log out</Button>
+					<Button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-600">Log out</Button>
 				</form>
 			{/if}
 		</Sidebar.Footer>

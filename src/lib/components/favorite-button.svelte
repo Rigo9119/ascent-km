@@ -61,7 +61,7 @@
 	variant={isFavorited ? 'default' : 'outline'}
 	onclick={toggleFavorite}
 	disabled={isLoading}
-	class="transition-all duration-200 hover:scale-105 {isFavorited ? 'bg-rose-500 hover:bg-rose-600' : ''}"
+	class="transition-all duration-200 hover:scale-105 {isFavorited ? 'bg-emerald-500 hover:bg-emerald-600' : ''}"
 >
 	<Heart
 		class="transition-all duration-200 {isFavorited ? 'fill-current' : ''}"

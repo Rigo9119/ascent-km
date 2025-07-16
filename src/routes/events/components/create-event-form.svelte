@@ -418,7 +418,7 @@
 		{#snippet children({ canSubmit, isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
 			<Button
 				type="submit"
-				class="mt-6 w-full cursor-pointer bg-rose-500 hover:bg-rose-600"
+				class="mt-6 w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600"
 				disabled={!canSubmit || isSubmitting}
 			>
 				{isSubmitting ? 'Submitting...' : 'Complete your profile'}

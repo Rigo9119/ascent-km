@@ -25,39 +25,61 @@
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 	<!-- Header Section -->
 	<div class="mb-6 sm:mb-8">
-		<h1 class="mb-2 text-2xl font-bold text-rose-600 sm:mb-4 sm:text-3xl md:text-4xl">
+		<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">
 			Communities
 		</h1>
-		<div class="flex items-center justify-between">
+		<div class="flex items-center justify-between gap-2">
 			<p class="text-muted-foreground mb-0 text-sm sm:text-base">
 				Join communities and connect with people who share your interests
 			</p>
-			{#if user}
-				<Sheet.Root>
-					<Sheet.Trigger>
-						<Button class="bg-rose-500 hover:bg-rose-600">Create Community</Button>
-					</Sheet.Trigger>
-
-					<Sheet.Content side="right">
-						<Sheet.Header>
-							<Sheet.Title>Create Community</Sheet.Title>
-						</Sheet.Header>
-						<CreateCommunityForm />
-					</Sheet.Content>
-				</Sheet.Root>
-			{/if}
+			<div class="flex gap-2">
+				<Button
+					href="/communities/discussions"
+					class="border border-emerald-500 bg-white text-emerald-600 hover:bg-emerald-50"
+					>View Discussions</Button
+				>
+				{#if user}
+					<Sheet.Root>
+						<Sheet.Trigger>
+							<Button class="bg-emerald-500 hover:bg-emerald-600">Create Community</Button>
+						</Sheet.Trigger>
+						<Sheet.Content side="right">
+							<Sheet.Header>
+								<Sheet.Title>Create Community</Sheet.Title>
+							</Sheet.Header>
+							<CreateCommunityForm />
+						</Sheet.Content>
+					</Sheet.Root>
+				{/if}
+			</div>
 		</div>
 	</div>
 
 	<!-- Recent Discussions Section -->
 	<section class="mb-8">
 		<h2 class="mb-4 text-xl font-semibold sm:mb-6 sm:text-2xl md:text-3xl">Recent Discussions</h2>
-		<ul class="list-disc pl-6 space-y-2">
+		<ul class="list-disc space-y-2 pl-6">
 			<!-- Placeholder discussions -->
-			<li><a href="/communities/discussions/1" class="text-rose-600 hover:underline">How to find housing in Seoul?</a></li>
-			<li><a href="/communities/discussions/2" class="text-rose-600 hover:underline">Best places to eat Korean BBQ</a></li>
-			<li><a href="/communities/discussions/3" class="text-rose-600 hover:underline">Tips for learning Korean fast</a></li>
-			<li><a href="/communities/discussions/4" class="text-rose-600 hover:underline">Making friends as an expat</a></li>
+			<li>
+				<a href="/communities/discussions/1" class="text-emerald-600 hover:underline"
+					>How to find housing in Seoul?</a
+				>
+			</li>
+			<li>
+				<a href="/communities/discussions/2" class="text-emerald-600 hover:underline"
+					>Best places to eat Korean BBQ</a
+				>
+			</li>
+			<li>
+				<a href="/communities/discussions/3" class="text-emerald-600 hover:underline"
+					>Tips for learning Korean fast</a
+				>
+			</li>
+			<li>
+				<a href="/communities/discussions/4" class="text-emerald-600 hover:underline"
+					>Making friends as an expat</a
+				>
+			</li>
 		</ul>
 	</section>
 

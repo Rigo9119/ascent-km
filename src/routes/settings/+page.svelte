@@ -7,7 +7,7 @@
 </script>
 
 <div class="mx-auto max-w-2xl px-4 py-8">
-  <h2 class="mb-6 text-2xl font-bold text-rose-600 sm:text-3xl">Settings</h2>
+  <h2 class="mb-6 text-2xl font-bold text-emerald-600 sm:text-3xl">Settings</h2>
 
   <!-- Account Settings -->
   <Card class="mb-6">

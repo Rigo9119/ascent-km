@@ -3,7 +3,7 @@
 </script>
 
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
-	<h2 class="md:mb-10 font-bold text-rose-600 mb-4 text-3xl md:text-4xl">
+	<h2 class="md:mb-10 font-bold text-emerald-600 mb-4 text-3xl md:text-4xl">
 		My Favourites
 	</h2>
 		<!-- Favourites: Events -->
