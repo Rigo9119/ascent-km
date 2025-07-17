@@ -92,28 +92,6 @@
 		}
 	}
 
-	async function signInWithFacebook() {
-		try {
-			isLoading = true;
-			error = '';
-			const { error: signInError } = await supabase.auth.signInWithOAuth({
-				provider: 'facebook',
-				options: {
-					redirectTo: `${window.location.origin}/`
-				}
-			});
-			if (signInError) throw signInError;
-		} catch (e) {
-			if (e instanceof Error) {
-				error = e.message;
-			} else {
-				error = 'An unexpected error occurred';
-			}
-		} finally {
-			isLoading = false;
-		}
-	}
-
 	async function signInWithKakao() {
 		try {
 			isLoading = true;
@@ -142,7 +120,7 @@
 		<div class="text-center">
 			<h2 class="text-3xl font-bold">{mode === 'login' ? 'Login' : 'Sign Up'}</h2>
 			{#if !success}
-				<LoginProviders {isLoading} {signInWithGoogle} {signInWithFacebook} {signInWithKakao} />
+				<LoginProviders {isLoading} {signInWithGoogle} {signInWithKakao} />
 			{/if}
 		</div>
 
