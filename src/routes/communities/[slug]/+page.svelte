@@ -13,9 +13,11 @@
 	import Minus from '@lucide/svelte/icons/minus';
 	import type { Community } from '@/lib/types';
 	import { type PageData } from '../$types';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 
 	interface CommunityPageProps {
 		community: Community;
+		user?: { id: string };
 	}
 
 	const { data }: { data: CommunityPageProps } = $props();
@@ -23,6 +25,7 @@
 	let currentCommunity = $state(data.community);
 	let relatedCommunities = $state<Community[]>([]);
 	let isMember = $state(false);
+	let user = data.user;
 
 	function goBack() {
 		goto('/communities');
@@ -253,6 +256,64 @@
 						<Heart class="h-4 w-4" />
 					</Button.Root>
 				</div>
+
+				<!-- Owner Actions Card -->
+				{#if user && user.id === currentCommunity.organizer_id}
+					<Card.Root>
+						<Card.Header>
+							<Card.Title>Owner Actions</Card.Title>
+						</Card.Header>
+						<Card.Content class="space-y-3">
+							<!-- Delete Community Modal -->
+							<Dialog.Root>
+								<Dialog.Trigger>
+									<Button.Root class="w-full" variant="destructive">Delete Community</Button.Root>
+								</Dialog.Trigger>
+								<Dialog.Content>
+									<Dialog.Header>
+										<Dialog.Title>Delete Community</Dialog.Title>
+									</Dialog.Header>
+									<Dialog.Description>
+										Are you sure you want to delete this community? This action cannot be undone.
+									</Dialog.Description>
+									<Dialog.Footer>
+										<Dialog.Close>
+											<Button.Root variant="outline">Cancel</Button.Root>
+										</Dialog.Close>
+										<Button.Root variant="destructive">Confirm Delete</Button.Root>
+									</Dialog.Footer>
+								</Dialog.Content>
+							</Dialog.Root>
+
+							<!-- Transfer Ownership Modal -->
+							<Dialog.Root>
+								<Dialog.Trigger>
+									<Button.Root class="w-full" variant="outline">Transfer Ownership</Button.Root>
+								</Dialog.Trigger>
+								<Dialog.Content>
+									<Dialog.Header>
+										<Dialog.Title>Transfer Ownership</Dialog.Title>
+									</Dialog.Header>
+									<Dialog.Description>
+										Select a new owner for this community.
+									</Dialog.Description>
+									<!-- TODO: Add user selection UI here -->
+									<Dialog.Footer>
+										<Dialog.Close>
+											<Button.Root variant="outline">Cancel</Button.Root>
+										</Dialog.Close>
+										<Button.Root variant="default">Transfer</Button.Root>
+									</Dialog.Footer>
+								</Dialog.Content>
+							</Dialog.Root>
+
+							<!-- Edit Community Button -->
+							<Button.Root class="w-full" variant="secondary" onclick={() => goto(`/communities/${currentCommunity.id}/edit`)}>
+								Edit Community
+							</Button.Root>
+						</Card.Content>
+					</Card.Root>
+				{/if}
 
 				<!-- Join Community Card -->
 				<Card.Root>
