@@ -13,4 +13,21 @@ export class CommunitiesService {
 			throw new Error(`getAllCommunities-services-error: ${error}`);
 		}
 	}
+
+	static async getFeaturedCommunities() {
+		try {
+			const { data: featuredCommunities, error: sbError } = await supabaseClient
+				.from('communities')
+				.select('*')
+				.eq('is_public', true)
+				.eq('is_featured', true)
+				.order('member_count', { ascending: false })
+				.limit(4);
+
+			if (sbError) throw new Error(`getFeaturedCommunities error: ${sbError}`);
+			return featuredCommunities;
+		} catch (error) {
+			throw new Error(`getFeaturedCommunities-services-error: ${error}`);
+		}
+	}
 }
