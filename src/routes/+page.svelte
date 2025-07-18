@@ -7,8 +7,8 @@
 
 	const { data }: { data: PageData } = $props();
 
-	const locations = $derived(data.appLocations as AppLocation[]);
-	const events = $derived(data.appEvents as AppEvent[]);
+	const locations = $derived(data.locations as AppLocation[]);
+	const events = $derived(data.events as AppEvent[]);
 	const featuredLocations = $derived(data.featuredLocations as AppLocation[]);
 	const trendingEvents = $derived(data.trendingEvents as AppEvent[]);
 	const featuredCommunities = $derived(data.featuredCommunities as Community[]);
