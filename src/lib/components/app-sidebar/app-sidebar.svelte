@@ -96,7 +96,7 @@
 		<Sidebar.Header>
 			<div class="flex flex-row items-center justify-between">
 				<h2 class="font-semibold text-emerald-600">Menu</h2>
-				<Button variant="ghost" size="icon" onclick={() => sidebar.toggle()}>
+				<Button variant="ghost" size="icon" onclick={() => sidebar.toggle()} >
 					<CircleX color="oklch(59.6% 0.145 163.225)" />
 				</Button>
 			</div>

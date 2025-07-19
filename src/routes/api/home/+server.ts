@@ -4,14 +4,21 @@ import { LocationService } from '@/lib/services/locations-service';
 
 export async function GET() {
 	try {
-		const locations = await LocationService.getAllLocations();
-		const featuredLocations = await LocationService.getFeaturedLocations();
-
-		const events = await EventsService.getAllEvents();
-		const trendingEvents = await EventsService.getTrendingEvents();
-
-		const communities = await CommunitiesService.getAllCommunities();
-		const featuredCommunities = await CommunitiesService.getFeaturedCommunities();
+		const [
+			locations,
+			featuredLocations,
+			events,
+			trendingEvents,
+			communities,
+			featuredCommunities
+		] = await Promise.all([
+			LocationService.getAllLocations(),
+			LocationService.getFeaturedLocations(),
+			EventsService.getAllEvents(),
+			EventsService.getTrendingEvents(),
+			CommunitiesService.getAllCommunities(),
+			CommunitiesService.getFeaturedCommunities()
+		]);
 
 		const responseObj = {
 			locations,

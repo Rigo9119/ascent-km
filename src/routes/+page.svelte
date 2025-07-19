@@ -14,6 +14,9 @@
 	const featuredCommunities = $derived(data.featuredCommunities as Community[]);
 	const carouselLocations = $derived([...locations].sort(() => Math.random() - 0.5));
 	const carouselEvents = $derived([...events].sort(() => Math.random() - 0.5));
+
+	const FIRST_CARROUSEL_DELAY = 5000;
+	const SECOND_CARROUSEL_DELAY = 4500;
 </script>
 
 <svelte:head>
@@ -24,33 +27,67 @@
 	/>
 </svelte:head>
 
-<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
-	<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">
-NextRoots
-	</h1>
+{#if !data}
+	<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
+		<!-- Skeleton for header -->
+		<div class="mb-6 sm:mb-8">
+			<div class="h-8 bg-gray-200 rounded w-48 mb-4 animate-pulse"></div>
+			<div class="h-4 bg-gray-200 rounded w-96 animate-pulse"></div>
+		</div>
+		
+		<!-- Skeleton for search -->
+		<div class="h-16 bg-gray-200 rounded-lg mb-8 animate-pulse"></div>
+		
+		<!-- Skeleton for carousel sections -->
+		<div class="space-y-8">
+			<div>
+				<div class="h-6 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+					{#each Array(4) as _}
+						<div class="h-48 bg-gray-200 rounded-lg animate-pulse"></div>
+					{/each}
+				</div>
+			</div>
+			
+			<div>
+				<div class="h-6 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
+				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+					{#each Array(4) as _}
+						<div class="h-48 bg-gray-200 rounded-lg animate-pulse"></div>
+					{/each}
+				</div>
+			</div>
+		</div>
+	</div>
+{:else}
+	<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
+		<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">
+			NextRoots
+		</h1>
 
-	<!-- Search Section -->
-	<SearchHome />
+		<!-- Search Section -->
+		<SearchHome />
 
-	<HomeSection sectionTitle="Locations" carouselItems={carouselLocations} carouselDelay={5000} />
-	<HomeSection sectionTitle="Events" carouselItems={carouselEvents} carouselDelay={4500} />
-	<TrendingSection
-		sectionTitle="Top locations"
-		sectionItems={featuredLocations}
-		urlSection="locations"
-	/>
-
-	{#if trendingEvents.length > 0}	
+		<HomeSection sectionTitle="Locations" carouselItems={carouselLocations} carouselDelay={5000} />
+		<HomeSection sectionTitle="Events" carouselItems={carouselEvents} carouselDelay={4500} />
 		<TrendingSection
-			sectionTitle="Trending events"
-			sectionItems={trendingEvents}
-			urlSection="events"
-			/>
-	{/if}
-	
-	<TrendingSection
-		sectionTitle="Popular communities"
-		sectionItems={featuredCommunities}
-		urlSection="communities"
-	/>
-</div>
+			sectionTitle="Top locations"
+			sectionItems={featuredLocations}
+			urlSection="locations"
+		/>
+
+		{#if trendingEvents.length > 0}	
+			<TrendingSection
+				sectionTitle="Trending events"
+				sectionItems={trendingEvents}
+				urlSection="events"
+				/>
+		{/if}
+		
+		<TrendingSection
+			sectionTitle="Popular communities"
+			sectionItems={featuredCommunities}
+			urlSection="communities"
+		/>
+	</div>
+{/if}

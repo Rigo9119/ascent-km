@@ -6,6 +6,7 @@
 	import type { LayoutData } from './$types';
 	import { setContext } from 'svelte';
 	import AppBreacrumbs from '@/lib/components/app-sidebar/app-breacrumbs.svelte';
+	import { fade } from 'svelte/transition';
 
 	export let data: LayoutData;
 
@@ -29,6 +30,8 @@
 				<AppBreacrumbs {breadcrumbs} />
 			{/if}
 		</div>
-		<slot />
+		<div transition:fade={{ duration: 200 }}>
+			<slot />
+		</div>
 	</main>
 </Sidebar.Provider>
