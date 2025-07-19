@@ -5,5 +5,7 @@ export const load: PageLoad = async ({ fetch }) => {
   const resourcesRes = await fetch('/api/resources')
   const resourcesData = await resourcesRes.json()
 
-  return resourcesData
+  return {
+    resources: resourcesData
+  }
 };
