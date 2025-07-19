@@ -1,6 +1,6 @@
 import { CommunitiesService } from '@/lib/services/communities-service';
 import { EventsService } from '@/lib/services/events-service';
-import { LocationService } from '@/lib/services/locations-service';
+import { LocationsService } from '@/lib/services/locations-service';
 
 export async function GET() {
 	try {
@@ -12,8 +12,8 @@ export async function GET() {
 			communities,
 			featuredCommunities
 		] = await Promise.all([
-			LocationService.getAllLocations(),
-			LocationService.getFeaturedLocations(),
+			LocationsService.getAllLocations(),
+			LocationsService.getFeaturedLocations(),
 			EventsService.getAllEvents(),
 			EventsService.getTrendingEvents(),
 			CommunitiesService.getAllCommunities(),

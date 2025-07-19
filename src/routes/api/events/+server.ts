@@ -1,11 +1,11 @@
 import { EventsService } from '@/lib/services/events-service.js';
-import { LocationService } from '@/lib/services/locations-service.js';
+import { LocationsService } from '@/lib/services/locations-service.js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export async function GET() {
 	const [events, locations ] = await Promise.all([
 		EventsService.getEventsWithDetails(),
-		LocationService.getLocationsNamesAndIds()
+		LocationsService.getLocationsNamesAndIds()
 	])
 
 	const locationsFilter = locations.map(

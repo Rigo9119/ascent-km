@@ -1,6 +1,6 @@
 import { supabaseClient } from '../supabase';
 
-export class LocationService {
+export class LocationsService {
 	static async getAllLocations() {
 		try {
 			const { data: locations, error: sbError } = await supabaseClient
