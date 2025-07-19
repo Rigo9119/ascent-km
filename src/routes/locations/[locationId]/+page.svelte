@@ -59,7 +59,7 @@
 
 	<!-- Hero Image -->
 	<HeroLocationsSlug
-		heroSrc={currentLocation?.image as string}
+		heroSrc={currentLocation?.image_url as string}
 		heroAlt={currentLocation?.name as string}
 		heroName={currentLocation?.name as string}
 		heroAddress={currentLocation?.address as string}

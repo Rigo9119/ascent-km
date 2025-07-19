@@ -8,6 +8,6 @@ export const load: PageLoad = async ({  params, url, fetch }) => {
 		const eventRes = await fetch(`/api/events/${eventId}`)
 		const eventData = await eventRes.json()
 
-		return { appEvent: eventData[0], urlSegments };
+		return { appEvent: eventData, urlSegments };
 
 };

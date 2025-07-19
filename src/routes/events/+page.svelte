@@ -26,17 +26,17 @@
 	const categoryOptions: { value: string; label: string }[] =
 		$state<{ value: string; label: string }[]>(categories);
 
-	const filteredEvents = $derived(
-		appEvents.filter((event) => {
-			const { year, month, day } = parseAbsoluteToLocal(event.date);
-			const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
-			const eventDate = new CalendarDate(year, month, day);
-			const matchesDate = !dateValue || isSameDay(eventDate, dateValue);
-			const matchesType = selectedType === 'all' || event.type === selectedType;
-			const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
-			return matchesCategory && matchesDate && matchesType && matchesLocation;
-		})
-	);
+	// const filteredEvents = $derived(
+	// 	appEvents.filter((event) => {
+	// 		const { year, month, day } = parseAbsoluteToLocal(event.date);
+	// 		const matchesCategory = selectedCategory === 'all' || event.category === selectedCategory;
+	// 		const eventDate = new CalendarDate(year, month, day);
+	// 		const matchesDate = !dateValue || isSameDay(eventDate, dateValue);
+	// 		const matchesType = selectedType === 'all' || event.type === selectedType;
+	// 		const matchesLocation = selectedLocation === 'all' || event.location === selectedLocation;
+	// 		return matchesCategory && matchesDate && matchesType && matchesLocation;
+	// 	})
+	// );
 </script>
 
 <svelte:head>

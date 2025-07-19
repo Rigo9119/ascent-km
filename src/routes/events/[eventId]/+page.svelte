@@ -78,7 +78,7 @@
 	<div class="mb-6 sm:mb-8">
 		<div class="relative aspect-[2/1] overflow-hidden rounded-lg">
 			<img
-				src={appEvent?.image || 'https://source.unsplash.com/random/1200x600?event'}
+				src={appEvent?.image_url || 'https://source.unsplash.com/random/1200x600?event'}
 				alt={appEvent?.name}
 				class="h-full w-full object-cover"
 			/>
