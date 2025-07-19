@@ -1,16 +1,17 @@
 <script lang="ts">
+	import type { PageData } from '../$types';
 	import QuickTips from './components/quick-tips.svelte';
 	import ResourceCategories from './components/resource-categories.svelte';
 	import type { Resource } from '@/lib/types';
 
-	export let data: { resources: Resource[] };
+	const { data }: { data: PageData} = $props()
 
 	const { resources } = data;
 
-	const categories = [...new Set(resources.map((r) => r.category))];
+	const categories = [...new Set(resources.map((resource: Resource) => resource.category))];
 
 	function getResourcesByCategory(category: string) {
-		return resources.filter((r) => r.category === category);
+		return resources.filter((resource: Resource) => resource.category === category);
 	}
 
 	function openResource(url: string) {

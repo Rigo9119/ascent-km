@@ -1,8 +1,8 @@
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch }) => {
-	const homePageData = await fetch('/api/home');
-	const homeData= await homePageData.json();
+	const homeRes = await fetch('/api/home');
+	const homeData= await homeRes.json();
 
 	return homeData;
 };
