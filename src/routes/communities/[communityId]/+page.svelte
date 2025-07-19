@@ -103,7 +103,7 @@
 		<div class="mb-6 sm:mb-8">
 			<div class="relative aspect-[2/1] overflow-hidden rounded-lg">
 				<img
-					src={currentCommunity.image}
+					src={currentCommunity.image_url}
 					alt={currentCommunity.name}
 					class="h-full w-full object-cover"
 				/>
