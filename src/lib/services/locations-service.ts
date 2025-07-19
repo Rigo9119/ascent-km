@@ -28,4 +28,17 @@ export class LocationService {
 			throw new Error(`getFeaturedLocations-services-error: ${error}`);
 		}
 	}
+
+	static async getLocationsNamesAndIds() {
+		try {
+			const { data: locations, error: sbError } = await supabaseClient.rpc(
+				'get_location_names_and_ids'
+			);
+			
+			if (sbError) throw new Error(`locations ids error: ${sbError}`);
+			return locations 
+		} catch (error) {
+			throw new Error(`getLocationsNamesAndIds-service-error: ${error}`);
+		}
+	}
 }

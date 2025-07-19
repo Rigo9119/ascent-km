@@ -1,4 +1,22 @@
+import { EventsService } from '@/lib/services/events-service.js';
+import { LocationService } from '@/lib/services/locations-service.js';
 import type { RequestHandler } from '@sveltejs/kit';
+
+export async function GET() {
+	const [events, locations ] = await Promise.all([
+		EventsService.getEventsWithDetails(),
+		LocationService.getLocationsNamesAndIds()
+	])
+
+	const locationsFilter = locations.map(
+		(location: { location_id: string; location_name: string }) => ({
+			value: location.location_id,
+			label: location.location_name
+		})
+	);
+
+	return new Response(JSON.stringify({ events: events, locationsFilter: locationsFilter }));
+}
 
 export const POST: RequestHandler = async ({ request, locals: { supabase, getUser } }) => {
 	const user = await getUser();
@@ -13,4 +31,4 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getUse
 		.single();
 	if (error) return new Response(error.message, { status: 400 });
 	return new Response(JSON.stringify(data), { status: 201 });
-}; 
+};

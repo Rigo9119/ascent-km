@@ -11,12 +11,16 @@
 	import Heart from '@lucide/svelte/icons/heart';
 	import Ticket from '@lucide/svelte/icons/ticket';
 	import { format } from 'date-fns';
-	import type { AppEvent } from '@/lib/types';
+	import type { AppEvent, AppEventWithJoinedData } from '@/lib/types';
 	import { getCategoryColor, getTypeColor, getFeeColor } from '@/lib/utils';
 	import RelatedItems from '@/lib/components/related-items.svelte';
-	import type { PageProps } from './$types';
 
-	let { data }: PageProps= $props();
+	interface EventPageData {
+		appEvent: AppEventWithJoinedData,
+		urlSegments: string
+	}
+
+	let { data }: { data: EventPageData}= $props();
 	const { appEvent, urlSegments } = data;
 
 	let relatedEvents = $state<AppEvent[]>([] as AppEvent[]);
@@ -88,12 +92,7 @@
 					>
 						{appEvent?.category_name}
 					</span>
-					<span
-						class="rounded-full px-3 py-1 text-sm font-medium"
-					>
-						{appEvent?.type_name}
-					</span>
-					<span class="rounded-full px-3 py-1 text-sm font-medium {getFeeColor(appEvent?.fee || false)}">
+					<span class="rounded-full px-3 py-1 text-sm font-medium {getFeeColor(appEvent?.is_free || false)}">
 						{appEvent?.is_free ? 'Paid Event' : 'Free Event'}
 					</span>
 				</div>
@@ -184,12 +183,12 @@
 					<div class="text-center">
 						<p class="text-primary text-2xl font-bold">{appEvent?.price}</p>
 						<p class="text-muted-foreground text-sm">
-							{appEvent?.fee ? 'Paid Event' : 'Free Event'}
+							{appEvent?.is_free ? 'Paid Event' : 'Free Event'}
 						</p>
 					</div>
 
 					<Button.Root class="w-full" onclick={registerForEvent}>
-						{appEvent?.fee ? 'Buy Tickets' : 'Register Now'}
+						{appEvent?.is_free ? 'Buy Tickets' : 'Register Now'}
 					</Button.Root>
 				</Card.Content>
 			</Card.Root>

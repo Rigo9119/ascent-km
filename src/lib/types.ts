@@ -215,3 +215,15 @@ export interface ToggleFavoriteResponse {
 	message?: string;
 }
 
+// Event with joined data from related tables
+export interface AppEventWithJoinedData extends AppEvent {
+	attendees_count: number;
+	category_name: string;
+	event_type_name: string;
+	location_name: string;
+	image_path: string;
+	image_url: string;
+	is_featured: boolean;
+	rating: number;
+}
+

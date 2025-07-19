@@ -28,5 +28,31 @@ export class EventsService {
 			throw new Error(`getTrendingEvents-service-error: ${error}`);
 		}
 	}
-}
 
+	static async getEventsWithDetails() {
+		try {
+			const { data: events, error: sbError } = await supabaseClient.rpc(
+				'get_events_with_details_v2'
+			);
+
+			if (sbError) throw new Error(`events details error: ${sbError}`);
+			return events;
+		} catch (error) {
+			throw new Error(`getEventsWithDetails-service-error: ${error}`);
+		}
+	}
+
+	static async getEventById(eventId: string) {
+		try {
+			const { data: event, error: sbError } = await supabaseClient.rpc('get_event_by_id', {
+				event_id_param: `${eventId}`
+			});
+
+			if (sbError) if (sbError) throw new Error(`event error: ${sbError}`);
+
+			return event;
+		} catch (error) {
+			throw new Error(`getEventById-service-error: ${error}`);
+		}
+	}
+}
