@@ -14,7 +14,7 @@ export type AppEvent = {
 	category_id: string; // UUID
 	event_type_id: string; // UUID
 	is_free: boolean;
-	image?: string;
+	image_url?: string;
 	time?: string;
 	capacity?: number;
 	organizer?: string;
@@ -35,7 +35,7 @@ export type AppLocation = {
 	address: string;
 	lat: number;
 	lng: number;
-	image?: string;
+	image_url?: string;
 	open_hour?: number;
 	close_hour?: number;
 	days_open?: string | null;

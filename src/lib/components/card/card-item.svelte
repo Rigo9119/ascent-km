@@ -19,7 +19,7 @@
 
 <Card.Root class="flex h-full flex-col py-0">
 	<Card.Header class="relative p-0">
-		<img src={cardItem.image} alt={cardItem.name} class="h-40 w-full rounded-t-lg object-cover" />
+		<img src={cardItem.image_url} alt={cardItem.name} class="h-40 w-full rounded-t-lg object-cover" />
 		<Button
 			variant="ghost"
 			size="icon"

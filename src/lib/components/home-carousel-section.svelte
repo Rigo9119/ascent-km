@@ -37,7 +37,7 @@
 									class="relative flex h-full min-h-[28vh] w-full items-center justify-center p-0"
 								>
 									<img
-										src={item.image}
+										src={item.image_url}
 										alt={item.name}
 										class="absolute inset-0 h-full w-full object-cover"
 									/>
