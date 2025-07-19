@@ -130,11 +130,20 @@
 		{:else if searchResults.length > 0}
 			<Card class="absolute right-0 left-0 z-10 mt-1 max-h-60 overflow-auto">
 				<CardContent class="p-0">
-					<ul>
+					<ul role="listbox" aria-label="Location search results">
 						{#each searchResults as result, i (i)}
 							<li
-								class="cursor-pointer border-b border-gray-100 px-4 py-2 last:border-b-0 hover:bg-emerald-100"
+								role="option"
+								aria-selected="false"
+								class="cursor-pointer border-b border-gray-100 px-4 py-2 last:border-b-0 hover:bg-emerald-100 focus:bg-emerald-100 focus:outline-none"
 								onmousedown={() => selectResult(result)}
+								onkeydown={(e) => {
+									if (e.key === 'Enter' || e.key === ' ') {
+										e.preventDefault();
+										selectResult(result);
+									}
+								}}
+								tabindex="0"
 							>
 								{result.city}, {result.country}
 							</li>
