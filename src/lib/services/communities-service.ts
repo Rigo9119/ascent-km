@@ -62,4 +62,20 @@ export class CommunitiesService {
 			throw new Error(`getPublicCommunities-services-error: ${error}`);
 		}
 	}
+
+	static async getCommunityById(communityId: string) {
+		try {
+			const { data: community, error: sbError } = await supabaseClient
+		.from('communities')
+		.select('*')
+		.eq('id', communityId)
+		.single();
+
+		if (sbError) throw new Error(`getCommunityById error: ${sbError}`);
+
+		return community
+		} catch (error) {
+			throw new Error(`getCommunityById-services-error: ${error}`);
+		}
+	}
 }
