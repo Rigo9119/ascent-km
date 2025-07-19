@@ -30,4 +30,36 @@ export class CommunitiesService {
 			throw new Error(`getFeaturedCommunities-services-error: ${error}`);
 		}
 	}
+
+	static async getPublicCommunities() {
+		try {
+			const { data: communities, error: sbError } = await supabaseClient
+			.from('communities')
+			.select('*')
+			.eq('is_public', true)
+			.order('created_at', { ascending: false });
+
+			if (sbError) throw new Error(`getPublicCommunities error: ${sbError}`);
+			return communities;
+		} catch (error) {
+			throw new Error(`getPublicCommunities-services-error: ${error}`);
+		}
+	}
+
+	static async getPublicFeaturedCommunities() {
+		try {
+			const { data: communities, error: sbError } = await supabaseClient
+			.from('communities')
+			.select('*')
+			.eq('is_public', true)
+			.eq('is_featured', true)
+			.order('member_count', { ascending: false })
+			.limit(6);
+
+			if (sbError) throw new Error(`getPublicCommunities error: ${sbError}`);
+			return communities;
+		} catch (error) {
+			throw new Error(`getPublicCommunities-services-error: ${error}`);
+		}
+	}
 }
