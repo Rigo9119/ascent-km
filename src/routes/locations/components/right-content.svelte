@@ -24,7 +24,6 @@
 		return `${hour12}:00 ${ampm}`;
 	}
 
-	console.log('formatHours: ', formatHours(9));
 </script>
 
 <div class="space-y-6 sm:space-y-8">

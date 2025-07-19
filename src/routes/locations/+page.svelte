@@ -5,7 +5,7 @@
 
 	const { data }: { data: { locations: AppLocation[] } } = $props();
 	const { locations } = data;
-	console.log(locations)
+
 	const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 </script>
 
