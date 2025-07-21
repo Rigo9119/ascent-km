@@ -23,7 +23,7 @@
 		<!-- Image -->
 		<div class="relative aspect-[4/3] overflow-hidden">
 			<img
-				src={relatedItem.image || 'https://source.unsplash.com/random/800x600?korea'}
+				src={relatedItem.image_url || 'https://source.unsplash.com/random/800x600?korea'}
 				alt={relatedItem.name}
 				class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 			/>
