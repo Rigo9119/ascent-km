@@ -8,6 +8,7 @@
 	import CalendarIcon from '@lucide/svelte/icons/calendar';
 	import { DateFormatter, today, type DateValue, getLocalTimeZone } from '@internationalized/date';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
+	import FormDateRange from '@/lib/components/forms/components/form-date-range.svelte';
 
 	type Props = {
 		dateValue: DateValue;
@@ -66,26 +67,8 @@
 					console.log(value);
 				}}
 			/>
-
-			<div class="flex flex-1 flex-col">
-				<label class="text-sm font-medium" for="date-picker">Date</label>
-				<Popover>
-					<PopoverTrigger>
-						<Button variant="outline" class="w-full justify-start text-left font-normal">
-							<CalendarIcon class="mr-2 h-4 w-4" />
-							{dateValue ? df.format(dateValue.toDate(getLocalTimeZone())) : 'Pick a date'}
-						</Button>
-					</PopoverTrigger>
-					<PopoverContent class="w-auto p-0">
-						<Calendar
-							type="single"
-							value={dateValue}
-							onValueChange={(value: DateValue | undefined) =>
-								(dateValue = value ?? today(getLocalTimeZone()))}
-						/>
-					</PopoverContent>
-				</Popover>
-			</div>
+			<!--Date Range picker-->
+			<FormDateRange label='Date range'/>
 			<FormSelect
 				forLabel="location-select"
 				placeholder={locationsSelectLabel}

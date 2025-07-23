@@ -11,7 +11,6 @@
 
 	function go() {
 		goto(`/${urlSegment}/${relatedItem.id}`);
-		//goto(`/locations/${location.id}`)
 	}
 </script>
 
