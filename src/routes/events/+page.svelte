@@ -2,7 +2,6 @@
 	import { type DateValue } from '@internationalized/date';
 	import Filters from './components/filters.svelte';
 	import EventList from './components/event-list.svelte';
-	import { categories } from '@/lib/data/mock-data/categories';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
 	import type { User } from '@supabase/supabase-js';
@@ -12,11 +11,12 @@
 	interface EventsPageData {
 		appEvents: AppEvent[];
 		locationsFilterOptions: { value: string; label: string }[];
+		categoriesFilterOptions: { value: string; label: string }[];
 		user: User;
 	}
 
 	const { data }: { data: EventsPageData } = $props();
-	const { appEvents, locationsFilterOptions, user } = data;
+	const { appEvents, locationsFilterOptions, categoriesFilterOptions, user } = data;
 
 	let filters = $state({
 		category: 'all',
@@ -29,8 +29,6 @@
 	const selectedCategory: string = $state<string>('all');
 	const selectedType: string = $state<string>('all');
 	const selectedLocation: string = $state<string>('all');
-	const categoryOptions: { value: string; label: string }[] =
-		$state<{ value: string; label: string }[]>(categories);
 </script>
 
 <svelte:head>
@@ -63,8 +61,8 @@
 					{selectedCategory}
 					{selectedType}
 					{selectedLocation}
-					{locationsFilterOptions}
-					{categoryOptions}
+					locationsOptions={locationsFilterOptions}
+					categoriesOptions={categoriesFilterOptions}
 				/>
 				{#if user}
 					<Sheet.Root>

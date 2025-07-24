@@ -1,10 +1,9 @@
-import type { PageServerLoad } from "../auth/onboarding/$types";
+import type { PageServerLoad } from '../auth/onboarding/$types';
 
 export const load: PageServerLoad = async ({ fetch, url, locals: { supabase } }) => {
-
   const eventsRes = await fetch('/api/events', { method: 'GET' });
-  const { events, locationsFilter } = await eventsRes.json();
-  console.log('server events: ', events)
+  const { events, locationsFilterOptions, categoriesFilterOptions } = await eventsRes.json();
+
   /*
   let query = await supabase.from('events').select('*')
 
@@ -24,7 +23,9 @@ export const load: PageServerLoad = async ({ fetch, url, locals: { supabase } })
 
   */
 
-
-
-  return { appEvents: events, locationsFilter: locationsFilter };
+  return {
+    appEvents: events,
+    locationsFilterOptions: locationsFilterOptions,
+    categoriesFilterOptions: categoriesFilterOptions
+  };
 };

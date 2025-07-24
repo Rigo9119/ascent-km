@@ -43,7 +43,7 @@
 		</Select.SelectTrigger>
 		<Select.SelectContent>
 			{#each options as option, i (i)}
-				<Select.SelectItem value={option.value} label={option.label}>
+				<Select.SelectItem class="capitalize" value={option.value} label={option.label}>
 					{option.label}
 				</Select.SelectItem>
 			{/each}

@@ -1,11 +1,7 @@
 <script lang="ts">
-	import * as Select from '$lib/components/ui/select';
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '$lib/components/ui/card';
-	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
-	import { Calendar } from '$lib/components/ui/calendar';
 	import { RadioGroup, RadioGroupItem } from '$lib/components/ui/radio-group';
-	import CalendarIcon from '@lucide/svelte/icons/calendar';
 	import { DateFormatter, today, type DateValue, getLocalTimeZone } from '@internationalized/date';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormDateRange from '@/lib/components/forms/components/form-date-range.svelte';
@@ -15,8 +11,8 @@
 		selectedCategory: string;
 		selectedType: string;
 		selectedLocation: string;
-		locationsFilterOptions: { value: string; label: string }[];
-		categoryOptions: { value: string; label: string }[];
+		locationsOptions: { value: string; label: string }[];
+		categoriesOptions: { value: string; label: string }[];
 	};
 
 	let {
@@ -24,11 +20,11 @@
 		selectedCategory,
 		selectedType,
 		selectedLocation,
-		locationsFilterOptions,
-		categoryOptions
+		locationsOptions,
+		categoriesOptions
 	}: Props = $props();
 
-	const df = new DateFormatter('en-US', {
+	const dateFormat = new DateFormatter('en-US', {
 		dateStyle: 'long'
 	});
 
@@ -37,13 +33,12 @@
 		selectedCategory = 'all';
 		selectedType = 'all';
 		selectedLocation = 'all';
-		categoryOptions;
 	}
 
 	const locationsSelectLabel = $derived(
 		selectedLocation === 'all'
 			? 'All locations'
-			: (locationsFilterOptions.find((location) => location.value === selectedLocation)?.label ??
+			: (locationsOptions.find((location) => location.value === selectedLocation)?.label ??
 					selectedLocation)
 	);
 </script>
@@ -62,12 +57,11 @@
 				value={''}
 				label="Category"
 				selectId="category-select"
-				options={categoryOptions}
+				options={categoriesOptions}
 				onValueChange={(value) => {
 					console.log(value);
 				}}
 			/>
-			<!--Date Range picker-->
 			<FormDateRange label="Date range" />
 			<FormSelect
 				forLabel="location-select"
@@ -75,7 +69,7 @@
 				name="locations-filter"
 				label="Location"
 				selectId="location-select"
-				options={locationsFilterOptions}
+				options={locationsOptions}
 				value={selectedLocation}
 				onValueChange={(value) => {
 					console.log(value);

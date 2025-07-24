@@ -1,12 +1,14 @@
+import { CategoriesService } from '@/lib/services/categories-services';
 import { EventsService } from '@/lib/services/events-service.js';
 import { LocationsService } from '@/lib/services/locations-service.js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export async function GET() {
-  const [events, locations] = await Promise.all([
+  const [events, locations, categories] = await Promise.all([
     EventsService.getEventsWithDetails(),
-    LocationsService.getLocationsNamesAndIds()
-  ])
+    LocationsService.getLocationsNamesAndIds(),
+    CategoriesService.getAllCategories()
+  ]);
 
   const locationsFilterOptions = locations.map(
     (location: { location_id: string; location_name: string }) => ({
@@ -15,7 +17,20 @@ export async function GET() {
     })
   );
 
-  return new Response(JSON.stringify({ events: events, locationsFilterOptions: locationsFilterOptions }));
+  const categoriesFilterOptions = categories.map(
+    (category: { id: string; name: string }) => ({
+      value: category.id,
+      label: category.name
+    })
+  );
+
+  return new Response(
+    JSON.stringify({
+      events: events,
+      locationsFilterOptions: locationsFilterOptions,
+      categoriesFilterOptions: categoriesFilterOptions
+    })
+  );
 }
 
 export const POST: RequestHandler = async ({ request, locals: { supabase, getUser } }) => {
