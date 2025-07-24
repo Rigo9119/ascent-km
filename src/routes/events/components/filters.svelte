@@ -15,7 +15,7 @@
 		selectedCategory: string;
 		selectedType: string;
 		selectedLocation: string;
-		locationsFilter: { value: string; label: string }[];
+		locationsFilterOptions: { value: string; label: string }[];
 		categoryOptions: { value: string; label: string }[];
 	};
 
@@ -24,7 +24,7 @@
 		selectedCategory,
 		selectedType,
 		selectedLocation,
-		locationsFilter,
+		locationsFilterOptions,
 		categoryOptions
 	}: Props = $props();
 
@@ -43,7 +43,7 @@
 	const locationsSelectLabel = $derived(
 		selectedLocation === 'all'
 			? 'All locations'
-			: (locationsFilter.find((location) => location.value === selectedLocation)?.label ??
+			: (locationsFilterOptions.find((location) => location.value === selectedLocation)?.label ??
 					selectedLocation)
 	);
 </script>
@@ -68,14 +68,14 @@
 				}}
 			/>
 			<!--Date Range picker-->
-			<FormDateRange label='Date range'/>
+			<FormDateRange label="Date range" />
 			<FormSelect
 				forLabel="location-select"
 				placeholder={locationsSelectLabel}
 				name="locations-filter"
 				label="Location"
 				selectId="location-select"
-				options={locationsFilter}
+				options={locationsFilterOptions}
 				value={selectedLocation}
 				onValueChange={(value) => {
 					console.log(value);
