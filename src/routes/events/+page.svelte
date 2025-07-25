@@ -12,11 +12,13 @@
 		appEvents: AppEvent[];
 		locationsFilterOptions: { value: string; label: string }[];
 		categoriesFilterOptions: { value: string; label: string }[];
+		eventTypeOptions: { value: string; label: string }[];
 		user: User;
 	}
 
 	const { data }: { data: EventsPageData } = $props();
-	const { appEvents, locationsFilterOptions, categoriesFilterOptions, user } = data;
+	const { appEvents, locationsFilterOptions, categoriesFilterOptions, eventTypeOptions, user } =
+		data;
 
 	let filters = $state({
 		category: 'all',
@@ -149,7 +151,12 @@
 							<Sheet.Header>
 								<Sheet.Title>Create Event</Sheet.Title>
 							</Sheet.Header>
-							<CreateEventForm />
+							<CreateEventForm
+								locationOptions={locationsFilterOptions}
+								categoriesOptions={categoriesFilterOptions}
+								{eventTypeOptions}
+								{user}
+							/>
 						</Sheet.Content>
 					</Sheet.Root>
 				{/if}

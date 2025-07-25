@@ -6,7 +6,7 @@
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormDateRange from '@/lib/components/forms/components/form-date-range.svelte';
 
-	type Props = {
+	interface FiltersProps {
 		dateValue: DateValue | undefined;
 		selectedCategory: string;
 		selectedType: string;
@@ -18,7 +18,7 @@
 		onTypeChange: (value: string) => void;
 		onDateChange: (value: DateValue | undefined) => void;
 		onClearFilters: () => void;
-	};
+	}
 
 	let {
 		dateValue,
@@ -32,7 +32,7 @@
 		onTypeChange,
 		onDateChange,
 		onClearFilters
-	}: Props = $props();
+	}: FiltersProps = $props();
 
 	function clearFilters() {
 		onClearFilters();

@@ -63,4 +63,18 @@ export class EventsService {
       throw new Error(`getEventById-service-error: ${error}`);
     }
   }
+
+  static async getEventTypes() {
+    try {
+      const { data: eventTypes, error: sbError } = await supabaseClient
+        .from('event_types')
+        .select('*');
+
+      if (sbError) throw new Error(`event types error: ${sbError.message}`);
+
+      return eventTypes;
+    } catch (error) {
+      throw new Error(`getEventTypes-service-error: ${error}`);
+    }
+  }
 }

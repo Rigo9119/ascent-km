@@ -4,10 +4,11 @@ import { LocationsService } from '@/lib/services/locations-service.js';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export async function GET() {
-  const [events, locations, categories] = await Promise.all([
+  const [events, locations, categories, eventTypes] = await Promise.all([
     EventsService.getEventsWithDetails(),
     LocationsService.getLocationsNamesAndIds(),
-    CategoriesService.getAllCategories()
+    CategoriesService.getAllCategories(),
+    EventsService.getEventTypes()
   ]);
 
   const locationsFilterOptions = locations.map(
@@ -24,11 +25,19 @@ export async function GET() {
     })
   );
 
+  const eventTypesFilterOptions = eventTypes.map(
+    (eventType: { id: string; name: string }) => ({
+      value: eventType.id,
+      label: eventType.name
+    })
+  );
+
   return new Response(
     JSON.stringify({
       events: events,
       locationsFilterOptions: locationsFilterOptions,
-      categoriesFilterOptions: categoriesFilterOptions
+      categoriesFilterOptions: categoriesFilterOptions,
+      eventTypeOptions: eventTypesFilterOptions
     })
   );
 }
