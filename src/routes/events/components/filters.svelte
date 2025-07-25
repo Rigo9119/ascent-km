@@ -2,21 +2,21 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '$lib/components/ui/card';
 	import { RadioGroup, RadioGroupItem } from '$lib/components/ui/radio-group';
-	import { DateFormatter, today, type DateValue, getLocalTimeZone } from '@internationalized/date';
+	import { type DateValue } from '@internationalized/date';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormDateRange from '@/lib/components/forms/components/form-date-range.svelte';
 
 	type Props = {
-		dateValue: DateValue;
+		dateValue: DateValue | undefined;
 		selectedCategory: string;
-		selectedType: boolean | string;
+		selectedType: string;
 		selectedLocation: string;
 		locationsOptions: { value: string; label: string }[];
 		categoriesOptions: { value: string; label: string }[];
 		onCategoryChange: (value: string) => void;
 		onLocationChange: (value: string) => void;
 		onTypeChange: (value: string) => void;
-		onDateChange: (value: DateValue) => void;
+		onDateChange: (value: DateValue | undefined) => void;
 		onClearFilters: () => void;
 	};
 
@@ -34,14 +34,9 @@
 		onClearFilters
 	}: Props = $props();
 
-	const dateFormat = new DateFormatter('en-US', {
-		dateStyle: 'long'
-	});
-
 	function clearFilters() {
 		onClearFilters();
 	}
-
 </script>
 
 <section class="mb-8">
@@ -74,7 +69,11 @@
 			/>
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="type-radio-group">Event Type</label>
-				<RadioGroup value={selectedType} onValueChange={onTypeChange} class="flex items-center space-x-2 pt-2">
+				<RadioGroup
+					value={selectedType}
+					onValueChange={onTypeChange}
+					class="flex items-center space-x-2 pt-2"
+				>
 					<div class="flex items-center space-x-2">
 						<RadioGroupItem value="all" id="r-all" />
 						<label for="r-all">All</label>

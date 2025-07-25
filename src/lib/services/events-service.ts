@@ -56,8 +56,7 @@ export class EventsService {
         )
         .eq('id', eventId)
         .single();
-
-      if (sbError) if (sbError) throw new Error(`event error: ${sbError.message}`);
+      if (sbError) throw new Error(`event error: ${sbError.message}`);
 
       return event;
     } catch (error) {

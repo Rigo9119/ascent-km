@@ -16,54 +16,80 @@
 
 	const createEventForm = createForm(() => ({
 		defaultValues: {
-			id: '',
 			name: '',
 			description: '',
 			date: '',
 			location_id: '',
 			category_id: '',
 			event_type_id: '',
-			is_free: '',
-			image: '',
+			is_free: false,
 			time: '',
-			capacity: '',
+			capacity: 0,
 			organizer: '',
 			contact: '',
 			website: '',
-			price: '',
-			requirements: [''] as Array<string>,
-			highlights: [''],
+			price: 0,
+			requirements: [] as Array<string>,
+			highlights: [] as Array<string>,
 			long_description: '',
-			is_featured: '',
-			rating: '',
-			created_at: '',
-			updated_at: '',
-			image_url: '',
-			image_path: ''
+			is_featured: false,
+			image_url: ''
 		},
 		onSubmit: async ({ value }) => {
-			console.log('create event form: ', value);
+			console.log('Creating event:', value);
+			// TODO: Add API call to create event
+			try {
+				const response = await fetch('/api/events', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(value)
+				});
+
+				if (response.ok) {
+					console.log('Event created successfully!');
+					// TODO: Reset form or redirect
+				} else {
+					console.error('Failed to create event');
+				}
+			} catch (error) {
+				console.error('Error creating event:', error);
+			}
 		}
 	}));
 </script>
 
 <form
-	class="overflow-y-auto p-4"
+	class="overflow-y-auto p-4 space-y-6"
 	onsubmit={(e) => {
 		e.preventDefault();
 		e.stopPropagation();
 		createEventForm.handleSubmit();
 	}}
 >
-	<createEventForm.Field name={'name'}>
+	<!-- Basic Information Section -->
+	<div class="space-y-4">
+		<h3 class="text-lg font-semibold text-gray-900 border-b pb-2">Basic Information</h3>
+	<createEventForm.Field 
+		name={'name'} 
+		validators={{
+			onChange: ({ value }) => {
+				if (!value || value.length < 3) {
+					return 'Event name must be at least 3 characters long';
+				}
+				return undefined;
+			}
+		}}
+	>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
 				{field}
 				name={field.name}
-				label="Event name"
+				label="Event name *"
 				inputId={field.name}
 				type="text"
-				placeholder="Event name"
+				placeholder="Enter event name"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -72,15 +98,25 @@
 			/>
 		{/snippet}
 	</createEventForm.Field>
-	<createEventForm.Field name={'description'}>
+	<createEventForm.Field 
+		name={'description'}
+		validators={{
+			onChange: ({ value }) => {
+				if (!value || value.length < 10) {
+					return 'Description must be at least 10 characters long';
+				}
+				return undefined;
+			}
+		}}
+	>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
 				{field}
 				name={field.name}
-				label="Short description"
+				label="Short description *"
 				inputId={field.name}
 				type="text"
-				placeholder="Short description"
+				placeholder="Brief description of the event"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -94,24 +130,29 @@
 			<FormTextarea
 				id={field.name}
 				forLabel={field.name}
-				label="Bio"
+				label="Long Description"
 				name={field.name}
-				placeholder="Tell us about yourself ..."
+				placeholder="Provide detailed information about the event..."
 				value={field.state.value}
 				oninput={(event: Event) => {
 					field.handleChange((event.target as HTMLInputElement).value);
 				}}
 				onblur={() => field.handleBlur()}
 				rows={4}
-				maxlength={280}
+				maxlength={500}
 			/>
 		{/snippet}
 	</createEventForm.Field>
+	</div>
+
+	<!-- Date & Time Section -->
+	<div class="space-y-4">
+		<h3 class="text-lg font-semibold text-gray-900 border-b pb-2">Date & Time</h3>
 	<createEventForm.Field name={'date'}>
 		{#snippet children(field: AnyFieldApi)}
 			<DateRangeField.Root class="group flex w-full flex-col gap-1.5">
 				<DateRangeField.Label class="block text-sm font-medium select-none">
-					Hotel dates
+					Event Date
 				</DateRangeField.Label>
 				<div
 					class="h-input rounded bg-background text-foreground focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover group-data-invalid:border-destructive flex w-full items-center border px-2 py-2 text-sm tracking-[0.01em] select-none"
@@ -150,8 +191,8 @@
 			<FormMultiSelect
 				forLabel={field.name}
 				selectId={field.name}
-				label="Category"
-				placeholder="Select the category of the event"
+				label="Location"
+				placeholder="Select the event location"
 				name={field.name}
 				value={field.state.value || []}
 				options={[]}
@@ -193,13 +234,15 @@
 				<Switch.Root
 					id={field.name}
 					name={field.name}
-					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-foreground data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-foreground peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-pink-100"
+					checked={field.state.value}
+					onCheckedChange={(checked) => field.handleChange(checked)}
+					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-emerald-500 data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-emerald-500 peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-gray-200"
 				>
 					<Switch.Thumb
 						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label for={field.name} class="text-sm font-medium">Is it a free event ?</Label>
+				<Label for={field.name} class="text-sm font-medium">Is it a free event?</Label>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
@@ -207,10 +250,11 @@
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
 				name={field.name}
-				label="Avatar"
+				label="Event Image"
 				inputId={field.name}
 				type="file"
 				customClass="block"
+				accept="image/*"
 				oninput={(e: Event) => {
 					const target = e.target as HTMLInputElement;
 					const file = target.files?.[0];
@@ -266,6 +310,11 @@
         </TimeRangeField.Root>
 		{/snippet}
 	</createEventForm.Field>
+	</div>
+
+	<!-- Event Details Section -->
+	<div class="space-y-4">
+		<h3 class="text-lg font-semibold text-gray-900 border-b pb-2">Event Details</h3>
 	<createEventForm.Field name={'capacity'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
@@ -379,13 +428,15 @@
 				<Switch.Root
 					id={field.name}
 					name={field.name}
-					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-foreground data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-foreground peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-pink-100"
+					checked={field.state.value}
+					onCheckedChange={(checked) => field.handleChange(checked)}
+					class="focus-visible:ring-foreground focus-visible:ring-offset-background data-[state=checked]:bg-emerald-500 data-[state=unchecked]:shadow-mini-inset dark:data-[state=checked]:bg-emerald-500 peer inline-flex h-[22px] min-h-[22px] w-[36px] shrink-0 cursor-pointer items-center rounded-full px-[2px] transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 data-[state=unchecked]:bg-gray-200"
 				>
 					<Switch.Thumb
 						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
+				<Label for={field.name} class="text-sm font-medium">Featured Event</Label>
 			</div>
 		{/snippet}
 	</createEventForm.Field>
@@ -409,6 +460,10 @@
 			</div>
 		{/snippet}
 	</createEventForm.Field>
+	</div>
+
+	<!-- Submit Section -->
+	<div class="pt-4 border-t">
 	<createEventForm.Subscribe
 		selector={(state: AnyFormState) => ({
 			canSubmit: state.canSubmit,
@@ -421,8 +476,9 @@
 				class="mt-6 w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600"
 				disabled={!canSubmit || isSubmitting}
 			>
-				{isSubmitting ? 'Submitting...' : 'Complete your profile'}
+				{isSubmitting ? 'Creating Event...' : 'Create Event'}
 			</Button>
 		{/snippet}
 	</createEventForm.Subscribe>
+	</div>
 </form>
