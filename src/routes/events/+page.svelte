@@ -22,13 +22,75 @@
 		category: 'all',
 		date: null as unknown as DateValue,
 		location: 'all',
-		type: false
+		type: 'all'
 	});
 
-	const dateValue = $state<DateValue>(null as unknown as DateValue);
-	const selectedCategory: string = $state<string>('all');
-	const selectedType: string = $state<string>('all');
-	const selectedLocation: string = $state<string>('all');
+	let filteredEvents = $state([]);
+
+	$effect(() => {
+		if (!appEvents) {
+			filteredEvents = [];
+			return;
+		}
+		
+		let result = [...appEvents];
+
+		// Filter by category
+		if (filters.category !== 'all') {
+			result = result.filter(event => event.category_id === filters.category);
+		}
+
+		// Filter by location
+		if (filters.location !== 'all') {
+			result = result.filter(event => event.location_id === filters.location);
+		}
+
+		// Filter by date
+		if (filters.date) {
+			const filterDate = filters.date.toString();
+			result = result.filter(event => {
+				const eventDate = new Date(event.date).toISOString().split('T')[0];
+				return eventDate === filterDate;
+			});
+		}
+
+		// Filter by event type (assuming event_type_id maps to public/private)
+		if (filters.type !== 'all') {
+			result = result.filter(event => {
+				// This would need to be adjusted based on your actual event type mapping
+				return event.event_type_id === filters.type;
+			});
+		}
+
+		filteredEvents = result;
+	});
+
+	let dateValue = $state<DateValue>(null as unknown as DateValue);
+
+	function handleCategoryChange(value: string) {
+		filters.category = value;
+	}
+
+	function handleLocationChange(value: string) {
+		filters.location = value;
+	}
+
+	function handleTypeChange(value: string) {
+		filters.type = value;
+	}
+
+	function handleDateChange(value: DateValue) {
+		filters.date = value;
+		dateValue = value;
+	}
+
+	function handleClearFilters() {
+		filters.category = 'all';
+		filters.location = 'all';
+		filters.type = 'all';
+		filters.date = null as unknown as DateValue;
+		dateValue = null as unknown as DateValue;
+	}
 </script>
 
 <svelte:head>
@@ -58,11 +120,16 @@
 			<div class="order-1 lg:order-1">
 				<Filters
 					{dateValue}
-					{selectedCategory}
-					{selectedType}
-					{selectedLocation}
+					selectedCategory={filters.category}
+					selectedType={filters.type}
+					selectedLocation={filters.location}
 					locationsOptions={locationsFilterOptions}
 					categoriesOptions={categoriesFilterOptions}
+					onCategoryChange={handleCategoryChange}
+					onLocationChange={handleLocationChange}
+					onTypeChange={handleTypeChange}
+					onDateChange={handleDateChange}
+					onClearFilters={handleClearFilters}
 				/>
 				{#if user}
 					<Sheet.Root>
@@ -80,7 +147,7 @@
 			</div>
 
 			<div class="order-2 lg:order-2">
-				<EventList {appEvents} />
+				<EventList appEvents={filteredEvents} />
 			</div>
 		</div>
 	</div>

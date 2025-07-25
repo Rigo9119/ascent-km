@@ -9,10 +9,15 @@
 	type Props = {
 		dateValue: DateValue;
 		selectedCategory: string;
-		selectedType: string;
+		selectedType: boolean | string;
 		selectedLocation: string;
 		locationsOptions: { value: string; label: string }[];
 		categoriesOptions: { value: string; label: string }[];
+		onCategoryChange: (value: string) => void;
+		onLocationChange: (value: string) => void;
+		onTypeChange: (value: string) => void;
+		onDateChange: (value: DateValue) => void;
+		onClearFilters: () => void;
 	};
 
 	let {
@@ -21,7 +26,12 @@
 		selectedType,
 		selectedLocation,
 		locationsOptions,
-		categoriesOptions
+		categoriesOptions,
+		onCategoryChange,
+		onLocationChange,
+		onTypeChange,
+		onDateChange,
+		onClearFilters
 	}: Props = $props();
 
 	const dateFormat = new DateFormatter('en-US', {
@@ -29,10 +39,7 @@
 	});
 
 	function clearFilters() {
-		dateValue = today(getLocalTimeZone());
-		selectedCategory = 'all';
-		selectedType = 'all';
-		selectedLocation = 'all';
+		onClearFilters();
 	}
 
 	const locationsSelectLabel = $derived(
@@ -58,9 +65,7 @@
 				label="Category"
 				selectId="category-select"
 				options={categoriesOptions}
-				onValueChange={(value) => {
-					console.log(value);
-				}}
+				onValueChange={onCategoryChange}
 			/>
 			<FormDateRange label="Date range" />
 			<FormSelect
@@ -71,13 +76,11 @@
 				selectId="location-select"
 				options={locationsOptions}
 				value={selectedLocation}
-				onValueChange={(value) => {
-					console.log(value);
-				}}
+				onValueChange={onLocationChange}
 			/>
 			<div class="flex-1">
 				<label class="text-sm font-medium" for="type-radio-group">Event Type</label>
-				<RadioGroup bind:value={selectedType} class="flex items-center space-x-2 pt-2">
+				<RadioGroup value={selectedType} onValueChange={onTypeChange} class="flex items-center space-x-2 pt-2">
 					<div class="flex items-center space-x-2">
 						<RadioGroupItem value="all" id="r-all" />
 						<label for="r-all">All</label>
