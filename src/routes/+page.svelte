@@ -14,6 +14,7 @@
 	const featuredCommunities = $derived(data.featuredCommunities as Community[]);
 	const carouselLocations = $derived([...locations].sort(() => Math.random() - 0.5));
 	const carouselEvents = $derived([...events].sort(() => Math.random() - 0.5));
+	const user = $derived(data.user);
 
 	const FIRST_CARROUSEL_DELAY = 5000;
 	const SECOND_CARROUSEL_DELAY = 4500;
@@ -74,6 +75,7 @@
 			sectionTitle="Top locations"
 			sectionItems={featuredLocations}
 			urlSection="locations"
+			{user}
 		/>
 
 		{#if trendingEvents.length > 0}	
@@ -81,6 +83,7 @@
 				sectionTitle="Trending events"
 				sectionItems={trendingEvents}
 				urlSection="events"
+				{user}
 				/>
 		{/if}
 		
@@ -88,6 +91,7 @@
 			sectionTitle="Popular communities"
 			sectionItems={featuredCommunities}
 			urlSection="communities"
+			{user}
 		/>
 	</div>
 {/if}
