@@ -25,39 +25,50 @@
 		type: 'all'
 	});
 
-	let filteredEvents = $state([]);
+	let filteredEvents = $state<AppEvent[]>([]);
 
 	$effect(() => {
 		if (!appEvents) {
 			filteredEvents = [];
 			return;
 		}
-		
+
 		let result = [...appEvents];
 
 		// Filter by category
 		if (filters.category !== 'all') {
-			result = result.filter(event => event.category_id === filters.category);
+			result = result.filter((event) => event.category_id === filters.category);
 		}
 
 		// Filter by location
 		if (filters.location !== 'all') {
-			result = result.filter(event => event.location_id === filters.location);
+			result = result.filter((event) => event.location_id === filters.location);
 		}
 
 		// Filter by date
 		if (filters.date) {
-			const filterDate = filters.date.toString();
-			result = result.filter(event => {
+			// Convert DateValue to YYYY-MM-DD format
+			const filterDateStr = `${filters.date.year}-${String(filters.date.month).padStart(2, '0')}-${String(filters.date.day).padStart(2, '0')}`;
+			console.log('filterDateStr:', filterDateStr);
+
+			result = result.filter((event) => {
+				// Convert ISO date to YYYY-MM-DD format for comparison
 				const eventDate = new Date(event.date).toISOString().split('T')[0];
-				return eventDate === filterDate;
+				console.log(
+					'eventDate vs filterDateStr:',
+					eventDate,
+					'===',
+					filterDateStr,
+					eventDate === filterDateStr
+				);
+				return eventDate === filterDateStr;
 			});
 		}
 
 		// Filter by event type (free/paid based on is_free property)
 		if (filters.type !== 'all') {
 			const isFree = filters.type === 'true';
-			result = result.filter(event => event.is_free === isFree);
+			result = result.filter((event) => event.is_free === isFree);
 		}
 
 		filteredEvents = result;

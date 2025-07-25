@@ -3,12 +3,19 @@
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Calendar from '@lucide/svelte/icons/calendar';
+	import type { DateValue } from '@internationalized/date';
 
-	const { label } = $props();
+	interface Props {
+		label: string;
+		value?: DateValue;
+		onValueChange?: (value: DateValue | undefined) => void;
+	}
+
+	let { label, value = $bindable(), onValueChange }: Props = $props();
 </script>
 
 
-<DatePicker.Root weekdayFormat="short" fixedWeeks={true}>
+<DatePicker.Root weekdayFormat="short" fixedWeeks={true} bind:value {onValueChange}>
   <div class="flex w-full flex-col gap-1.5">
     <DatePicker.Label class="block select-none text-sm font-medium"
       >{label}</DatePicker.Label

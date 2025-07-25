@@ -61,7 +61,7 @@
 				options={[{ value: 'all', label: 'All categories' }, ...categoriesOptions]}
 				onValueChange={onCategoryChange}
 			/>
-			<FormDateRange label="Date range" />
+			<FormDateRange label="Date" bind:value={dateValue} onValueChange={onDateChange} />
 			<FormSelect
 				forLabel="location-select"
 				placeholder="All locations"
