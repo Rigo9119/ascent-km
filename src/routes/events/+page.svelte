@@ -54,12 +54,10 @@
 			});
 		}
 
-		// Filter by event type (assuming event_type_id maps to public/private)
+		// Filter by event type (free/paid based on is_free property)
 		if (filters.type !== 'all') {
-			result = result.filter(event => {
-				// This would need to be adjusted based on your actual event type mapping
-				return event.event_type_id === filters.type;
-			});
+			const isFree = filters.type === 'true';
+			result = result.filter(event => event.is_free === isFree);
 		}
 
 		filteredEvents = result;

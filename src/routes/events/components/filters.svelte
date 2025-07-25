@@ -80,12 +80,12 @@
 						<label for="r-all">All</label>
 					</div>
 					<div class="flex items-center space-x-2">
-						<RadioGroupItem value="public" id="r-public" />
-						<label for="r-public">Public</label>
+						<RadioGroupItem value="true" id="r-free" />
+						<label for="r-free">Free</label>
 					</div>
 					<div class="flex items-center space-x-2">
-						<RadioGroupItem value="private" id="r-private" />
-						<label for="r-private">Private</label>
+						<RadioGroupItem value="false" id="r-paid" />
+						<label for="r-paid">Paid</label>
 					</div>
 				</RadioGroup>
 			</div>
