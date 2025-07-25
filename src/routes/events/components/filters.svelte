@@ -42,12 +42,6 @@
 		onClearFilters();
 	}
 
-	const locationsSelectLabel = $derived(
-		selectedLocation === 'all'
-			? 'All locations'
-			: (locationsOptions.find((location) => location.value === selectedLocation)?.label ??
-					selectedLocation)
-	);
 </script>
 
 <section class="mb-8">
@@ -59,22 +53,22 @@
 		<CardContent class="flex flex-col gap-4">
 			<FormSelect
 				forLabel="category-select"
-				placeholder={selectedCategory}
+				placeholder="All categories"
 				name="category-select"
-				value={''}
+				value={selectedCategory}
 				label="Category"
 				selectId="category-select"
-				options={categoriesOptions}
+				options={[{ value: 'all', label: 'All categories' }, ...categoriesOptions]}
 				onValueChange={onCategoryChange}
 			/>
 			<FormDateRange label="Date range" />
 			<FormSelect
 				forLabel="location-select"
-				placeholder={locationsSelectLabel}
+				placeholder="All locations"
 				name="locations-filter"
 				label="Location"
 				selectId="location-select"
-				options={locationsOptions}
+				options={[{ value: 'all', label: 'All locations' }, ...locationsOptions]}
 				value={selectedLocation}
 				onValueChange={onLocationChange}
 			/>
