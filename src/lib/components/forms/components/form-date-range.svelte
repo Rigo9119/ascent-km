@@ -9,12 +9,12 @@
 
 
 <DatePicker.Root weekdayFormat="short" fixedWeeks={true}>
-  <div class="flex w-full max-w-[232px] flex-col gap-1.5">
+  <div class="flex w-full flex-col gap-1.5">
     <DatePicker.Label class="block select-none text-sm font-medium"
-      >Birthday</DatePicker.Label
+      >{label}</DatePicker.Label
     >
     <DatePicker.Input
-      class="h-input rounded-input border-border-input bg-background text-foreground focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover flex w-full max-w-[232px] select-none items-center border px-2 py-3 text-sm tracking-[0.01em]"
+      class="h-9 rounded-md border border-input bg-transparent text-foreground focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px] hover:border-ring/50 shadow-xs flex w-full select-none items-center px-3 py-2 text-sm transition-[color,box-shadow]"
     >
       {#snippet children({ segments })}
         {#each segments as { part, value }, i (part + i)}
@@ -42,7 +42,7 @@
     </DatePicker.Input>
     <DatePicker.Content sideOffset={6} class="z-50">
       <DatePicker.Calendar
-        class="border-dark-10 bg-background-alt shadow-popover rounded-[15px] border p-[22px]"
+        class="border border-border bg-background shadow-lg rounded-lg p-6"
       >
         {#snippet children({ months, weekdays })}
           <DatePicker.Header class="flex items-center justify-between">
