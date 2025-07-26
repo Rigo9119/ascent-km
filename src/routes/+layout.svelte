@@ -35,5 +35,5 @@
 			<slot />
 		</div>
 	</main>
-	<Toaster />
+	<Toaster position="top-center" />
 </Sidebar.Provider>

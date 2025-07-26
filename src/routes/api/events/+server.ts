@@ -60,6 +60,7 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getUse
     const eventPayload = {
       ...eventData,
       image_url: imageUrl,
+      owner_id: user.id,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString()
     };

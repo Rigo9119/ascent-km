@@ -13,6 +13,7 @@ export type AppEvent = {
 	location_id: string; // UUID
 	category_id: string; // UUID
 	event_type_id: string; // UUID
+	owner_id: string; // UUID - creator/organizer of the event
 	is_free: boolean;
 	image_url?: string;
 	time?: string;

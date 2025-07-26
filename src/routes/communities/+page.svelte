@@ -5,7 +5,7 @@
 	import type { PageData } from './$types';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
-	import CreateCommunityForm from './components/create-community-form.svelte';
+	import CreateCommunityForm from '@/lib/components/forms/create-community-form.svelte';
 
 	const { data }: { data: PageData } = $props();
 	const user = data.user;

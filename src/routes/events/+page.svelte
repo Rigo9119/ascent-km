@@ -4,12 +4,11 @@
 	import EventList from './components/event-list.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
-	import type { SupabaseClient, User } from '@supabase/supabase-js';
-	import CreateEventForm from './components/create-event-form.svelte';
+	import type { User } from '@supabase/supabase-js';
+	import { CreateEventForm } from '@/lib/components/forms';
 	import type { AppEvent } from '@/lib/types';
 
 	interface EventsPageData {
-		supabase: SupabaseClient;
 		appEvents: AppEvent[];
 		locationsFilterOptions: { value: string; label: string }[];
 		categoriesFilterOptions: { value: string; label: string }[];
@@ -23,8 +22,7 @@
 		locationsFilterOptions,
 		categoriesFilterOptions,
 		eventTypeOptions,
-		user,
-		supabase
+		user
 	} = data;
 
 	let filters = $state({
@@ -58,18 +56,10 @@
 		if (filters.date) {
 			// Convert DateValue to YYYY-MM-DD format
 			const filterDateStr = `${filters.date.year}-${String(filters.date.month).padStart(2, '0')}-${String(filters.date.day).padStart(2, '0')}`;
-			console.log('filterDateStr:', filterDateStr);
 
 			result = result.filter((event) => {
 				// Convert ISO date to YYYY-MM-DD format for comparison
 				const eventDate = new Date(event.date).toISOString().split('T')[0];
-				console.log(
-					'eventDate vs filterDateStr:',
-					eventDate,
-					'===',
-					filterDateStr,
-					eventDate === filterDateStr
-				);
 				return eventDate === filterDateStr;
 			});
 		}
@@ -163,7 +153,6 @@
 								categoriesOptions={categoriesFilterOptions}
 								{eventTypeOptions}
 								{user}
-								{supabase}
 							/>
 						</Sheet.Content>
 					</Sheet.Root>

@@ -111,4 +111,40 @@ export class EventsService {
       throw new Error(`createEvent-service-error: ${error}`);
     }
   }
+
+  async getUserEvents(userId: string) {
+    try {
+      const { data: userEvents, error: sbError } = await this.supabase
+        .from('events')
+        .select(`
+          *,
+          locations (name),
+          categories (name),
+          event_types (name)
+        `)
+        .eq('owner_id', userId)
+        .order('date', { ascending: true });
+
+      if (sbError) throw new Error(`user events error: ${sbError.message}`);
+
+      return userEvents;
+    } catch (error) {
+      throw new Error(`getUserEvents-service-error: ${error}`);
+    }
+  }
+
+  async deleteEvent(eventId: string) {
+    try {
+      const { error: sbError } = await this.supabase
+        .from('events')
+        .delete()
+        .eq('id', eventId);
+
+      if (sbError) throw new Error(`delete event error: ${sbError.message}`);
+
+      return { success: true };
+    } catch (error) {
+      throw new Error(`deleteEvent-service-error: ${error}`);
+    }
+  }
 }

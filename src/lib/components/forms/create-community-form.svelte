@@ -11,34 +11,42 @@
 	import { createForm, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
 	import { Switch } from 'bits-ui';
 	import { DateField } from 'bits-ui';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
+	import type { User } from '@supabase/supabase-js';
+
+	interface CreateCommunityFormProps {
+		categoriesOptions?: { value: string; label: string }[];
+		meetingFrequencyOptions?: { value: string; label: string }[];
+		communityTypeOptions?: { value: string; label: string }[];
+		user: User;
+	}
+
+	const { categoriesOptions = [], meetingFrequencyOptions = [], communityTypeOptions = [], user }: CreateCommunityFormProps = $props();
 
 	// TODO: image, image_url, image_path are the same columns, have to delete tow
 	// from supabase
 
 	const createCommunityForm = createForm(() => ({
 		defaultValues: {
-			id: '',
 			name: '',
 			description: '',
 			image: '',
-			member_count: '',
-			is_public: '',
-			is_featured: '',
-			tags: '',
-			rules: '',
-			contact_email: '',
+			member_count: 1,
+			is_public: true,
+			is_featured: false,
+			tags: [],
+			rules: [],
+			contact_email: user.email || '',
 			website: '',
-			created_at: '',
-			updated_at: '',
 			image_url: '',
 			image_path: '',
 			location: '',
-			category: '',
+			category: [],
 			meeting_frequency: '',
-			recent_discussions: '',
-			upcoming_events: '',
+			recent_discussions: [],
+			upcoming_events: [],
 			long_description: '',
-			organizer_id: '',
 			contact_phone: '',
 			next_meeting_date: '',
 			next_meeting_location: '',
@@ -47,7 +55,37 @@
 			community_type_id: ''
 		},
 		onSubmit: async ({ value }) => {
-			console.log('create event form: ', value);
+			try {
+				const response = await fetch('/api/communities', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(value)
+				});
+
+				const result = await response.json();
+
+				if (response.ok && result.success) {
+					toast.success('Community created successfully!', {
+						description: `${value.name} has been created and is ready for members.`
+					});
+					
+					// Navigate to the new community page
+					setTimeout(() => {
+						goto(`/communities/${result.community.id}`);
+					}, 1000);
+				} else {
+					toast.error('Failed to create community', {
+						description: result.error || 'Something went wrong. Please try again.'
+					});
+				}
+			} catch (error) {
+				console.error('Error creating community:', error);
+				toast.error('Network error', {
+					description: 'Unable to create community. Please check your connection and try again.'
+				});
+			}
 		}
 	}));
 </script>
@@ -65,10 +103,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Event name"
+				label="Community name"
 				inputId={field.name}
 				type="text"
-				placeholder="Event name"
+				placeholder="Enter community name"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -121,10 +159,10 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Capacity"
+				label="Initial member count"
 				inputId={field.name}
 				type="number"
-				placeholder="Capacity"
+				placeholder="Number of initial members"
 				value={field.state.value}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
@@ -145,7 +183,7 @@
 						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
+				<Label for={field.name} class="text-sm font-medium">Public community</Label>
 			</div>
 		{/snippet}
 	</createCommunityForm.Field>
@@ -161,7 +199,7 @@
 						class="data-[state=unchecked]:shadow-mini dark:border-background/30 dark:bg-foreground dark:shadow-popover pointer-events-none block size-[18px] shrink-0 rounded-full bg-white transition-transform data-[state=checked]:translate-x-[14px] data-[state=unchecked]:translate-x-0 dark:border dark:data-[state=unchecked]:border"
 					/>
 				</Switch.Root>
-				<Label for={field.name} class="text-sm font-medium">Do not disturb</Label>
+				<Label for={field.name} class="text-sm font-medium">Public community</Label>
 			</div>
 		{/snippet}
 	</createCommunityForm.Field>
@@ -181,11 +219,12 @@
 			<FormInput
 				{field}
 				name={field.name}
-				label="Event name"
+				label="Contact email"
 				inputId={field.name}
 				type="email"
-				placeholder="Event name"
+				placeholder="contact@example.com"
 				value={field.state.value}
+				disabled={true}
 				oninput={(event: HtmlInputEvent) => {
 					const target = event.currentTarget as HTMLInputElement;
 					field.handleChange(target.value);
@@ -215,7 +254,7 @@
 			<LocationSearch
 				value={field.state.value}
 				placeholder="Search for your city..."
-				label="Where are you from ?"
+				label="Community location"
 				onChange={(result) => field.handleChange(result)}
 			/>
 		{/snippet}
@@ -226,10 +265,10 @@
 				forLabel={field.name}
 				selectId={field.name}
 				label="Category"
-				placeholder="Select the category of the event"
+				placeholder="Select community categories"
 				name={field.name}
 				value={field.state.value || []}
-				options={[]}
+				options={categoriesOptions}
 				onValueChange={(selected) => field.handleChange(selected)}
 			/>
 		{/snippet}
@@ -238,12 +277,12 @@
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
 				forLabel={field.name}
-				label='Meeting frquency'
+				label='Meeting frequency'
 				name={field.name}
 				value={field.state.value}
-				selectId="country-code"
-				placeholder="Meeting frequency"
-				options={[]}
+				selectId="meeting-frequency"
+				placeholder="How often do you meet?"
+				options={meetingFrequencyOptions}
 				onValueChange={(value) => {
 					field.handleChange(value);
 				}}
@@ -255,9 +294,9 @@
 			<FormTextarea
 				id={field.name}
 				forLabel={field.name}
-				label="Bio"
+				label="Long description"
 				name={field.name}
-				placeholder="Tell us about yourself ..."
+				placeholder="Tell us more about your community..."
 				value={field.state.value}
 				oninput={(event: Event) => {
 					field.handleChange((event.target as HTMLInputElement).value);
@@ -290,7 +329,7 @@
     <DateField.Root>
       <div class="flex w-full max-w-[280px] flex-col gap-1.5">
         <DateField.Label class="block select-none text-sm font-medium"
-          >Birthday</DateField.Label
+          >Next meeting date</DateField.Label
         >
         <DateField.Input
           class="h-input rounded-input border-border-input bg-background text-foreground focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover data-invalid:border-destructive flex w-full select-none items-center border px-2 py-3 text-sm tracking-[0.01em] "
@@ -340,9 +379,9 @@
 			<FormTextarea
 				id={field.name}
 				forLabel={field.name}
-				label="Bio"
+				label="Next meeting details"
 				name={field.name}
-				placeholder="Tell us about yourself ..."
+				placeholder="Describe what will happen at the next meeting..."
 				value={field.state.value}
 				oninput={(event: Event) => {
 					field.handleChange((event.target as HTMLInputElement).value);
@@ -357,12 +396,12 @@
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
 				forLabel={field.name}
-				label='Meeting frquency'
+				label='Community type'
 				name={field.name}
 				value={field.state.value}
-				selectId="country-code"
-				placeholder="Meeting frequency"
-				options={[]}
+				selectId="community-type"
+				placeholder="What type of community is this?"
+				options={communityTypeOptions}
 				onValueChange={(value) => {
 					field.handleChange(value);
 				}}

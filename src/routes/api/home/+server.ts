@@ -5,6 +5,7 @@ import { LocationsService } from '@/lib/services/locations-service';
 export async function GET({ locals: { supabase } }) {
 	try {
 		const eventsService = new EventsService(supabase);
+		const communitiesService = new CommunitiesService(supabase);
 		
 		const [
 			locations,
@@ -18,8 +19,8 @@ export async function GET({ locals: { supabase } }) {
 			LocationsService.getFeaturedLocations(),
 			eventsService.getAllEvents(),
 			eventsService.getTrendingEvents(),
-			CommunitiesService.getAllCommunities(),
-			CommunitiesService.getFeaturedCommunities()
+			communitiesService.getAllCommunities(),
+			communitiesService.getFeaturedCommunities()
 		]);
 
 		const responseObj = {

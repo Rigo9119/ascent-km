@@ -9,6 +9,8 @@
 	import FileSearch from '@lucide/svelte/icons/file-search';
 	import Settings from '@lucide/svelte/icons/settings';
 	import BookOpen from '@lucide/svelte/icons/book-open';
+	import Calendar from '@lucide/svelte/icons/calendar';
+	import Users from '@lucide/svelte/icons/users';
 	import Skeleton from './skeleton.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -77,6 +79,16 @@
 			title: 'Profile',
 			url: '/profile',
 			icon: UserIcon
+		},
+		{
+			title: 'My Events',
+			url: '/profile/my-events',
+			icon: Calendar
+		},
+		{
+			title: 'My Communities',
+			url: '/profile/my-communities',
+			icon: Users
 		},
 		{
 			title: 'Favourites',
