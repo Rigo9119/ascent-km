@@ -11,6 +11,9 @@
 	import type { DateValue, TimeValue, Time } from '@internationalized/date';
 	import type { User } from '@supabase/supabase-js';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
+	import { dataURLtoBlob } from '@/lib/utils';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
 
 	type SelectOptions = Array<{ value: string; label: string }>;
 
@@ -21,8 +24,12 @@
 		user: User;
 	}
 
-	const { categoriesOptions, locationOptions, eventTypeOptions, user }: CreateEventFormProps =
-		$props();
+	const {
+		categoriesOptions,
+		locationOptions,
+		eventTypeOptions,
+		user
+	}: CreateEventFormProps = $props();
 
 	const createEventForm = createForm(() => ({
 		defaultValues: {
@@ -46,41 +53,72 @@
 			highlights: [] as Array<string>,
 			long_description: '',
 			is_featured: false,
-			image_url: ''
+			image_url: '',
+			rating: 0.0
 		},
 		onSubmit: async ({ value }) => {
-			// Convert DateValue and Time to timestamptz format
-			let eventTimestamp = '';
-			let formattedTimeRange = '';
+			try {
+				// Convert DateValue and Time to timestamptz format
+				let eventTimestamp = '';
+				let formattedTimeRange = '';
 
-			if (value.date && value.time?.start) {
-				// Create ISO date string
-				const dateStr = `${value.date.year}-${String(value.date.month).padStart(2, '0')}-${String(value.date.day).padStart(2, '0')}`;
+				if (value.date && value.time?.start) {
+					// Create ISO date string
+					const dateStr = `${value.date.year}-${String(value.date.month).padStart(2, '0')}-${String(value.date.day).padStart(2, '0')}`;
 
-				// Create time string for start time
-				const startHour = String(value.time.start.hour).padStart(2, '0');
-				const startMinute = String(value.time.start.minute).padStart(2, '0');
+					// Create time string for start time
+					const startHour = String(value.time.start.hour).padStart(2, '0');
+					const startMinute = String(value.time.start.minute).padStart(2, '0');
 
-				// Combine date and start time into timestamptz format
-				eventTimestamp = `${dateStr}T${startHour}:${startMinute}:00.000Z`;
+					// Combine date and start time into timestamptz format
+					eventTimestamp = `${dateStr}T${startHour}:${startMinute}:00.000Z`;
+				}
+
+				// Also create a separate formatted time range for display/storage if needed
+				if (value.time?.start && value.time?.end) {
+					const startTime = `${String(value.time.start.hour).padStart(2, '0')}:${String(value.time.start.minute).padStart(2, '0')}`;
+					const endTime = `${String(value.time.end.hour).padStart(2, '0')}:${String(value.time.end.minute).padStart(2, '0')}`;
+					formattedTimeRange = `${startTime} - ${endTime}`;
+				}
+
+				// Create the payload with formatted values
+				const eventPayload = {
+					...value,
+					id: crypto.randomUUID(),
+					date: eventTimestamp,
+					time: formattedTimeRange
+				};
+
+				// Send to API
+				const response = await fetch('/api/events', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(eventPayload)
+				});
+
+				const result = await response.json();
+
+				if (response.ok && result.success) {
+					console.log('Event created successfully:', result.event);
+					toast.success('Event created successfully!', {
+						description: `${result.event.name} has been created and is now live.`
+					});
+					// Redirect to the event page
+					goto(`/events/${result.event.id}`);
+				} else {
+					console.error('Failed to create event:', result.error);
+					toast.error('Failed to create event', {
+						description: result.error || 'Something went wrong. Please try again.'
+					});
+				}
+			} catch (error) {
+				console.error('Error creating event:', error);
+				toast.error('Network error', {
+					description: 'Unable to create event. Please check your connection and try again.'
+				});
 			}
-
-			// Also create a separate formatted time range for display/storage if needed
-			if (value.time?.start && value.time?.end) {
-				const startTime = `${String(value.time.start.hour).padStart(2, '0')}:${String(value.time.start.minute).padStart(2, '0')}`;
-				const endTime = `${String(value.time.end.hour).padStart(2, '0')}:${String(value.time.end.minute).padStart(2, '0')}`;
-				formattedTimeRange = `${startTime} - ${endTime}`;
-			}
-
-			// Create the payload with formatted values
-			const eventPayload = {
-				...value,
-				id: crypto.randomUUID(),
-				date: eventTimestamp, // timestamptz format for Supabase
-				time: formattedTimeRange // formatted time range for display
-			};
-
-			console.log('Creating event - formatted payload:', eventPayload);
 		}
 	}));
 </script>

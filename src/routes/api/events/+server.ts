@@ -1,14 +1,16 @@
 import { CategoriesService } from '@/lib/services/categories-services';
 import { EventsService } from '@/lib/services/events-service.js';
 import { LocationsService } from '@/lib/services/locations-service.js';
+import { transformObjToSelectItemsObj } from '@/lib/utils';
 import type { RequestHandler } from '@sveltejs/kit';
 
-export async function GET() {
+export const GET: RequestHandler = async ({ locals: { supabase } }) => {
+  const eventsService = new EventsService(supabase);
   const [events, locations, categories, eventTypes] = await Promise.all([
-    EventsService.getEventsWithDetails(),
+    eventsService.getEventsWithDetails(),
     LocationsService.getLocationsNamesAndIds(),
     CategoriesService.getAllCategories(),
-    EventsService.getEventTypes()
+    eventsService.getEventTypes()
   ]);
 
   const locationsFilterOptions = locations.map(
@@ -18,19 +20,9 @@ export async function GET() {
     })
   );
 
-  const categoriesFilterOptions = categories.map(
-    (category: { id: string; name: string }) => ({
-      value: category.id,
-      label: category.name
-    })
-  );
+  const categoriesFilterOptions = transformObjToSelectItemsObj(categories)
 
-  const eventTypesFilterOptions = eventTypes.map(
-    (eventType: { id: string; name: string }) => ({
-      value: eventType.id,
-      label: eventType.name
-    })
-  );
+  const eventTypesFilterOptions = transformObjToSelectItemsObj(eventTypes)
 
   return new Response(
     JSON.stringify({
@@ -43,16 +35,53 @@ export async function GET() {
 }
 
 export const POST: RequestHandler = async ({ request, locals: { supabase, getUser } }) => {
-  const user = await getUser();
-  if (!user) {
-    return new Response('Unauthorized', { status: 401 });
+  try {
+    const user = await getUser();
+    if (!user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    const eventData = await request.json();
+    const eventsService = new EventsService(supabase);
+
+    // Handle image upload if provided
+    let imageUrl = '';
+    if (eventData.image_url) {
+      // Convert data URL to blob
+      const response = await fetch(eventData.image_url);
+      const blob = await response.blob();
+      imageUrl = await eventsService.uploadImage(blob, eventData.name);
+    }
+
+    // Prepare event data for database
+    const eventPayload = {
+      ...eventData,
+      image_url: imageUrl,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+
+    // Create the event
+    const createdEvent = await eventsService.createEvent(eventPayload);
+
+    return new Response(JSON.stringify({
+      success: true,
+      event: createdEvent
+    }), {
+      status: 201,
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+  } catch (error) {
+    console.error('Create event error:', error);
+    return new Response(JSON.stringify({
+      error: error instanceof Error ? error.message : 'Failed to create event'
+    }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-  const { title, description, location_id } = await request.json();
-  const { data, error } = await supabase
-    .from('events')
-    .insert([{ user_id: user.id, title, description, location_id }])
-    .select()
-    .single();
-  if (error) return new Response(error.message, { status: 400 });
-  return new Response(JSON.stringify(data), { status: 201 });
 };

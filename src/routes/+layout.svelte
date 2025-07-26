@@ -7,6 +7,7 @@
 	import { setContext } from 'svelte';
 	import AppBreacrumbs from '@/lib/components/app-sidebar/app-breacrumbs.svelte';
 	import { fade } from 'svelte/transition';
+	import { Toaster } from '@/lib/components/ui/sonner';
 
 	export let data: LayoutData;
 
@@ -34,4 +35,5 @@
 			<slot />
 		</div>
 	</main>
+	<Toaster />
 </Sidebar.Provider>

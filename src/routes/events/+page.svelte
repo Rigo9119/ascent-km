@@ -4,11 +4,12 @@
 	import EventList from './components/event-list.svelte';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
-	import type { User } from '@supabase/supabase-js';
+	import type { SupabaseClient, User } from '@supabase/supabase-js';
 	import CreateEventForm from './components/create-event-form.svelte';
 	import type { AppEvent } from '@/lib/types';
 
 	interface EventsPageData {
+		supabase: SupabaseClient;
 		appEvents: AppEvent[];
 		locationsFilterOptions: { value: string; label: string }[];
 		categoriesFilterOptions: { value: string; label: string }[];
@@ -17,8 +18,14 @@
 	}
 
 	const { data }: { data: EventsPageData } = $props();
-	const { appEvents, locationsFilterOptions, categoriesFilterOptions, eventTypeOptions, user } =
-		data;
+	const {
+		appEvents,
+		locationsFilterOptions,
+		categoriesFilterOptions,
+		eventTypeOptions,
+		user,
+		supabase
+	} = data;
 
 	let filters = $state({
 		category: 'all',
@@ -156,6 +163,7 @@
 								categoriesOptions={categoriesFilterOptions}
 								{eventTypeOptions}
 								{user}
+								{supabase}
 							/>
 						</Sheet.Content>
 					</Sheet.Root>

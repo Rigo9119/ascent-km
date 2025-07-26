@@ -1,9 +1,11 @@
-import { supabaseClient } from '../supabase';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 export class EventsService {
-  static async getAllEvents() {
+  constructor(private supabase: SupabaseClient) { }
+
+  async getAllEvents() {
     try {
-      const { data: events, error: sbError } = await supabaseClient.from('events').select('*');
+      const { data: events, error: sbError } = await this.supabase.from('events').select('*');
 
       if (sbError) throw new Error(`events error: ${sbError.message}`);
 
@@ -13,9 +15,9 @@ export class EventsService {
     }
   }
 
-  static async getTrendingEvents() {
+  async getTrendingEvents() {
     try {
-      const { data: trendingEvents, error: sbError } = await supabaseClient
+      const { data: trendingEvents, error: sbError } = await this.supabase
         .from('events')
         .select('*')
         .gte('date', new Date().toISOString())
@@ -30,9 +32,9 @@ export class EventsService {
     }
   }
 
-  static async getEventsWithDetails() {
+  async getEventsWithDetails() {
     try {
-      const { data: events, error: sbError } = await supabaseClient
+      const { data: events, error: sbError } = await this.supabase
         .from('events_with_details_v2')
         .select('*');
 
@@ -43,9 +45,9 @@ export class EventsService {
     }
   }
 
-  static async getEventById(eventId: string) {
+  async getEventById(eventId: string) {
     try {
-      const { data: event, error: sbError } = await supabaseClient
+      const { data: event, error: sbError } = await this.supabase
         .from('events')
         .select(
           `
@@ -64,9 +66,9 @@ export class EventsService {
     }
   }
 
-  static async getEventTypes() {
+  async getEventTypes() {
     try {
-      const { data: eventTypes, error: sbError } = await supabaseClient
+      const { data: eventTypes, error: sbError } = await this.supabase
         .from('event_types')
         .select('*');
 
@@ -75,6 +77,38 @@ export class EventsService {
       return eventTypes;
     } catch (error) {
       throw new Error(`getEventTypes-service-error: ${error}`);
+    }
+  }
+
+  async uploadImage(imageBlob: Blob, fileName: string) {
+    const { data: imageUrl, error: imageUploadError } = await this.supabase.storage
+      .from('event_images')
+      .upload(`${fileName}.png`, imageBlob, {
+        cacheControl: '3600',
+        upsert: true
+      });
+
+    if (imageUploadError) {
+      throw new Error(`Error uploading image: ${imageUploadError.message}`);
+    }
+    const { data } = this.supabase.storage.from('event_images').getPublicUrl(imageUrl.path);
+
+    return data.publicUrl;
+  }
+
+  async createEvent(eventData: unknown) {
+    try {
+      const { data: event, error: sbError } = await this.supabase
+        .from('events')
+        .insert(eventData)
+        .select()
+        .single();
+
+      if (sbError) throw new Error(`event error: ${sbError.message}`);
+
+      return event;
+    } catch (error) {
+      throw new Error(`createEvent-service-error: ${error}`);
     }
   }
 }

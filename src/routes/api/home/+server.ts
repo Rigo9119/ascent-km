@@ -2,8 +2,10 @@ import { CommunitiesService } from '@/lib/services/communities-service';
 import { EventsService } from '@/lib/services/events-service';
 import { LocationsService } from '@/lib/services/locations-service';
 
-export async function GET() {
+export async function GET({ locals: { supabase } }) {
 	try {
+		const eventsService = new EventsService(supabase);
+		
 		const [
 			locations,
 			featuredLocations,
@@ -14,8 +16,8 @@ export async function GET() {
 		] = await Promise.all([
 			LocationsService.getAllLocations(),
 			LocationsService.getFeaturedLocations(),
-			EventsService.getAllEvents(),
-			EventsService.getTrendingEvents(),
+			eventsService.getAllEvents(),
+			eventsService.getTrendingEvents(),
 			CommunitiesService.getAllCommunities(),
 			CommunitiesService.getFeaturedCommunities()
 		]);
