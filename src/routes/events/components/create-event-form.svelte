@@ -38,7 +38,7 @@
 				end: Time | undefined;
 			},
 			capacity: 0,
-			organizer: '',
+			organizer: user.email,
 			contact: '',
 			website: '',
 			price: 0,
@@ -75,9 +75,9 @@
 			// Create the payload with formatted values
 			const eventPayload = {
 				...value,
+				id: crypto.randomUUID(),
 				date: eventTimestamp, // timestamptz format for Supabase
-				time: formattedTimeRange, // formatted time range for display
-				user_id: user.id
+				time: formattedTimeRange // formatted time range for display
 			};
 
 			console.log('Creating event - formatted payload:', eventPayload);
@@ -190,7 +190,7 @@
 					label="Location"
 					placeholder="Select the event location"
 					name={field.name}
-					value={field.state.value || []}
+					value={field.state.value || ''}
 					options={locationOptions}
 					onValueChange={(selected) => field.handleChange(selected)}
 				/>
@@ -204,7 +204,7 @@
 					label="Category"
 					placeholder="Select the category of the event"
 					name={field.name}
-					value={field.state.value || []}
+					value={field.state.value || ''}
 					options={categoriesOptions}
 					onValueChange={(selected) => field.handleChange(selected)}
 				/>
@@ -218,7 +218,7 @@
 					label="Type of event"
 					placeholder="Select the event type"
 					name={field.name}
-					value={field.state.value || []}
+					value={field.state.value || ''}
 					options={eventTypeOptions}
 					onValueChange={(selected) => field.handleChange(selected)}
 				/>
@@ -271,7 +271,6 @@
 					class="group flex w-full flex-col gap-1.5"
 					value={field.state.value}
 					onValueChange={(value) => {
-						console.log('TimeRangeField value changed:', value);
 						field.handleChange(value);
 					}}
 				>
@@ -340,7 +339,8 @@
 					label="Organizer"
 					inputId={field.name}
 					type="text"
-					placeholder="Organizer"
+					disabled={true}
+					placeholder={user.email}
 					value={field.state.value}
 					oninput={(event: HtmlInputEvent) => {
 						const target = event.currentTarget as HTMLInputElement;
