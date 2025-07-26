@@ -156,16 +156,27 @@
 							</div>
 						</div>
 
-						{#if community.tags && community.tags.length > 0}
-							<div class="flex flex-wrap gap-1">
-								{#each community.tags.slice(0, 3) as tag}
-									<Badge variant="secondary" class="text-xs">{tag}</Badge>
-								{/each}
-								{#if community.tags.length > 3}
-									<Badge variant="secondary" class="text-xs">+{community.tags.length - 3}</Badge>
-								{/if}
-							</div>
-						{/if}
+						<div class="space-y-2">
+							{#if community.rules && community.rules.length > 0}
+								<div class="flex items-center text-sm text-muted-foreground">
+									<svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+									</svg>
+									{community.rules.length} community {community.rules.length === 1 ? 'rule' : 'rules'}
+								</div>
+							{/if}
+
+							{#if community.tags && community.tags.length > 0}
+								<div class="flex flex-wrap gap-1">
+									{#each community.tags.slice(0, 3) as tag}
+										<Badge variant="secondary" class="text-xs">{tag}</Badge>
+									{/each}
+									{#if community.tags.length > 3}
+										<Badge variant="secondary" class="text-xs">+{community.tags.length - 3}</Badge>
+									{/if}
+								</div>
+							{/if}
+						</div>
 
 						<Separator />
 						

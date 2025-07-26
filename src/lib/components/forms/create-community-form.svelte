@@ -22,7 +22,12 @@
 		user: User;
 	}
 
-	const { categoriesOptions = [], meetingFrequencyOptions = [], communityTypeOptions = [], user }: CreateCommunityFormProps = $props();
+	const {
+		categoriesOptions,
+		meetingFrequencyOptions,
+		communityTypeOptions,
+		user
+	}: CreateCommunityFormProps = $props();
 
 	// TODO: image, image_url, image_path are the same columns, have to delete tow
 	// from supabase
@@ -70,7 +75,7 @@
 					toast.success('Community created successfully!', {
 						description: `${value.name} has been created and is ready for members.`
 					});
-					
+
 					// Navigate to the new community page
 					setTimeout(() => {
 						goto(`/communities/${result.community.id}`);
@@ -208,9 +213,10 @@
 			<FormArrayInput
 				{field}
 				form={createCommunityForm}
-				label={'Highlights'}
-				addButtonText={'Add another highlight'}
-				removeButtonText={'Remove'}
+				label={'Community rules'}
+				addButtonText={'Add another rule'}
+				removeButtonText={'Remove rule'}
+				placeholder={'Enter a community rule...'}
 			/>
 		{/snippet}
 	</createCommunityForm.Field>
@@ -277,7 +283,7 @@
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
 				forLabel={field.name}
-				label='Meeting frequency'
+				label="Meeting frequency"
 				name={field.name}
 				value={field.state.value}
 				selectId="meeting-frequency"
@@ -307,7 +313,7 @@
 			/>
 		{/snippet}
 	</createCommunityForm.Field>
-  <createCommunityForm.Field name={'contact_phone'}>
+	<createCommunityForm.Field name={'contact_phone'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
 				{field}
@@ -324,40 +330,40 @@
 			/>
 		{/snippet}
 	</createCommunityForm.Field>
-  <createCommunityForm.Field name={'next_meeting_date'}>
-    {#snippet children(field: AnyFieldApi)}
-    <DateField.Root>
-      <div class="flex w-full max-w-[280px] flex-col gap-1.5">
-        <DateField.Label class="block select-none text-sm font-medium"
-          >Next meeting date</DateField.Label
-        >
-        <DateField.Input
-          class="h-input rounded-input border-border-input bg-background text-foreground focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover data-invalid:border-destructive flex w-full select-none items-center border px-2 py-3 text-sm tracking-[0.01em] "
-        >
-          {#snippet children({ segments })}
-            {#each segments as { part, value }, i (part + i)}
-              <div class="inline-block select-none">
-                {#if part === "literal"}
-                  <DateField.Segment {part} class="text-muted-foreground p-1">
-                    {value}
-                  </DateField.Segment>
-                {:else}
-                  <DateField.Segment
-                    {part}
-                    class="rounded-5px hover:bg-muted focus:bg-muted focus:text-foreground aria-[valuetext=Empty]:text-muted-foreground data-invalid:text-destructive focus-visible:ring-0! focus-visible:ring-offset-0! px-1 py-1"
-                  >
-                    {value}
-                  </DateField.Segment>
-                {/if}
-              </div>
-            {/each}
-          {/snippet}
-        </DateField.Input>
-      </div>
-    </DateField.Root>
-    {/snippet}
-  </createCommunityForm.Field>
-  <createCommunityForm.Field name={'next_meeting_location'}>
+	<createCommunityForm.Field name={'next_meeting_date'}>
+		{#snippet children(field: AnyFieldApi)}
+			<DateField.Root>
+				<div class="flex w-full max-w-[280px] flex-col gap-1.5">
+					<DateField.Label class="block text-sm font-medium select-none"
+						>Next meeting date</DateField.Label
+					>
+					<DateField.Input
+						class="h-input rounded-input border-border-input bg-background text-foreground focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover data-invalid:border-destructive flex w-full items-center border px-2 py-3 text-sm tracking-[0.01em] select-none "
+					>
+						{#snippet children({ segments })}
+							{#each segments as { part, value }, i (part + i)}
+								<div class="inline-block select-none">
+									{#if part === 'literal'}
+										<DateField.Segment {part} class="text-muted-foreground p-1">
+											{value}
+										</DateField.Segment>
+									{:else}
+										<DateField.Segment
+											{part}
+											class="rounded-5px hover:bg-muted focus:bg-muted focus:text-foreground aria-[valuetext=Empty]:text-muted-foreground data-invalid:text-destructive px-1 py-1 focus-visible:ring-0! focus-visible:ring-offset-0!"
+										>
+											{value}
+										</DateField.Segment>
+									{/if}
+								</div>
+							{/each}
+						{/snippet}
+					</DateField.Input>
+				</div>
+			</DateField.Root>
+		{/snippet}
+	</createCommunityForm.Field>
+	<createCommunityForm.Field name={'next_meeting_location'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormInput
 				{field}
@@ -374,7 +380,7 @@
 			/>
 		{/snippet}
 	</createCommunityForm.Field>
-  <createCommunityForm.Field name={'next_meeting_details'}>
+	<createCommunityForm.Field name={'next_meeting_details'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormTextarea
 				id={field.name}
@@ -392,11 +398,11 @@
 			/>
 		{/snippet}
 	</createCommunityForm.Field>
-  <createCommunityForm.Field name={'community_type_id'}>
+	<createCommunityForm.Field name={'community_type_id'}>
 		{#snippet children(field: AnyFieldApi)}
 			<FormSelect
 				forLabel={field.name}
-				label='Community type'
+				label="Community type"
 				name={field.name}
 				value={field.state.value}
 				selectId="community-type"

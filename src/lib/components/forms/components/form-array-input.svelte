@@ -8,19 +8,19 @@
 		field: AnyFieldApi;
 		form: any;
 		label: string;
-
 		addButtonText: string;
 		removeButtonText: string;
+		placeholder?: string;
 	}
 
-	const { field, form, label, addButtonText, removeButtonText }: ArrayInputProps = $props();
+	const { field, form, label, addButtonText, removeButtonText, placeholder }: ArrayInputProps = $props();
 
-	function addItem(fieldName: 'requirements' | 'highlights') {
-		form.pushFieldValue(fieldName, '');
+	function addItem() {
+		form.pushFieldValue(field.name, '');
 	}
 
-	function removeItem(fieldName: 'requirements' | 'highlights', index: number) {
-		form.removeFieldValue(fieldName, index);
+	function removeItem(index: number) {
+		form.removeFieldValue(field.name, index);
 	}
 </script>
 
@@ -34,7 +34,7 @@
 						name={subfield.name}
 						inputId={subfield.name}
 						type="text"
-						placeholder={`${field.name} ${index + 1}`}
+						placeholder={placeholder || `${field.name} ${index + 1}`}
 						value={item}
 						oninput={(event: Event) => {
 							const target = event.currentTarget as HTMLInputElement;
@@ -46,7 +46,7 @@
 							type="button"
 							variant="ghost"
 							size="sm"
-							onclick={() => removeItem(`${field.name}` as 'requirements' | 'highlights', index)}
+							onclick={() => removeItem(index)}
 							>{removeButtonText}</Button
 						>
 					{/if}
@@ -55,7 +55,7 @@
 		</div>
 	{/each}
 	<Button
-		onclick={() => addItem(`${field.name}` as 'requirements' | 'highlights')}
+		onclick={() => addItem()}
 		type="button"
 		class="cursor-pointer">{addButtonText}</Button
 	>

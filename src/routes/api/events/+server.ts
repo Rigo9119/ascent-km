@@ -6,10 +6,11 @@ import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ locals: { supabase } }) => {
   const eventsService = new EventsService(supabase);
+  const categoriesService = new CategoriesService(supabase);
   const [events, locations, categories, eventTypes] = await Promise.all([
     eventsService.getEventsWithDetails(),
     LocationsService.getLocationsNamesAndIds(),
-    CategoriesService.getAllCategories(),
+    categoriesService.getAllCategories(),
     eventsService.getEventTypes()
   ]);
 

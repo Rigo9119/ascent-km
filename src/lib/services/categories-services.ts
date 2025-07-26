@@ -1,9 +1,11 @@
-import { supabaseClient } from "../supabase";
+import type { SupabaseClient } from "@supabase/supabase-js";
+
 
 export class CategoriesService {
-  static async getAllCategories() {
+  constructor(private supabase: SupabaseClient) { }
+  async getAllCategories() {
     try {
-      const { data: categories, error: sbError } = await supabaseClient.from('categories').select('*');
+      const { data: categories, error: sbError } = await this.supabase.from('categories').select('*');
       if (sbError) throw new Error(`getAllCategories error: ${sbError.message}`);
       return categories;
     } catch (error) {

@@ -1,17 +1,29 @@
 <script lang="ts">
 	import CardItem from '$lib/components/card/card-item.svelte';
 	import type { Community } from '@/lib/types';
-
-	import type { PageData } from './$types';
 	import Button from '@/lib/components/ui/button/button.svelte';
 	import * as Sheet from '@/lib/components/ui/sheet';
 	import CreateCommunityForm from '@/lib/components/forms/create-community-form.svelte';
+	import type { User } from '@supabase/supabase-js';
 
-	const { data }: { data: PageData } = $props();
-	const user = data.user;
+	interface CommunitiesPageProps {
+		user: User;
+		communities: Community[];
+		featuredCommunities: Community[];
+		categoriesOptions: Array<{ value: string; label: string }>;
+		meetingFrequencyOptions: Array<{ value: string; label: string }>;
+		communityTypeOptions: Array<{ value: string; label: string }>;
+	}
 
-	const communities = $derived(data.communities as Community[]);
-	const featuredCommunities = $derived(data.featuredCommunities as Community[]);
+	const { data }: { data: CommunitiesPageProps } = $props();
+	const {
+		user,
+		communities,
+		featuredCommunities,
+		categoriesOptions,
+		meetingFrequencyOptions,
+		communityTypeOptions
+	} = data;
 </script>
 
 <svelte:head>
@@ -47,7 +59,12 @@
 							<Sheet.Header>
 								<Sheet.Title>Create Community</Sheet.Title>
 							</Sheet.Header>
-							<CreateCommunityForm />
+							<CreateCommunityForm
+								{categoriesOptions}
+								{meetingFrequencyOptions}
+								{communityTypeOptions}
+								{user}
+							/>
 						</Sheet.Content>
 					</Sheet.Root>
 				{/if}
@@ -84,7 +101,7 @@
 	</section>
 
 	<!-- Featured Communities Section -->
-	{#if featuredCommunities.length > 0}
+	{#if featuredCommunities && featuredCommunities.length > 0}
 		<section class="mb-8">
 			<h2 class="mb-4 text-xl font-semibold sm:mb-6 sm:text-2xl md:text-3xl">
 				Featured Communities
@@ -105,7 +122,7 @@
 		<div
 			class="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 lg:gap-6"
 		>
-			{#each communities as community (community.id)}
+			{#each communities || [] as community (community.id)}
 				<CardItem cardItem={community} urlSection="communities" />
 			{/each}
 		</div>

@@ -11,6 +11,7 @@
 	import BookOpen from '@lucide/svelte/icons/book-open';
 	import Calendar from '@lucide/svelte/icons/calendar';
 	import Users from '@lucide/svelte/icons/users';
+	import MessageSquare from '@lucide/svelte/icons/message-square';
 	import Skeleton from './skeleton.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
@@ -59,7 +60,14 @@
 		{
 			title: 'Communities',
 			url: '/communities',
-			icon: Handshake
+			icon: Handshake,
+			subitems: [
+				{
+					title: 'Discussions',
+					url: '/communities/discussions',
+					icon: MessageSquare
+				}
+			]
 		},
 		{
 			title: 'Resources',
