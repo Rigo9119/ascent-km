@@ -8,10 +8,10 @@
 	import { createForm, type AnyFieldApi, type AnyFormState } from '@tanstack/svelte-form';
 	import { Switch, TimeRangeField } from 'bits-ui';
 	import FormDateRange from '@/lib/components/forms/components/form-date-range.svelte';
-	import type { DateValue, TimeValue, Time } from '@internationalized/date';
+	import type { DateValue, Time } from '@internationalized/date';
 	import type { User } from '@supabase/supabase-js';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
-	import { dataURLtoBlob } from '@/lib/utils';
+	import { dataURLtoBlob, formatToTimestamp, formatTimeRange } from '@/lib/utils';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 
@@ -55,33 +55,16 @@
 		onSubmit: async ({ value }) => {
 			try {
 				// Convert DateValue and Time to timestamptz format
-				let eventTimestamp = '';
-				let formattedTimeRange = '';
-
-				if (value.date && value.time?.start) {
-					// Create ISO date string
-					const dateStr = `${value.date.year}-${String(value.date.month).padStart(2, '0')}-${String(value.date.day).padStart(2, '0')}`;
-
-					// Create time string for start time
-					const startHour = String(value.time.start.hour).padStart(2, '0');
-					const startMinute = String(value.time.start.minute).padStart(2, '0');
-
-					// Combine date and start time into timestamptz format
-					eventTimestamp = `${dateStr}T${startHour}:${startMinute}:00.000Z`;
-				}
+				const eventTimeStamp = formatToTimestamp(value.date as DateValue, value.time);
 
 				// Also create a separate formatted time range for display/storage if needed
-				if (value.time?.start && value.time?.end) {
-					const startTime = `${String(value.time.start.hour).padStart(2, '0')}:${String(value.time.start.minute).padStart(2, '0')}`;
-					const endTime = `${String(value.time.end.hour).padStart(2, '0')}:${String(value.time.end.minute).padStart(2, '0')}`;
-					formattedTimeRange = `${startTime} - ${endTime}`;
-				}
+				const formattedTimeRange = formatTimeRange(value.time);
 
 				// Create the payload with formatted values
 				const eventPayload = {
 					...value,
 					id: crypto.randomUUID(),
-					date: eventTimestamp,
+					date: eventTimeStamp,
 					time: formattedTimeRange
 				};
 
@@ -133,7 +116,7 @@
 		<createEventForm.Field
 			name="name"
 			validators={{
-				onChange: ({ value }) => {
+				onChange: ({ value }: { value: string }) => {
 					if (!value || value.length < 3) {
 						return 'Event name must be at least 3 characters long';
 					}
@@ -160,7 +143,7 @@
 		<createEventForm.Field
 			name="description"
 			validators={{
-				onChange: ({ value }) => {
+				onChange: ({ value }: { value: string }) => {
 					if (!value || value.length < 10) {
 						return 'Description must be at least 10 characters long';
 					}

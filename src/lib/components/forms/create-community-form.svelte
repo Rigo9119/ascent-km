@@ -13,6 +13,8 @@
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 	import type { User } from '@supabase/supabase-js';
+	import FormDateRange from './components/form-date-range.svelte';
+	import type { DateValue } from '@internationalized/date';
 
 	interface CreateCommunityFormProps {
 		categoriesOptions?: { value: string; label: string }[];
@@ -50,81 +52,45 @@
 			meeting_frequency: '',
 			long_description: '',
 			contact_phone: '',
-			next_meeting_date: '',
+			next_meeting_date: undefined as DateValue | undefined,
 			next_meeting_location: '',
 			next_meeting_details: '',
 			category_id: '',
 			community_type_id: ''
 		},
-		validators: {
-			onChange: ({ value }) => {
-				const errors: Record<string, string> = {};
-
-				if (!value.name?.trim()) {
-					errors.name = 'Community name is required';
-				} else if (value.name.length < 3) {
-					errors.name = 'Community name must be at least 3 characters';
-				}
-
-				if (!value.description?.trim()) {
-					errors.description = 'Description is required';
-				}
-
-				if (!value.location?.trim()) {
-					errors.location = 'Location is required';
-				}
-
-				if (!value.meeting_frequency) {
-					errors.meeting_frequency = 'Meeting frequency is required';
-				}
-
-				if (!value.community_type_id) {
-					errors.community_type_id = 'Community type is required';
-				}
-
-				if (value.website && !value.website.match(/^https?:\/\/.+/)) {
-					errors.website = 'Website must be a valid URL';
-				}
-
-				if (value.contact_phone && !value.contact_phone.match(/^[\d\s\-\+\(\)]+$/)) {
-					errors.contact_phone = 'Please enter a valid phone number';
-				}
-
-				return Object.keys(errors).length > 0 ? errors : undefined;
-			}
-		},
 		onSubmit: async ({ value }) => {
-			try {
-				const response = await fetch('/api/communities', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(value)
-				});
+			console.log('form data: ', value);
+			// try {
+			// 	const response = await fetch('/api/communities', {
+			// 		method: 'POST',
+			// 		headers: {
+			// 			'Content-Type': 'application/json'
+			// 		},
+			// 		body: JSON.stringify(value)
+			// 	});
 
-				const result = await response.json();
+			// 	const result = await response.json();
 
-				if (response.ok && result.success) {
-					toast.success('Community created successfully!', {
-						description: `${value.name} has been created and is ready for members.`
-					});
+			// 	if (response.ok && result.success) {
+			// 		toast.success('Community created successfully!', {
+			// 			description: `${value.name} has been created and is ready for members.`
+			// 		});
 
-					// Navigate to the new community page
-					setTimeout(() => {
-						goto(`/communities/${result.community.id}`);
-					}, 1000);
-				} else {
-					toast.error('Failed to create community', {
-						description: result.error || 'Something went wrong. Please try again.'
-					});
-				}
-			} catch (error) {
-				console.error('Error creating community:', error);
-				toast.error('Network error', {
-					description: 'Unable to create community. Please check your connection and try again.'
-				});
-			}
+			// 		// Navigate to the new community page
+			// 		setTimeout(() => {
+			// 			goto(`/communities/${result.community.id}`);
+			// 		}, 1000);
+			// 	} else {
+			// 		toast.error('Failed to create community', {
+			// 			description: result.error || 'Something went wrong. Please try again.'
+			// 		});
+			// 	}
+			// } catch (error) {
+			// 	console.error('Error creating community:', error);
+			// 	toast.error('Network error', {
+			// 		description: 'Unable to create community. Please check your connection and try again.'
+			// 	});
+			// }
 		}
 	}));
 </script>
@@ -140,7 +106,7 @@
 	<!-- Basic Information Section -->
 	<div class="space-y-4">
 		<h3 class="border-b pb-2 text-lg font-semibold text-gray-900">Basic Information</h3>
-		<createCommunityForm.Field name={'name'}>
+		<createCommunityForm.Field name="name">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -153,12 +119,9 @@
 					required={true}
 					oninput={handleInputChange(field)}
 				/>
-				{#if field.state.meta.errors.length > 0}
-					<p class="mt-1 text-sm text-red-600">{field.state.meta.errors[0]}</p>
-				{/if}
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'description'}>
+		<createCommunityForm.Field name="description">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -176,7 +139,7 @@
 				{/if}
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'long_description'}>
+		<createCommunityForm.Field name="long_description">
 			{#snippet children(field: AnyFieldApi)}
 				<FormTextarea
 					id={field.name}
@@ -194,7 +157,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'image'}>
+		<createCommunityForm.Field name="image">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					name={field.name}
@@ -235,7 +198,7 @@
 				{/if}
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'category'}>
+		<createCommunityForm.Field name="category">
 			{#snippet children(field: AnyFieldApi)}
 				<FormMultiSelect
 					forLabel={field.name}
@@ -249,7 +212,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'community_type_id'}>
+		<createCommunityForm.Field name="community_type_id">
 			{#snippet children(field: AnyFieldApi)}
 				<FormSelect
 					forLabel={field.name}
@@ -265,7 +228,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'meeting_frequency'}>
+		<createCommunityForm.Field name="meeting_frequency">
 			{#snippet children(field: AnyFieldApi)}
 				<FormSelect
 					forLabel={field.name}
@@ -286,7 +249,7 @@
 	<!-- Community Settings Section -->
 	<div class="space-y-4">
 		<h3 class="border-b pb-2 text-lg font-semibold text-gray-900">Community Settings</h3>
-		<createCommunityForm.Field name={'member_count'}>
+		<createCommunityForm.Field name="member_count">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -300,7 +263,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'is_public'}>
+		<createCommunityForm.Field name="is_public">
 			{#snippet children(field: AnyFieldApi)}
 				<div class="flex items-center space-x-3">
 					<Switch.Root
@@ -318,7 +281,7 @@
 				</div>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'is_featured'}>
+		<createCommunityForm.Field name="is_featured">
 			{#snippet children(field: AnyFieldApi)}
 				<div class="flex items-center space-x-3">
 					<Switch.Root
@@ -336,15 +299,15 @@
 				</div>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'rules'} mode="array">
+		<createCommunityForm.Field name="rules" mode="array">
 			{#snippet children(field: AnyFieldApi)}
 				<FormArrayInput
 					{field}
 					form={createCommunityForm}
-					label={'Community rules'}
-					addButtonText={'Add another rule'}
-					removeButtonText={'Remove rule'}
-					placeholder={'Enter a community rule...'}
+					label="Community rules"
+					addButtonText="Add another rule"
+					removeButtonText="Remove rule"
+					placeholder="Enter a community rule..."
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
@@ -353,7 +316,7 @@
 	<!-- Contact Information Section -->
 	<div class="space-y-4">
 		<h3 class="border-b pb-2 text-lg font-semibold text-gray-900">Contact Information</h3>
-		<createCommunityForm.Field name={'contact_email'}>
+		<createCommunityForm.Field name="contact_email">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -368,7 +331,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'contact_phone'}>
+		<createCommunityForm.Field name="contact_phone">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -382,7 +345,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'website'}>
+		<createCommunityForm.Field name="website">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -401,21 +364,16 @@
 	<!-- Next Meeting Section -->
 	<div class="space-y-4">
 		<h3 class="border-b pb-2 text-lg font-semibold text-gray-900">Next Meeting</h3>
-		<createCommunityForm.Field name={'next_meeting_date'}>
+		<createCommunityForm.Field name="next_meeting_date">
 			{#snippet children(field: AnyFieldApi)}
-				<FormInput
-					{field}
-					name={field.name}
-					label="Next meeting date"
-					inputId={field.name}
-					type="date"
-					placeholder="Select next meeting date"
+				<FormDateRange
+					label="Next Event Date"
 					value={field.state.value}
-					oninput={handleInputChange(field)}
+					onValueChange={(value) => field.handleChange(value)}
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'next_meeting_location'}>
+		<createCommunityForm.Field name="next_meeting_location">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					{field}
@@ -429,7 +387,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name={'next_meeting_details'}>
+		<createCommunityForm.Field name="next_meeting_details">
 			{#snippet children(field: AnyFieldApi)}
 				<FormTextarea
 					id={field.name}
