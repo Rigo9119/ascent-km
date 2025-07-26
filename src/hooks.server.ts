@@ -20,4 +20,4 @@ export const handle: Handle = async ({ event, resolve }) => {
 			return name === 'content-range';
 		}
 	});
-}; 
+};

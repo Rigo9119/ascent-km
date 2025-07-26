@@ -16,11 +16,11 @@
 	import RelatedItems from '@/lib/components/related-items.svelte';
 
 	interface EventPageData {
-		appEvent: AppEventWithJoinedData,
-		urlSegments: string
+		appEvent: AppEventWithJoinedData;
+		urlSegments: string;
 	}
 
-	let { data }: { data: EventPageData}= $props();
+	let { data }: { data: EventPageData } = $props();
 	const { appEvent, urlSegments } = data;
 
 	let relatedEvents = $state<AppEvent[]>([] as AppEvent[]);
@@ -31,7 +31,7 @@
 
 	// Handle share functionality
 	function shareEvent() {
-		if (navigator.share && appEvent as unknown as AppEvent) {
+		if (navigator.share && (appEvent as unknown as AppEvent)) {
 			navigator.share({
 				title: appEvent?.name,
 				text: appEvent?.description,
@@ -92,7 +92,11 @@
 					>
 						{appEvent?.category_name}
 					</span>
-					<span class="rounded-full px-3 py-1 text-sm font-medium {getFeeColor(appEvent?.is_free || false)}">
+					<span
+						class="rounded-full px-3 py-1 text-sm font-medium {getFeeColor(
+							appEvent?.is_free || false
+						)}"
+					>
 						{appEvent?.is_free ? 'Paid Event' : 'Free Event'}
 					</span>
 				</div>
@@ -282,6 +286,6 @@
 
 	<!-- Related Events -->
 	{#if relatedEvents.length > 0}
-		<RelatedItems relatedItems={relatedEvents as AppEvent[]} urlSegment={urlSegments[0]}/>
+		<RelatedItems relatedItems={relatedEvents as AppEvent[]} urlSegment={urlSegments[0]} />
 	{/if}
 </div>

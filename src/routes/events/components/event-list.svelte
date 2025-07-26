@@ -1,8 +1,5 @@
 <script lang="ts">
-	import {
-		Card,
-		CardContent,
-	} from '$lib/components/ui/card';
+	import { Card, CardContent } from '$lib/components/ui/card';
 	import CardEvent from '@/lib/components/card/card-event.svelte';
 	import type { AppEvent } from '@/lib/types';
 

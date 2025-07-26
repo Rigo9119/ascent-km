@@ -12,6 +12,6 @@ export const load: LayoutServerLoad = async ({ locals: { getUser }, url }) => {
 			urlSegments
 		};
 	} catch (layoutServerLoadError) {
-		throw error(404, `loadLayoutServer error ==> ${layoutServerLoadError}`)
+		throw error(404, `loadLayoutServer error ==> ${layoutServerLoadError}`);
 	}
 };

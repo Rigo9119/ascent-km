@@ -132,7 +132,11 @@
 			</div>
 		{/if}
 
-		<Button variant="ghost" href="/auth" class="w-full text-sm text-indigo-600 hover:text-indigo-500">
+		<Button
+			variant="ghost"
+			href="/auth"
+			class="w-full text-sm text-indigo-600 hover:text-indigo-500"
+		>
 			Back to login
 		</Button>
 	</div>

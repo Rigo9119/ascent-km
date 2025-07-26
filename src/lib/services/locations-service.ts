@@ -62,7 +62,7 @@ export class LocationsService {
 			const { data: locations, error: sbError } = await supabaseClient
 				.from('locations')
 				.select('*')
-				.limit(3)
+				.limit(3);
 
 			if (sbError) throw new Error(`location error: ${sbError}`);
 			return locations;

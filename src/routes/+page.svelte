@@ -32,29 +32,29 @@
 	<div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 		<!-- Skeleton for header -->
 		<div class="mb-6 sm:mb-8">
-			<div class="h-8 bg-gray-200 rounded w-48 mb-4 animate-pulse"></div>
-			<div class="h-4 bg-gray-200 rounded w-96 animate-pulse"></div>
+			<div class="mb-4 h-8 w-48 animate-pulse rounded bg-gray-200"></div>
+			<div class="h-4 w-96 animate-pulse rounded bg-gray-200"></div>
 		</div>
-		
+
 		<!-- Skeleton for search -->
-		<div class="h-16 bg-gray-200 rounded-lg mb-8 animate-pulse"></div>
-		
+		<div class="mb-8 h-16 animate-pulse rounded-lg bg-gray-200"></div>
+
 		<!-- Skeleton for carousel sections -->
 		<div class="space-y-8">
 			<div>
-				<div class="h-6 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
-				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				<div class="mb-4 h-6 w-32 animate-pulse rounded bg-gray-200"></div>
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{#each Array(4) as _}
-						<div class="h-48 bg-gray-200 rounded-lg animate-pulse"></div>
+						<div class="h-48 animate-pulse rounded-lg bg-gray-200"></div>
 					{/each}
 				</div>
 			</div>
-			
+
 			<div>
-				<div class="h-6 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
-				<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+				<div class="mb-4 h-6 w-32 animate-pulse rounded bg-gray-200"></div>
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 					{#each Array(4) as _}
-						<div class="h-48 bg-gray-200 rounded-lg animate-pulse"></div>
+						<div class="h-48 animate-pulse rounded-lg bg-gray-200"></div>
 					{/each}
 				</div>
 			</div>
@@ -78,15 +78,15 @@
 			{user}
 		/>
 
-		{#if trendingEvents.length > 0}	
+		{#if trendingEvents.length > 0}
 			<TrendingSection
 				sectionTitle="Trending events"
 				sectionItems={trendingEvents}
 				urlSection="events"
 				{user}
-				/>
+			/>
 		{/if}
-		
+
 		<TrendingSection
 			sectionTitle="Popular communities"
 			sectionItems={featuredCommunities}

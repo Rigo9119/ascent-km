@@ -1,5 +1,5 @@
 export { default as CreateEventForm } from './create-event-form.svelte';
-export { default as CreateCommunityForm } from './create-community-form.svelte';
+export { default as CreateCommunityForm } from './create-community-form-test.svelte';
 export { default as FormArrayInput } from './components/form-array-input.svelte';
 export { default as FormDateRange } from './components/form-date-range.svelte';
 export { default as FormInput } from './components/form-input.svelte';

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '@/lib/components/ui/button/button.svelte';
 
-  let { isLoading, signInWithGoogle, signInWithKakao } = $props();
+	let { isLoading, signInWithGoogle, signInWithKakao } = $props();
 </script>
 
 <div>
@@ -11,7 +11,7 @@
 			type="button"
 			disabled={isLoading}
 			onclick={signInWithGoogle}
-			class="cursor-pointer inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
+			class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-500 shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-gray-50 disabled:opacity-50"
 		>
 			<img src="/google.svg" alt="Google" class="h-5 w-5" />
 			Google
@@ -21,7 +21,7 @@
 			type="button"
 			disabled={isLoading}
 			onclick={signInWithKakao}
-			class="cursor-pointer inline-flex items-center justify-center gap-2 rounded-md bg-[#FEE500] px-4 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-yellow-300 disabled:opacity-50"
+			class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-md bg-[#FEE500] px-4 py-2 text-sm font-bold text-black shadow-sm ring-1 ring-gray-300 ring-inset hover:bg-yellow-300 disabled:opacity-50"
 		>
 			Kakao
 		</Button>

@@ -5,7 +5,7 @@ import { json } from '@sveltejs/kit';
 export const GET: RequestHandler = async ({ locals: { supabase, getUser } }) => {
 	try {
 		const user = await getUser();
-		
+
 		if (!user) {
 			return json({ error: 'Unauthorized' }, { status: 401 });
 		}
@@ -17,11 +17,13 @@ export const GET: RequestHandler = async ({ locals: { supabase, getUser } }) => 
 			success: true,
 			communities: myCommunities || []
 		});
-
 	} catch (error) {
 		console.error('My communities API error:', error);
-		return json({
-			error: error instanceof Error ? error.message : 'Internal server error'
-		}, { status: 500 });
+		return json(
+			{
+				error: error instanceof Error ? error.message : 'Internal server error'
+			},
+			{ status: 500 }
+		);
 	}
 };

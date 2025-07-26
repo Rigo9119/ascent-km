@@ -15,23 +15,23 @@ import CreditCard from '@lucide/svelte/icons/credit-card';
 
 // Icon mapping object
 export const iconMap = {
-  'Globe': Globe,
-  'MapPin': MapPin,
-  'BookOpen': BookOpen,
-  'Languages': Languages,
-  'Train': Train,
-  'Bus': Bus,
-  'Plane': Plane,
-  'Users': Users,
-  'ShoppingBag': ShoppingBag,
-  'Calendar': Calendar,
-  'Camera': Camera,
-  'Utensils': Utensils,
-  'Wifi': Wifi,
-  'CreditCard': CreditCard
+	Globe: Globe,
+	MapPin: MapPin,
+	BookOpen: BookOpen,
+	Languages: Languages,
+	Train: Train,
+	Bus: Bus,
+	Plane: Plane,
+	Users: Users,
+	ShoppingBag: ShoppingBag,
+	Calendar: Calendar,
+	Camera: Camera,
+	Utensils: Utensils,
+	Wifi: Wifi,
+	CreditCard: CreditCard
 } as const;
 
 // Function to get icon component by name
 export function getIconComponent(iconName: string) {
-  return iconMap[iconName as keyof typeof iconMap] || Globe;
-} 
+	return iconMap[iconName as keyof typeof iconMap] || Globe;
+}

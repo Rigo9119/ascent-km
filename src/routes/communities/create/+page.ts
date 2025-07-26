@@ -3,7 +3,7 @@ import type { PageLoad } from './$types';
 export const load: PageLoad = async ({ fetch, data }) => {
 	// For now, return empty options arrays until we have the actual data sources
 	// TODO: Fetch categories, meeting frequencies, and community types from API
-	
+
 	const categoriesOptions = [
 		{ value: 'tech', label: 'Technology' },
 		{ value: 'language', label: 'Language Exchange' },

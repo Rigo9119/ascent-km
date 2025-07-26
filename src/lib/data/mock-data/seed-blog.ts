@@ -147,4 +147,4 @@ async function seedBlogPosts() {
 	}
 }
 
-seedBlogPosts(); 
+seedBlogPosts();

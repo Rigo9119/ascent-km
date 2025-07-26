@@ -17,13 +17,8 @@
 	}
 
 	const { data }: { data: EventsPageData } = $props();
-	const {
-		appEvents,
-		locationsFilterOptions,
-		categoriesFilterOptions,
-		eventTypeOptions,
-		user
-	} = data;
+	const { appEvents, locationsFilterOptions, categoriesFilterOptions, eventTypeOptions, user } =
+		data;
 
 	let filters = $state({
 		category: 'all',

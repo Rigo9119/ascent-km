@@ -25,7 +25,7 @@
 <Sidebar.Provider>
 	<AppSidebar {user} />
 	<main class="w-full p-2">
-		<div class="flex items-center gap-2 mb-4">
+		<div class="mb-4 flex items-center gap-2">
 			<Sidebar.Trigger />
 			{#if breadcrumbs.length > 0}
 				<AppBreacrumbs {breadcrumbs} />

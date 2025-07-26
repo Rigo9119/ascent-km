@@ -1,9 +1,9 @@
-import type { Component } from "svelte";
+import type { Component } from 'svelte';
 
 export type Item = AppEvent | AppLocation | Community;
 export type HtmlInputEvent = Event & {
 	currentTarget: EventTarget & HTMLInputElement;
-}
+};
 
 export type AppEvent = {
 	id: string; // UUID
@@ -27,7 +27,7 @@ export type AppEvent = {
 	long_description?: string;
 	created_at?: string;
 	updated_at?: string;
-}
+};
 
 export type AppLocation = {
 	id: string; // UUID
@@ -51,54 +51,54 @@ export type AppLocation = {
 	is_featured?: boolean;
 	created_at?: string;
 	updated_at?: string;
-}
+};
 
 export type Community = {
-  id: string; // UUID
-  name: string;
-  description: string;
+	id: string; // UUID
+	name: string;
+	description: string;
 	long_description: string;
-  image: string;
-  member_count: number;
-  is_public: boolean;
-  is_featured: boolean;
-  tags: string[];
-  rules: string[];
-  contact_email: string;
-  website: string;
-  created_at: string; // ISO date string
-  updated_at: string; // ISO date string
-  image_url: string;
-  image_path: string;
-  location: string;
-  category: string;
-  meeting_frequency: string;
-  recent_discussions:  Discussion[]; // JSONB type
-  upcoming_events: Event[]; // JSONB type
+	image: string;
+	member_count: number;
+	is_public: boolean;
+	is_featured: boolean;
+	tags: string[];
+	rules: string[];
+	contact_email: string;
+	website: string;
+	created_at: string; // ISO date string
+	updated_at: string; // ISO date string
+	image_url: string;
+	image_path: string;
+	location: string;
+	category: string;
+	meeting_frequency: string;
+	recent_discussions: Discussion[]; // JSONB type
+	upcoming_events: Event[]; // JSONB type
 	organizer_id: string; // UUID reference to profiles
 	next_meeting_date: string; // ISO date string
-	next_meeting_location: string; 
-	next_meeting_details: string
-}
+	next_meeting_location: string;
+	next_meeting_details: string;
+};
 
 export type Discussion = {
-  id: string;
-  title: string;
-  created_at: string;
+	id: string;
+	title: string;
+	created_at: string;
 	author: string;
 	date: string;
-	replies: string[]
-  // other discussion properties
-}
+	replies: string[];
+	// other discussion properties
+};
 
 export type Event = {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-	description: string
-  // other event properties
-}
+	id: string;
+	title: string;
+	date: string;
+	location: string;
+	description: string;
+	// other event properties
+};
 
 export type CommunityMember = {
 	id: number;
@@ -106,7 +106,7 @@ export type CommunityMember = {
 	user_id: string; // UUID
 	role: 'admin' | 'moderator' | 'member';
 	joined_at: string;
-}
+};
 
 export type Resource = {
 	title: string;
@@ -115,7 +115,7 @@ export type Resource = {
 	category: string;
 	icon: Component;
 	badge?: string;
-}
+};
 
 export type Category = {
 	id: string; // UUID
@@ -123,7 +123,7 @@ export type Category = {
 	description?: string;
 	created_at?: string;
 	updated_at?: string;
-}
+};
 
 export type EventType = {
 	id: string; // UUID
@@ -131,7 +131,7 @@ export type EventType = {
 	description?: string;
 	created_at?: string;
 	updated_at?: string;
-}
+};
 
 // User Profile Types
 export interface UserProfile {
@@ -227,4 +227,3 @@ export interface AppEventWithJoinedData extends AppEvent {
 	is_featured: boolean;
 	rating: number;
 }
-

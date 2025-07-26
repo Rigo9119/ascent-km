@@ -88,7 +88,10 @@ export const countryOptions: { value: string; label: string }[] = [
 	{ value: 'guadeloupe', label: 'Guadeloupe' },
 	{ value: 'equatorial guinea', label: 'Equatorial Guinea' },
 	{ value: 'greece', label: 'Greece' },
-	{ value: 'south georgia and the south sandwich islands', label: 'South Georgia and the South Sandwich Islands' },
+	{
+		value: 'south georgia and the south sandwich islands',
+		label: 'South Georgia and the South Sandwich Islands'
+	},
 	{ value: 'guatemala', label: 'Guatemala' },
 	{ value: 'guam', label: 'Guam' },
 	{ value: 'guinea-bissau', label: 'Guinea-Bissau' },

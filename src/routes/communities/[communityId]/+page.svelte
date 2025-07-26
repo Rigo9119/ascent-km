@@ -151,12 +151,28 @@
 				<!-- Recent Discussions Section -->
 				<section>
 					<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Recent Discussions</h2>
-					<ul class="list-disc pl-6 space-y-2">
+					<ul class="list-disc space-y-2 pl-6">
 						<!-- Placeholder discussions -->
-						<li><a href="/communities/discussions/1" class="text-emerald-600 hover:underline">How to find housing in Seoul?</a></li>
-						<li><a href="/communities/discussions/2" class="text-emerald-600 hover:underline">Best places to eat Korean BBQ</a></li>
-						<li><a href="/communities/discussions/3" class="text-emerald-600 hover:underline">Tips for learning Korean fast</a></li>
-						<li><a href="/communities/discussions/4" class="text-emerald-600 hover:underline">Making friends as an expat</a></li>
+						<li>
+							<a href="/communities/discussions/1" class="text-emerald-600 hover:underline"
+								>How to find housing in Seoul?</a
+							>
+						</li>
+						<li>
+							<a href="/communities/discussions/2" class="text-emerald-600 hover:underline"
+								>Best places to eat Korean BBQ</a
+							>
+						</li>
+						<li>
+							<a href="/communities/discussions/3" class="text-emerald-600 hover:underline"
+								>Tips for learning Korean fast</a
+							>
+						</li>
+						<li>
+							<a href="/communities/discussions/4" class="text-emerald-600 hover:underline"
+								>Making friends as an expat</a
+							>
+						</li>
 					</ul>
 				</section>
 
@@ -294,9 +310,7 @@
 									<Dialog.Header>
 										<Dialog.Title>Transfer Ownership</Dialog.Title>
 									</Dialog.Header>
-									<Dialog.Description>
-										Select a new owner for this community.
-									</Dialog.Description>
+									<Dialog.Description>Select a new owner for this community.</Dialog.Description>
 									<!-- TODO: Add user selection UI here -->
 									<Dialog.Footer>
 										<Dialog.Close>
@@ -308,7 +322,11 @@
 							</Dialog.Root>
 
 							<!-- Edit Community Button -->
-							<Button.Root class="w-full" variant="secondary" onclick={() => goto(`/communities/${currentCommunity.id}/edit`)}>
+							<Button.Root
+								class="w-full"
+								variant="secondary"
+								onclick={() => goto(`/communities/${currentCommunity.id}/edit`)}
+							>
 								Edit Community
 							</Button.Root>
 						</Card.Content>

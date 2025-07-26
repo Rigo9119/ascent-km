@@ -9,12 +9,7 @@
 		onChange: (result: { city: string; country: string }) => void;
 	}
 
-	const {
-		value,
-		placeholder,
-		label,
-		onChange
-	}: LocationSearchProps = $props();
+	const { value, placeholder, label, onChange }: LocationSearchProps = $props();
 
 	let searchResults = $state<Array<{ city: string; country: string }>>([]);
 	let isLoading = $state(false);

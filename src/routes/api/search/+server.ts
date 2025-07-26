@@ -18,14 +18,14 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 				.select('id, name, description, date, location_id')
 				.or(`name.ilike.%${query}%,description.ilike.%${query}%`)
 				.limit(5),
-			
+
 			// Search locations
 			supabase
 				.from('locations')
 				.select('id, name, description, address, rating')
 				.or(`name.ilike.%${query}%,description.ilike.%${query}%,address.ilike.%${query}%`)
 				.limit(5),
-			
+
 			// Search communities
 			supabase
 				.from('communities')
@@ -39,15 +39,15 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 
 		// Combine and format results
 		const results = [
-			...(eventsResult.data || []).map(event => ({
+			...(eventsResult.data || []).map((event) => ({
 				...event,
 				type: 'event' as const
 			})),
-			...(locationsResult.data || []).map(location => ({
+			...(locationsResult.data || []).map((location) => ({
 				...location,
 				type: 'location' as const
 			})),
-			...(communitiesResult.data || []).map(community => ({
+			...(communitiesResult.data || []).map((community) => ({
 				...community,
 				type: 'community' as const
 			}))
@@ -58,4 +58,4 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 		console.error('Search error:', error);
 		return json({ results: [], error: 'Search failed' }, { status: 500 });
 	}
-}; 
+};

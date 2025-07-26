@@ -1,8 +1,7 @@
-
-import { UserService } from "@/lib/services/user-service";
+import { UserService } from '@/lib/services/user-service';
 
 export async function GET() {
-  const userData = await UserService.getUserSb();
+	const userData = await UserService.getUserSb();
 
-  return new Response(JSON.stringify(({user: userData})))
+	return new Response(JSON.stringify({ user: userData }));
 }

@@ -15,9 +15,9 @@
 	import Badge from '../ui/badge/badge.svelte';
 
 	let { appEvent } = $props();
-	const { event_name, event_description, event_id, category_name, event_type_name } = appEvent
+	const { event_name, event_description, event_id, category_name, event_type_name } = appEvent;
 
-  function viewEventDetails(eventId: string) {
+	function viewEventDetails(eventId: string) {
 		goto(`/events/${eventId}`);
 	}
 </script>
@@ -36,7 +36,7 @@
 					{category_name}
 				</Badge>
 				<div class="flex gap-1">
-					<Badge class="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800">
+					<Badge class="bg-gray-100 px-2 py-1 text-xs font-medium text-gray-800">
 						{event_type_name}
 					</Badge>
 				</div>
@@ -48,9 +48,10 @@
 	</CardContent>
 	<CardContent class="flex justify-end pt-0">
 		<Button
-    variant="outline"
-    class="bg-black text-white"
-    onclick={() => viewEventDetails(event_id)}>
+			variant="outline"
+			class="bg-black text-white"
+			onclick={() => viewEventDetails(event_id)}
+		>
 			View Details
 		</Button>
 	</CardContent>

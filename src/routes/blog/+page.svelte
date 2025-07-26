@@ -13,7 +13,8 @@
 			id: 1,
 			slug: 'top-10-must-visit-cafes-in-seoul',
 			title: 'Top 10 Must-Visit Cafes in Seoul',
-			description: 'Discover the most Instagram-worthy cafes in Seoul, from traditional Korean tea houses to modern specialty coffee shops.',
+			description:
+				'Discover the most Instagram-worthy cafes in Seoul, from traditional Korean tea houses to modern specialty coffee shops.',
 			image: 'https://source.unsplash.com/random/800x600?cafe',
 			author: 'Sarah Kim',
 			date: '2024-01-15',
@@ -24,7 +25,8 @@
 			id: 2,
 			slug: 'complete-guide-to-korean-street-food',
 			title: 'A Complete Guide to Korean Street Food',
-			description: 'Everything you need to know about Korean street food, from popular dishes to where to find the best vendors.',
+			description:
+				'Everything you need to know about Korean street food, from popular dishes to where to find the best vendors.',
 			image: 'https://source.unsplash.com/random/800x600?street-food',
 			author: 'Mike Chen',
 			date: '2024-01-12',
@@ -35,7 +37,8 @@
 			id: 3,
 			slug: 'hidden-gems-in-busan-beyond-tourist-trail',
 			title: 'Hidden Gems in Busan: Beyond the Tourist Trail',
-			description: 'Explore the lesser-known attractions in Busan that most tourists miss, from secret beaches to local markets.',
+			description:
+				'Explore the lesser-known attractions in Busan that most tourists miss, from secret beaches to local markets.',
 			image: 'https://source.unsplash.com/random/800x600?busan',
 			author: 'Emma Wilson',
 			date: '2024-01-10',
@@ -46,7 +49,8 @@
 			id: 4,
 			slug: 'learning-korean-tips-from-language-exchange',
 			title: 'Learning Korean: Tips from Language Exchange Meetups',
-			description: 'Practical advice for learning Korean through language exchange programs and cultural immersion.',
+			description:
+				'Practical advice for learning Korean through language exchange programs and cultural immersion.',
 			image: 'https://source.unsplash.com/random/800x600?language',
 			author: 'David Park',
 			date: '2024-01-08',
@@ -57,7 +61,8 @@
 			id: 5,
 			slug: 'kpop-culture-understanding-hallyu-wave',
 			title: 'K-Pop Culture: Understanding the Hallyu Wave',
-			description: 'An in-depth look at the global phenomenon of K-Pop and its impact on Korean culture and tourism.',
+			description:
+				'An in-depth look at the global phenomenon of K-Pop and its impact on Korean culture and tourism.',
 			image: 'https://source.unsplash.com/random/800x600?kpop',
 			author: 'Lisa Thompson',
 			date: '2024-01-05',
@@ -68,7 +73,8 @@
 			id: 6,
 			slug: 'traditional-korean-festivals-you-should-experience',
 			title: 'Traditional Korean Festivals You Should Experience',
-			description: 'A year-round guide to the most important traditional festivals and celebrations in Korea.',
+			description:
+				'A year-round guide to the most important traditional festivals and celebrations in Korea.',
 			image: 'https://source.unsplash.com/random/800x600?festival',
 			author: 'James Lee',
 			date: '2024-01-03',
@@ -98,18 +104,20 @@
 <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 	<!-- Header Section -->
 	<div class="mb-6 sm:mb-8">
-		<h1 class="text-2xl font-bold sm:text-3xl md:text-4xl mb-2 sm:mb-4 text-emerald-600">Blog</h1>
-		<p class="text-sm sm:text-base text-muted-foreground">
+		<h1 class="mb-2 text-2xl font-bold text-emerald-600 sm:mb-4 sm:text-3xl md:text-4xl">Blog</h1>
+		<p class="text-muted-foreground text-sm sm:text-base">
 			Discover insights, tips, and stories about Korean culture, travel, food, and community
 		</p>
 	</div>
 
 	<!-- Blog Posts Grid -->
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+	<div
+		class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8 lg:grid-cols-2 xl:grid-cols-3"
+	>
 		{#each blogPosts as post (post.id)}
-			<div 
-				class="group overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer h-full bg-card border rounded-lg" 
-				role="button" 
+			<div
+				class="group bg-card h-full cursor-pointer overflow-hidden rounded-lg border transition-all duration-200 hover:shadow-lg"
+				role="button"
 				tabindex="0"
 				onclick={() => goto(`/blog/${post.slug}`)}
 				onkeydown={(e) => e.key === 'Enter' && goto(`/blog/${post.slug}`)}
@@ -122,24 +130,30 @@
 						class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 					/>
 					<div class="absolute top-3 left-3">
-						<span class="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+						<span
+							class="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
+						>
 							{post.category}
 						</span>
 					</div>
 				</div>
-				
+
 				<!-- Content -->
-				<div class="p-4 sm:p-5 flex flex-col h-full">
+				<div class="flex h-full flex-col p-4 sm:p-5">
 					<div class="flex-1">
-						<h2 class="font-semibold text-lg sm:text-xl mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+						<h2
+							class="group-hover:text-primary mb-2 line-clamp-2 text-lg font-semibold transition-colors sm:text-xl"
+						>
 							{post.title}
 						</h2>
-						<p class="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-3">
+						<p class="text-muted-foreground mb-4 line-clamp-3 text-sm sm:text-base">
 							{post.description}
 						</p>
-						
+
 						<!-- Meta Information -->
-						<div class="flex items-center justify-between text-xs sm:text-sm text-muted-foreground mb-4">
+						<div
+							class="text-muted-foreground mb-4 flex items-center justify-between text-xs sm:text-sm"
+						>
 							<div class="flex items-center gap-1">
 								<User class="h-3 w-3 sm:h-4 sm:w-4" />
 								<span>{post.author}</span>
@@ -159,7 +173,11 @@
 
 					<!-- Read More Button - Always at bottom left -->
 					<div class="mt-auto pt-2">
-						<a href="/blog/{post.slug}" class="inline-flex items-center gap-2 text-sm font-medium text-black hover:text-primary/80 transition-colors" onclick={(e) => e.stopPropagation()}>
+						<a
+							href="/blog/{post.slug}"
+							class="hover:text-primary/80 inline-flex items-center gap-2 text-sm font-medium text-black transition-colors"
+							onclick={(e) => e.stopPropagation()}
+						>
 							Read More
 							<ArrowRight class="h-4 w-4" />
 						</a>
@@ -169,10 +187,11 @@
 		{/each}
 	</div>
 
-
-	<div class="mt-8 sm:mt-12 text-center">
-		<Button class="inline-flex items-center justify-center rounded-md  bg-emerald-500 hover:bg-emerald-600 px-4 py-2 text-sm font-medium text-primary-foreground transition-colors">
+	<div class="mt-8 text-center sm:mt-12">
+		<Button
+			class="text-primary-foreground inline-flex items-center justify-center  rounded-md bg-emerald-500 px-4 py-2 text-sm font-medium transition-colors hover:bg-emerald-600"
+		>
 			Load More Posts
 		</Button>
 	</div>
-</div> 
+</div>

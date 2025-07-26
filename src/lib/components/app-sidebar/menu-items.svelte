@@ -33,13 +33,13 @@
 							<item.icon class="h-4 w-4 stroke-2" />
 							<span>{item.title}</span>
 						</div>
-						<ChevronRight 
-							class="h-3 w-3 transition-transform {expandedItems[item.title] ? 'rotate-90' : ''}" 
+						<ChevronRight
+							class="h-3 w-3 transition-transform {expandedItems[item.title] ? 'rotate-90' : ''}"
 						/>
 					</button>
 				{/snippet}
 			</Sidebar.MenuButton>
-			
+
 			{#if expandedItems[item.title]}
 				<Sidebar.MenuSub>
 					<!-- Main Communities link -->
@@ -59,7 +59,7 @@
 							{/snippet}
 						</Sidebar.MenuSubButton>
 					</Sidebar.MenuSubItem>
-					
+
 					<!-- Subitems -->
 					{#each item.subitems as subitem (subitem.title)}
 						<Sidebar.MenuSubItem>

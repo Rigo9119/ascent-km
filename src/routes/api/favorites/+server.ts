@@ -20,10 +20,12 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 			case 'events': {
 				const { data: eventFavorites, error: eventError } = await supabase
 					.from('user_favorite_events')
-					.select(`
+					.select(
+						`
 						*,
 						event:events(*)
-					`)
+					`
+					)
 					.eq('user_id', userId)
 					.order('created_at', { ascending: false });
 
@@ -35,10 +37,12 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 			case 'locations': {
 				const { data: locationFavorites, error: locationError } = await supabase
 					.from('user_favorite_locations')
-					.select(`
+					.select(
+						`
 						*,
 						location:locations(*)
-					`)
+					`
+					)
 					.eq('user_id', userId)
 					.order('created_at', { ascending: false });
 
@@ -50,10 +54,12 @@ export const GET: RequestHandler = async ({ locals, url }) => {
 			case 'communities': {
 				const { data: communityFavorites, error: communityError } = await supabase
 					.from('user_favorite_communities')
-					.select(`
+					.select(
+						`
 						*,
 						community:communities(*)
-					`)
+					`
+					)
 					.eq('user_id', userId)
 					.order('created_at', { ascending: false });
 
@@ -90,11 +96,13 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 
 		switch (type) {
 			case 'events': {
-				const { data: eventResult, error: eventError } = await supabase
-					.rpc('toggle_favorite_event', {
+				const { data: eventResult, error: eventError } = await supabase.rpc(
+					'toggle_favorite_event',
+					{
 						user_uuid: userId,
 						event_uuid: itemId
-					});
+					}
+				);
 
 				if (eventError) throw eventError;
 				result = eventResult;
@@ -102,11 +110,13 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 			}
 
 			case 'locations': {
-				const { data: locationResult, error: locationError } = await supabase
-					.rpc('toggle_favorite_location', {
+				const { data: locationResult, error: locationError } = await supabase.rpc(
+					'toggle_favorite_location',
+					{
 						user_uuid: userId,
 						location_uuid: itemId
-					});
+					}
+				);
 
 				if (locationError) throw locationError;
 				result = locationResult;
@@ -114,11 +124,13 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 			}
 
 			case 'communities': {
-				const { data: communityResult, error: communityError } = await supabase
-					.rpc('toggle_favorite_community', {
+				const { data: communityResult, error: communityError } = await supabase.rpc(
+					'toggle_favorite_community',
+					{
 						user_uuid: userId,
 						community_uuid: itemId
-					});
+					}
+				);
 
 				if (communityError) throw communityError;
 				result = communityResult;
@@ -129,7 +141,7 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 				return json({ error: 'Invalid type parameter' }, { status: 400 });
 		}
 
-		return json({ 
+		return json({
 			isFavorited: result,
 			message: result ? 'Added to favorites' : 'Removed from favorites'
 		});
@@ -137,4 +149,4 @@ export const POST: RequestHandler = async ({ locals, request }) => {
 		console.error('Error toggling favorite:', error);
 		return json({ error: 'Failed to toggle favorite' }, { status: 500 });
 	}
-}; 
+};

@@ -4,7 +4,9 @@ import type { RequestHandler } from './$types';
 // POST /api/favorites/locations - Toggle favorite location
 export const POST: RequestHandler = async ({ request, locals }) => {
 	const { supabase } = locals;
-	const { data: { user } } = await supabase.auth.getUser();
+	const {
+		data: { user }
+	} = await supabase.auth.getUser();
 
 	if (!user) {
 		return json({ error: 'Unauthorized' }, { status: 401 });
@@ -36,4 +38,4 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		console.error('Error toggling favorite location:', error);
 		return json({ error: 'Failed to toggle favorite' }, { status: 500 });
 	}
-}; 
+};

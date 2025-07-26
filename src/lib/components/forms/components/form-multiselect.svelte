@@ -31,10 +31,12 @@
 	}: SelectProps = $props();
 
 	const selectLabel = $derived(
-		value.length ? options
-      .filter((option) => value.includes(option.value))
-      .map((option) => option.label)
-      .join(", ") : placeholder
+		value.length
+			? options
+					.filter((option) => value.includes(option.value))
+					.map((option) => option.label)
+					.join(', ')
+			: placeholder
 	);
 </script>
 

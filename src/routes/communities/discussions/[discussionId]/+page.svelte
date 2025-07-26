@@ -61,11 +61,11 @@
 	const popularCommunities = [
 		{ name: 'Seoul Foodies', url: '/communities/seoul-foodies' },
 		{ name: 'Hiking Buddies', url: '/communities/hiking-buddies' },
-		{ name: 'K-Drama Fans', url: '/communities/kdrama-fans' },
+		{ name: 'K-Drama Fans', url: '/communities/kdrama-fans' }
 	];
 	const relatedCommunities = [
 		{ name: 'Language Exchange', url: '/communities/language-exchange' },
-		{ name: 'Travel Korea', url: '/communities/travel-korea' },
+		{ name: 'Travel Korea', url: '/communities/travel-korea' }
 	];
 </script>
 

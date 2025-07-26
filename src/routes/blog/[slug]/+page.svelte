@@ -30,7 +30,8 @@
 			id: 1,
 			slug: 'top-10-must-visit-cafes-in-seoul',
 			title: 'Top 10 Must-Visit Cafes in Seoul',
-			description: 'Discover the most Instagram-worthy cafes in Seoul, from traditional Korean tea houses to modern specialty coffee shops.',
+			description:
+				'Discover the most Instagram-worthy cafes in Seoul, from traditional Korean tea houses to modern specialty coffee shops.',
 			image: 'https://source.unsplash.com/random/1200x600?cafe',
 			author: 'Sarah Kim',
 			date: '2024-01-15',
@@ -71,7 +72,8 @@
 			id: 2,
 			slug: 'complete-guide-to-korean-street-food',
 			title: 'A Complete Guide to Korean Street Food',
-			description: 'Everything you need to know about Korean street food, from popular dishes to where to find the best vendors.',
+			description:
+				'Everything you need to know about Korean street food, from popular dishes to where to find the best vendors.',
 			image: 'https://source.unsplash.com/random/1200x600?street-food',
 			author: 'Mike Chen',
 			date: '2024-01-12',
@@ -102,7 +104,8 @@
 			id: 3,
 			slug: 'hidden-gems-in-busan-beyond-tourist-trail',
 			title: 'Hidden Gems in Busan: Beyond the Tourist Trail',
-			description: 'Explore the lesser-known attractions in Busan that most tourists miss, from secret beaches to local markets.',
+			description:
+				'Explore the lesser-known attractions in Busan that most tourists miss, from secret beaches to local markets.',
 			image: 'https://source.unsplash.com/random/1200x600?busan',
 			author: 'Emma Wilson',
 			date: '2024-01-10',
@@ -133,7 +136,8 @@
 			id: 4,
 			slug: 'learning-korean-tips-from-language-exchange',
 			title: 'Learning Korean: Tips from Language Exchange Meetups',
-			description: 'Practical advice for learning Korean through language exchange programs and cultural immersion.',
+			description:
+				'Practical advice for learning Korean through language exchange programs and cultural immersion.',
 			image: 'https://source.unsplash.com/random/1200x600?language',
 			author: 'David Park',
 			date: '2024-01-08',
@@ -164,7 +168,8 @@
 			id: 5,
 			slug: 'kpop-culture-understanding-hallyu-wave',
 			title: 'K-Pop Culture: Understanding the Hallyu Wave',
-			description: 'An in-depth look at the global phenomenon of K-Pop and its impact on Korean culture and tourism.',
+			description:
+				'An in-depth look at the global phenomenon of K-Pop and its impact on Korean culture and tourism.',
 			image: 'https://source.unsplash.com/random/1200x600?kpop',
 			author: 'Lisa Thompson',
 			date: '2024-01-05',
@@ -195,7 +200,8 @@
 			id: 6,
 			slug: 'traditional-korean-festivals-you-should-experience',
 			title: 'Traditional Korean Festivals You Should Experience',
-			description: 'A year-round guide to the most important traditional festivals and celebrations in Korea.',
+			description:
+				'A year-round guide to the most important traditional festivals and celebrations in Korea.',
 			image: 'https://source.unsplash.com/random/1200x600?festival',
 			author: 'James Lee',
 			date: '2024-01-03',
@@ -235,10 +241,10 @@
 	let isBookmarked = $state(false);
 
 	$effect(() => {
-		const foundPost = blogPosts.find(post => post.slug === $page.params.slug);
+		const foundPost = blogPosts.find((post) => post.slug === $page.params.slug);
 		currentPost = foundPost;
-		relatedPosts = foundPost 
-			? blogPosts.filter(post => post.id !== foundPost.id).slice(0, 3)
+		relatedPosts = foundPost
+			? blogPosts.filter((post) => post.id !== foundPost.id).slice(0, 3)
 			: [];
 	});
 
@@ -289,7 +295,8 @@
 	<title>{currentPost?.title || 'Blog Post'} | Next Roots</title>
 	<meta
 		name="description"
-		content={currentPost?.description || 'Read our latest blog post about Korean culture, travel, and community'}
+		content={currentPost?.description ||
+			'Read our latest blog post about Korean culture, travel, and community'}
 	/>
 </svelte:head>
 
@@ -297,11 +304,7 @@
 	<div class="mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8">
 		<!-- Back Button -->
 		<div class="mb-6">
-			<Button.Root 
-				variant="ghost" 
-				class="inline-flex items-center gap-2 text-sm" 
-				onclick={goBack}
-			>
+			<Button.Root variant="ghost" class="inline-flex items-center gap-2 text-sm" onclick={goBack}>
 				<ArrowLeft class="h-4 w-4" />
 				Back to Blog
 			</Button.Root>
@@ -310,13 +313,11 @@
 		<!-- Hero Image -->
 		<div class="mb-6 sm:mb-8">
 			<div class="relative aspect-[2/1] overflow-hidden rounded-lg">
-				<img
-					src={currentPost.image}
-					alt={currentPost.title}
-					class="h-full w-full object-cover"
-				/>
+				<img src={currentPost.image} alt={currentPost.title} class="h-full w-full object-cover" />
 				<div class="absolute top-4 left-4">
-					<span class="inline-flex items-center rounded-full bg-black/70 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm">
+					<span
+						class="inline-flex items-center rounded-full bg-black/70 px-3 py-1 text-sm font-medium text-white backdrop-blur-sm"
+					>
 						{currentPost.category}
 					</span>
 				</div>
@@ -325,16 +326,16 @@
 
 		<!-- Article Header -->
 		<header class="mb-8 sm:mb-12">
-			<h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+			<h1 class="mb-4 text-2xl leading-tight font-bold sm:mb-6 sm:text-3xl md:text-4xl lg:text-5xl">
 				{currentPost.title}
 			</h1>
-			<p class="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 leading-relaxed">
+			<p class="text-muted-foreground mb-6 text-base leading-relaxed sm:mb-8 sm:text-lg">
 				{currentPost.description}
 			</p>
-			
+
 			<!-- Meta Information -->
-			<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-				<div class="flex items-center gap-4 text-sm sm:text-base text-muted-foreground">
+			<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+				<div class="text-muted-foreground flex items-center gap-4 text-sm sm:text-base">
 					<div class="flex items-center gap-2">
 						<User class="h-4 w-4" />
 						<span>{currentPost.author}</span>
@@ -348,23 +349,13 @@
 						<span>{currentPost.readTime}</span>
 					</div>
 				</div>
-				
+
 				<!-- Action Buttons -->
 				<div class="flex items-center gap-2">
-					<Button.Root 
-						variant="outline" 
-						size="icon" 
-						class="h-9 w-9" 
-						onclick={sharePost}
-					>
+					<Button.Root variant="outline" size="icon" class="h-9 w-9" onclick={sharePost}>
 						<Share2 class="h-4 w-4" />
 					</Button.Root>
-					<Button.Root 
-						variant="outline" 
-						size="icon" 
-						class="h-9 w-9"
-						onclick={toggleBookmark}
-					>
+					<Button.Root variant="outline" size="icon" class="h-9 w-9" onclick={toggleBookmark}>
 						{#if isBookmarked}
 							<Bookmark class="h-4 w-4 fill-current" />
 						{:else}
@@ -376,17 +367,20 @@
 		</header>
 
 		<!-- Article Content -->
-		<article class="prose prose-lg max-w-none mb-12 sm:mb-16">
+		<article class="prose prose-lg mb-12 max-w-none sm:mb-16">
 			{@html currentPost.content}
 		</article>
 
 		<!-- Related Posts -->
 		{#if relatedPosts.length > 0}
 			<section class="border-t pt-8 sm:pt-12">
-				<h2 class="text-xl sm:text-2xl font-semibold mb-6 sm:mb-8">Related Posts</h2>
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+				<h2 class="mb-6 text-xl font-semibold sm:mb-8 sm:text-2xl">Related Posts</h2>
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
 					{#each relatedPosts as post (post.id)}
-						<Card.Root class="group overflow-hidden transition-all duration-200 hover:shadow-lg cursor-pointer" onclick={() => goto(`/blog/${post.slug}`)}>
+						<Card.Root
+							class="group cursor-pointer overflow-hidden transition-all duration-200 hover:shadow-lg"
+							onclick={() => goto(`/blog/${post.slug}`)}
+						>
 							<Card.Content class="p-0">
 								<!-- Image -->
 								<div class="relative aspect-[4/3] overflow-hidden">
@@ -396,23 +390,27 @@
 										class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
 									/>
 									<div class="absolute top-2 left-2">
-										<span class="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
+										<span
+											class="inline-flex items-center rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm"
+										>
 											{post.category}
 										</span>
 									</div>
 								</div>
-								
+
 								<!-- Content -->
 								<div class="p-4">
-									<h3 class="font-semibold text-base sm:text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+									<h3
+										class="group-hover:text-primary mb-2 line-clamp-2 text-base font-semibold transition-colors sm:text-lg"
+									>
 										{post.title}
 									</h3>
-									<p class="text-sm text-muted-foreground mb-3 line-clamp-2">
+									<p class="text-muted-foreground mb-3 line-clamp-2 text-sm">
 										{post.description}
 									</p>
-									
+
 									<!-- Meta Information -->
-									<div class="flex items-center justify-between text-xs text-muted-foreground">
+									<div class="text-muted-foreground flex items-center justify-between text-xs">
 										<div class="flex items-center gap-1">
 											<User class="h-3 w-3" />
 											<span>{post.author}</span>
@@ -432,24 +430,18 @@
 	</div>
 {:else}
 	<!-- 404 Not Found -->
-	<div class="mx-auto max-w-4xl px-4 py-4 sm:px-6 sm:py-6 md:px-8 md:py-8 text-center">
+	<div class="mx-auto max-w-4xl px-4 py-4 text-center sm:px-6 sm:py-6 md:px-8 md:py-8">
 		<div class="mb-6">
-			<Button.Root 
-				variant="ghost" 
-				class="inline-flex items-center gap-2 text-sm" 
-				onclick={goBack}
-			>
+			<Button.Root variant="ghost" class="inline-flex items-center gap-2 text-sm" onclick={goBack}>
 				<ArrowLeft class="h-4 w-4" />
 				Back to Blog
 			</Button.Root>
 		</div>
-		
-		<h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">Post Not Found</h1>
-		<p class="text-base sm:text-lg text-muted-foreground mb-8">
+
+		<h1 class="mb-4 text-2xl font-bold sm:text-3xl md:text-4xl">Post Not Found</h1>
+		<p class="text-muted-foreground mb-8 text-base sm:text-lg">
 			The blog post you're looking for doesn't exist or has been moved.
 		</p>
-		<Button.Root onclick={goBack}>
-			Return to Blog
-		</Button.Root>
+		<Button.Root onclick={goBack}>Return to Blog</Button.Root>
 	</div>
-{/if} 
+{/if}

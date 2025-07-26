@@ -36,11 +36,11 @@
 			if (response.ok) {
 				const result = await response.json();
 				favorited = result.is_favorited;
-				dispatch('toggle', { 
-					itemId, 
-					itemType, 
+				dispatch('toggle', {
+					itemId,
+					itemType,
 					isFavorited: favorited,
-					message: result.message 
+					message: result.message
 				});
 			} else {
 				console.error('Failed to toggle favorite');
@@ -60,15 +60,15 @@
 
 <Button
 	variant={favorited ? 'default' : 'outline'}
-	size={size}
+	{size}
 	onclick={toggleFavorite}
 	disabled={loading || disabled}
-	class="transition-all duration-200 hover:scale-105 {favorited ? 'bg-rose-500 hover:bg-rose-600 text-white' : 'hover:bg-rose-50 hover:border-rose-200'}"
+	class="transition-all duration-200 hover:scale-105 {favorited
+		? 'bg-rose-500 text-white hover:bg-rose-600'
+		: 'hover:border-rose-200 hover:bg-rose-50'}"
 >
-	<Heart
-		class="h-4 w-4 {favorited ? 'fill-current' : ''} {loading ? 'animate-pulse' : ''}"
-	/>
+	<Heart class="h-4 w-4 {favorited ? 'fill-current' : ''} {loading ? 'animate-pulse' : ''}" />
 	{#if loading}
 		<span class="ml-2 text-xs">...</span>
 	{/if}
-</Button> 
+</Button>

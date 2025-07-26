@@ -1,1 +1,1 @@
-declare module '@beyonk/svelte-googlemaps'; 
+declare module '@beyonk/svelte-googlemaps';

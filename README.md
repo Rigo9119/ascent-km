@@ -33,6 +33,7 @@ bun install
 ```bash
 bun run dev
 ```
+
 - The app will be available at [http://localhost:5173](http://localhost:5173) (or as shown in your terminal).
 
 ### 3. Run the Sanity Studio (CMS)
@@ -42,6 +43,7 @@ cd sanity
 bun install
 bun run dev
 ```
+
 - The Sanity Studio will be available at [http://localhost:3333](http://localhost:3333) by default.
 
 ---
@@ -68,12 +70,12 @@ bun run dev
 
 ## 🧑‍💻 Useful Commands
 
-| Command                     | Description                  |
-|-----------------------------|------------------------------|
-| `bun run dev`               | Start SvelteKit dev server   |
-| `bun run build`             | Build for production         |
-| `bun run preview`           | Preview production build     |
-| `bun run sanity`            | Start Sanity Studio          |
+| Command           | Description                |
+| ----------------- | -------------------------- |
+| `bun run dev`     | Start SvelteKit dev server |
+| `bun run build`   | Build for production       |
+| `bun run preview` | Preview production build   |
+| `bun run sanity`  | Start Sanity Studio        |
 
 ---
 
@@ -101,6 +103,7 @@ This project is ready to deploy on [Netlify](https://www.netlify.com/) using the
 5. **Deploy!**
 
 ### Notes
+
 - The project uses `@sveltejs/adapter-netlify` (see `svelte.config.js`).
 - For more details, see the [SvelteKit Netlify adapter docs](https://kit.svelte.dev/docs/adapter-netlify).
 - If you use server-only environment variables, set them in Netlify's dashboard under Site settings > Environment variables.

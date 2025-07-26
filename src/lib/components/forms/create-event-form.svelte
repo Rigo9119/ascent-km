@@ -24,12 +24,8 @@
 		user: User;
 	}
 
-	const {
-		categoriesOptions,
-		locationOptions,
-		eventTypeOptions,
-		user
-	}: CreateEventFormProps = $props();
+	const { categoriesOptions, locationOptions, eventTypeOptions, user }: CreateEventFormProps =
+		$props();
 
 	const createEventForm = createForm(() => ({
 		defaultValues: {

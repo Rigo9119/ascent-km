@@ -57,12 +57,11 @@
 					description: `${eventToDelete.name} has been permanently deleted.`
 				});
 				closeDeleteDialog();
-				
+
 				// Refresh the page to update the events list
 				setTimeout(() => {
 					window.location.reload();
 				}, 1000);
-				
 			} else {
 				toast.error('Failed to delete event', {
 					description: result.error || 'Something went wrong. Please try again.'

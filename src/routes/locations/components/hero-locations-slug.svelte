@@ -1,6 +1,6 @@
 <script lang="ts">
 	import MapPin from '@lucide/svelte/icons/map-pin';
-  
+
 	interface HeroProps {
 		heroSrc: string;
 		heroAlt: string;

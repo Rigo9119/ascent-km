@@ -6,14 +6,14 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals: { supabase, getUser } }) => {
 	const user = await getUser();
-	
+
 	if (!user) {
 		throw redirect(303, '/auth?mode=login');
 	}
 
 	try {
 		const eventsService = new EventsService(supabase);
-		
+
 		const [locations, categories, eventTypes] = await Promise.all([
 			LocationsService.getLocationsNamesAndIds(),
 			CategoriesService.getAllCategories(),
@@ -27,19 +27,15 @@ export const load: PageServerLoad = async ({ locals: { supabase, getUser } }) =>
 			})
 		);
 
-		const categoriesOptions = categories.map(
-			(category: { id: string; name: string }) => ({
-				value: category.id,
-				label: category.name
-			})
-		);
+		const categoriesOptions = categories.map((category: { id: string; name: string }) => ({
+			value: category.id,
+			label: category.name
+		}));
 
-		const eventTypeOptions = eventTypes.map(
-			(eventType: { id: string; name: string }) => ({
-				value: eventType.id,
-				label: eventType.name
-			})
-		);
+		const eventTypeOptions = eventTypes.map((eventType: { id: string; name: string }) => ({
+			value: eventType.id,
+			label: eventType.name
+		}));
 
 		return {
 			user,

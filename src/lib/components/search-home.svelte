@@ -5,7 +5,6 @@
 	import FormInput from './forms/components/form-input.svelte';
 	import { type HtmlInputEvent } from '../types';
 
-
 	let searchResults = $state<any[]>([]);
 	let isLoading = $state(false);
 
@@ -35,16 +34,16 @@
 </script>
 
 <section class="my-4 sm:my-6 md:my-8">
-	<form 
+	<form
 		onsubmit={(event) => {
 			event.preventDefault();
 			event.stopPropagation();
 			form.handleSubmit();
-		}} 
+		}}
 		class="relative"
 	>
 		<SearchIcon
-			class="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 sm:h-5 sm:w-5 z-10"
+			class="text-muted-foreground absolute top-1/2 left-3 z-10 h-4 w-4 -translate-y-1/2 sm:h-5 sm:w-5"
 		/>
 		<form.Field name="search">
 			{#snippet children(field)}
@@ -68,7 +67,7 @@
 		<Card class="mt-3 sm:mt-4">
 			<CardContent class="p-4">
 				<div class="flex items-center justify-center">
-					<div class="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-500"></div>
+					<div class="h-6 w-6 animate-spin rounded-full border-b-2 border-emerald-500"></div>
 					<span class="ml-2 text-sm text-gray-600">Searching...</span>
 				</div>
 			</CardContent>

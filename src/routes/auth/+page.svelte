@@ -13,7 +13,6 @@
 	export let data: PageData;
 	$: ({ supabase, mode } = data);
 
-
 	let isLoading = false;
 	let error = '';
 	let success = false;
@@ -133,7 +132,7 @@
 		<div class="mt-4 text-center">
 			<Button
 				variant="ghost"
-				class="text-sm text-black-600 hover:underline underline-offset-4 cursor-pointer"
+				class="text-black-600 cursor-pointer text-sm underline-offset-4 hover:underline"
 				onclick={() => authMode(mode as unknown as AuthMode)}
 			>
 				{mode === 'login' ? 'Need an account? Sign Up' : 'Already have an account? Login'}

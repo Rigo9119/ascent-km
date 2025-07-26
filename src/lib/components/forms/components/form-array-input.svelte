@@ -13,7 +13,8 @@
 		placeholder?: string;
 	}
 
-	const { field, form, label, addButtonText, removeButtonText, placeholder }: ArrayInputProps = $props();
+	const { field, form, label, addButtonText, removeButtonText, placeholder }: ArrayInputProps =
+		$props();
 
 	function addItem() {
 		form.pushFieldValue(field.name, '');
@@ -42,11 +43,7 @@
 						}}
 					/>
 					{#if field.state.value.length > 1}
-						<Button
-							type="button"
-							variant="ghost"
-							size="sm"
-							onclick={() => removeItem(index)}
+						<Button type="button" variant="ghost" size="sm" onclick={() => removeItem(index)}
 							>{removeButtonText}</Button
 						>
 					{/if}
@@ -54,9 +51,5 @@
 			</form.Field>
 		</div>
 	{/each}
-	<Button
-		onclick={() => addItem()}
-		type="button"
-		class="cursor-pointer">{addButtonText}</Button
-	>
+	<Button onclick={() => addItem()} type="button" class="cursor-pointer">{addButtonText}</Button>
 </div>

@@ -3,7 +3,7 @@
 	import Heart from '@lucide/svelte/icons/heart';
 	import * as Button from '$lib/components/ui/button/index.js';
 
-  type ButtonSize = 'sm' | 'md' | 'lg' | 'default' | 'icon' | undefined;
+	type ButtonSize = 'sm' | 'md' | 'lg' | 'default' | 'icon' | undefined;
 
 	export let itemId: string;
 	export let type: 'events' | 'locations' | 'communities';
@@ -61,13 +61,12 @@
 	variant={isFavorited ? 'default' : 'outline'}
 	onclick={toggleFavorite}
 	disabled={isLoading}
-	class="transition-all duration-200 hover:scale-105 {isFavorited ? 'bg-emerald-500 hover:bg-emerald-600' : ''}"
+	class="transition-all duration-200 hover:scale-105 {isFavorited
+		? 'bg-emerald-500 hover:bg-emerald-600'
+		: ''}"
 >
-	<Heart
-		class="transition-all duration-200 {isFavorited ? 'fill-current' : ''}"
-		size={iconSize}
-	/>
+	<Heart class="transition-all duration-200 {isFavorited ? 'fill-current' : ''}" size={iconSize} />
 	{#if isLoading}
 		<span class="ml-2">...</span>
 	{/if}
-</Button.Root> 
+</Button.Root>

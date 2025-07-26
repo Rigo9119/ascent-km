@@ -1,4 +1,4 @@
-import type { AppEvent } from "../../types";
+import type { AppEvent } from '../../types';
 
 export const events: AppEvent[] = [
 	{
@@ -34,7 +34,7 @@ export const events: AppEvent[] = [
 	{
 		id: 4,
 		name: 'Busan International Film Festival',
-		description: 'Attend Asia\'s most prestigious film festival',
+		description: "Attend Asia's most prestigious film festival",
 		date: new Date(2024, 9, 5), // October 5, 2024
 		location: 'Busan Cinema Center',
 		type: 'public',
@@ -111,7 +111,7 @@ export const events: AppEvent[] = [
 		type: 'public',
 		fee: false
 	}
-] as const; 
+] as const;
 
 export const enhancedEvents: AppEvent[] = [
 	{

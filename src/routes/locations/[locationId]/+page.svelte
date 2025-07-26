@@ -76,9 +76,6 @@
 
 	<!-- Related Locations -->
 	{#if relatedLocations.length > 0}
-		<RelatedItems
-			relatedItems={relatedLocations as AppLocation[]}
-			urlSegment={urlSegments[0]}
-		/>
+		<RelatedItems relatedItems={relatedLocations as AppLocation[]} urlSegment={urlSegments[0]} />
 	{/if}
 </div>

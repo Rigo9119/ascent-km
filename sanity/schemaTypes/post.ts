@@ -10,9 +10,9 @@ export default defineType({
       title: 'Title',
       type: 'object',
       fields: [
-        { name: 'en', type: 'string', title: 'English' },
-        { name: 'ko', type: 'string', title: 'Korean' },
-      ]
+        {name: 'en', type: 'string', title: 'English'},
+        {name: 'ko', type: 'string', title: 'Korean'},
+      ],
     }),
     defineField({
       name: 'slug',
@@ -58,18 +58,18 @@ export default defineType({
       title: 'Description',
       type: 'object',
       fields: [
-        { name: 'en', type: 'text', title: 'English' },
-        { name: 'ko', type: 'text', title: 'Korean' }
-      ]
+        {name: 'en', type: 'text', title: 'English'},
+        {name: 'ko', type: 'text', title: 'Korean'},
+      ],
     }),
     defineField({
       name: 'content',
       title: 'Content',
       type: 'object',
       fields: [
-        { name: 'en', type: 'text', title: 'English' },
-        { name: 'ko', type: 'text', title: 'Korean' }
-      ]
+        {name: 'en', type: 'text', title: 'English'},
+        {name: 'ko', type: 'text', title: 'Korean'},
+      ],
     }),
   ],
 
