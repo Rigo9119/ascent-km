@@ -11,7 +11,7 @@
 	import type { DateValue, Time } from '@internationalized/date';
 	import type { User } from '@supabase/supabase-js';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
-	import { dataURLtoBlob, formatToTimestamp, formatTimeRange } from '@/lib/utils';
+	import { formatToTimestamp, formatTimeRange } from '@/lib/utils';
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 

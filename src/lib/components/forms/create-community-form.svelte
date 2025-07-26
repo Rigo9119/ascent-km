@@ -200,7 +200,7 @@
 		</createCommunityForm.Field>
 		<createCommunityForm.Field name="category">
 			{#snippet children(field: AnyFieldApi)}
-				<FormMultiSelect
+				<FormSelect
 					forLabel={field.name}
 					selectId={field.name}
 					label="Categories"
