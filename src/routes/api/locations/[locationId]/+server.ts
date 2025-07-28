@@ -1,11 +1,13 @@
 import { LocationsService } from '@/lib/services/locations-service';
 
-export async function GET({ params }) {
-	const { locationId } = params;
-	const [location, locations] = await Promise.all([
-		LocationsService.getLocationById(locationId),
-		LocationsService.getRelatedLocations()
-	]);
+export async function GET({ params, locals: { supabase } }) {
+  const { locationId } = params;
+  const locationsService = new LocationsService(supabase)
 
-	return new Response(JSON.stringify({ location, locations }));
+  const [location, locations] = await Promise.all([
+    locationsService.getLocationById(locationId as string),
+    locationsService.getRelatedLocations()
+  ]);
+
+  return new Response(JSON.stringify({ location, locations }));
 }
