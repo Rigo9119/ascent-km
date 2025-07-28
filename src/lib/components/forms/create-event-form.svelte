@@ -68,7 +68,6 @@
 					time: formattedTimeRange
 				};
 
-				// Send to API
 				const response = await fetch('/api/events', {
 					method: 'POST',
 					headers: {
@@ -80,23 +79,21 @@
 				const result = await response.json();
 
 				if (response.ok && result.success) {
-					console.log('Event created successfully:', result.event);
 					toast.success('Event created successfully!', {
 						description: `${result.event.name} has been created and is now live.`
 					});
 					// Redirect to the event page
 					goto(`/events/${result.event.id}`);
 				} else {
-					console.error('Failed to create event:', result.error);
 					toast.error('Failed to create event', {
 						description: result.error || 'Something went wrong. Please try again.'
 					});
 				}
 			} catch (error) {
-				console.error('Error creating event:', error);
 				toast.error('Network error', {
 					description: 'Unable to create event. Please check your connection and try again.'
 				});
+				throw new Error(`Error creating event: ${error}`);
 			}
 		}
 	}));
@@ -467,13 +464,7 @@
 				isSubmitting: state.isSubmitting
 			})}
 		>
-			{#snippet children({
-				canSubmit,
-				isSubmitting
-			}: {
-				canSubmit: boolean;
-				isSubmitting: boolean;
-			})}
+			{#snippet children({ isSubmitting }: { canSubmit: boolean; isSubmitting: boolean })}
 				<Button
 					type="submit"
 					class="mt-6 w-full cursor-pointer bg-emerald-500 hover:bg-emerald-600"

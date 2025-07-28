@@ -12,7 +12,6 @@
 	import Plus from '@lucide/svelte/icons/plus';
 	import Minus from '@lucide/svelte/icons/minus';
 	import type { Community } from '@/lib/types';
-	import { type PageData } from '../$types';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 
 	interface CommunityPageProps {
@@ -181,7 +180,7 @@
 					<section>
 						<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Tags</h2>
 						<div class="flex flex-wrap gap-2">
-							{#each currentCommunity.tags as tag}
+							{#each currentCommunity.tags as tag, index (index)}
 								<span class="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800">
 									{tag}
 								</span>
@@ -195,7 +194,7 @@
 					<section>
 						<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Community Rules</h2>
 						<ul class="space-y-3">
-							{#each currentCommunity.rules as rule}
+							{#each currentCommunity.rules as rule, index (index)}
 								<li class="flex items-start gap-3">
 									<div class="bg-primary mt-2 h-2 w-2 flex-shrink-0 rounded-full"></div>
 									<p class="text-muted-foreground text-base">{rule}</p>
@@ -210,7 +209,7 @@
 					<section>
 						<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Upcoming Events</h2>
 						<div class="space-y-4">
-							{#each currentCommunity.upcoming_events as event}
+							{#each currentCommunity.upcoming_events as event, index (index)}
 								<Card.Root class="p-4">
 									<div class="flex items-start justify-between">
 										<div class="flex-1">
@@ -239,7 +238,7 @@
 					<section>
 						<h2 class="mb-4 text-xl font-semibold sm:text-2xl">Recent Discussions</h2>
 						<div class="space-y-3">
-							{#each currentCommunity.recent_discussions as discussion}
+							{#each currentCommunity.recent_discussions as discussion, index (index)}
 								<Card.Root class="p-4">
 									<div class="flex items-start justify-between">
 										<div class="flex-1">

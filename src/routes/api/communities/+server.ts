@@ -37,11 +37,48 @@ export const POST: RequestHandler = async ({ request, locals: { supabase, getUse
 
     const communityData = await request.json();
 
-    // Add organizer_id to the community data
+
+    console.log('Raw community data:', communityData);
+
+    // Handle image upload if provided
+    let imageUrl = '';
+    if (communityData.image_url && communityData.image_url.startsWith('data:')) {
+      // Convert base64 to blob and upload
+      const base64Data = communityData.image_url.split(',')[1];
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'image/png' });
+
+      const fileName = `community-${crypto.randomUUID()}`;
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('community_images')
+        .upload(`${fileName}.png`, blob, {
+          cacheControl: '3600',
+          upsert: true
+        });
+
+      if (uploadError) {
+        throw new Error(`Image upload failed: ${uploadError.message}`);
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('community_images')
+        .getPublicUrl(uploadData.path);
+
+      imageUrl = publicUrlData.publicUrl;
+    }
+
+    // Add organizer_id and image_url to the community data
     const communityWithOrganizer = {
       ...communityData,
       organizer_id: user.id,
-      id: crypto.randomUUID()
+      id: crypto.randomUUID(),
+      image_url: imageUrl || communityData.image_url // Use uploaded URL or existing URL
     };
 
     const communitiesService = new CommunitiesService(supabase);

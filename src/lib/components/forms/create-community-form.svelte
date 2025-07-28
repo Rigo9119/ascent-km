@@ -1,7 +1,6 @@
 <script lang="ts">
 	import FormArrayInput from '@/lib/components/forms/components/form-array-input.svelte';
 	import FormInput from '@/lib/components/forms/components/form-input.svelte';
-	import FormMultiSelect from '@/lib/components/forms/components/form-multiselect.svelte';
 	import FormSelect from '@/lib/components/forms/components/form-select.svelte';
 	import FormTextarea from '@/lib/components/forms/components/form-textarea.svelte';
 	import LocationSearch from '@/lib/components/forms/components/location-search.svelte';
@@ -15,6 +14,7 @@
 	import type { User } from '@supabase/supabase-js';
 	import FormDateRange from './components/form-date-range.svelte';
 	import type { DateValue } from '@internationalized/date';
+	import { formatToTimestamp } from '@/lib/utils';
 
 	interface CreateCommunityFormProps {
 		categoriesOptions?: { value: string; label: string }[];
@@ -39,7 +39,7 @@
 		defaultValues: {
 			name: '',
 			description: '',
-			image: '',
+			image_url: '',
 			member_count: 1,
 			is_public: true,
 			is_featured: false,
@@ -48,49 +48,58 @@
 			contact_email: user.email || '',
 			website: '',
 			location: '',
-			category: [],
+			category: '',
 			meeting_frequency: '',
 			long_description: '',
 			contact_phone: '',
 			next_meeting_date: undefined as DateValue | undefined,
 			next_meeting_location: '',
 			next_meeting_details: '',
-			category_id: '',
-			community_type_id: ''
+			category_id: null,
+			community_type_id: null
 		},
 		onSubmit: async ({ value }) => {
 			console.log('form data: ', value);
-			// try {
-			// 	const response = await fetch('/api/communities', {
-			// 		method: 'POST',
-			// 		headers: {
-			// 			'Content-Type': 'application/json'
-			// 		},
-			// 		body: JSON.stringify(value)
-			// 	});
+			const eventTimeStamp = formatToTimestamp(value.next_meeting_date as DateValue);
+			const formData = {
+				...value,
+				id: crypto.randomUUID(),
+				next_meeting_date: eventTimeStamp,
+				created_at: new Date().toISOString(),
+				updated_at: new Date().toISOString()
+			};
 
-			// 	const result = await response.json();
+			try {
+				const response = await fetch('/api/communities', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(formData)
+				});
 
-			// 	if (response.ok && result.success) {
-			// 		toast.success('Community created successfully!', {
-			// 			description: `${value.name} has been created and is ready for members.`
-			// 		});
+				const result = await response.json();
 
-			// 		// Navigate to the new community page
-			// 		setTimeout(() => {
-			// 			goto(`/communities/${result.community.id}`);
-			// 		}, 1000);
-			// 	} else {
-			// 		toast.error('Failed to create community', {
-			// 			description: result.error || 'Something went wrong. Please try again.'
-			// 		});
-			// 	}
-			// } catch (error) {
-			// 	console.error('Error creating community:', error);
-			// 	toast.error('Network error', {
-			// 		description: 'Unable to create community. Please check your connection and try again.'
-			// 	});
-			// }
+				if (response.ok && result.success) {
+					toast.success('Community created successfully!', {
+						description: `${value.name} has been created and is ready for members.`
+					});
+
+					// Navigate to the new community page
+					setTimeout(() => {
+						goto(`/communities/${result.community.id}`);
+					}, 1000);
+				} else {
+					toast.error('Failed to create community', {
+						description: result.error || 'Something went wrong. Please try again.'
+					});
+				}
+			} catch (error) {
+				toast.error('Network error', {
+					description: 'Unable to create community. Please check your connection and try again.'
+				});
+				throw new Error(`Error creating community: ${error}`);
+			}
 		}
 	}));
 </script>
@@ -157,7 +166,7 @@
 				/>
 			{/snippet}
 		</createCommunityForm.Field>
-		<createCommunityForm.Field name="image">
+		<createCommunityForm.Field name="image_url">
 			{#snippet children(field: AnyFieldApi)}
 				<FormInput
 					name={field.name}
@@ -203,10 +212,10 @@
 				<FormSelect
 					forLabel={field.name}
 					selectId={field.name}
-					label="Categories"
-					placeholder="Select community categories"
+					label="Category"
+					placeholder="Select a category"
 					name={field.name}
-					value={field.state.value || []}
+					value={field.state.value}
 					options={categoriesOptions || []}
 					onValueChange={(selected) => field.handleChange(selected)}
 				/>
